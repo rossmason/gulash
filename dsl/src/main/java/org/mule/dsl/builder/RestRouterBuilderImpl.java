@@ -28,7 +28,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
 
     private String ramlPath;
     private Map<String, Object> properties;
-    private List<ResourceActionBuilderImpl<RestRouterBuilder>> resourceActionBuilders = new ArrayList<ResourceActionBuilderImpl<RestRouterBuilder>>();
+    private List<MessageProcessorChainBuilderImpl<RestRouterBuilder>> resourceActionBuilders = new ArrayList<MessageProcessorChainBuilderImpl<RestRouterBuilder>>();
 
     public RestRouterBuilder declareApi(String ramlPath)
     {
@@ -42,9 +42,9 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
         return this;
     }
 
-    public ResourceActionBuilder<RestRouterBuilder> implementResourceAction(ActionType action, String resource)
+    public MessageProcessorChainBuilder<RestRouterBuilder> on(ActionType action, String resource)
     {
-        ResourceActionBuilderImpl<RestRouterBuilder> restRouterBuilderResourceActionBuilder = new ResourceActionBuilderImpl<RestRouterBuilder>(this, action, resource);
+        MessageProcessorChainBuilderImpl<RestRouterBuilder> restRouterBuilderResourceActionBuilder = new MessageProcessorChainBuilderImpl<RestRouterBuilder>(this, action, resource);
         resourceActionBuilders.add(restRouterBuilderResourceActionBuilder);
         return restRouterBuilderResourceActionBuilder;
     }
@@ -68,12 +68,12 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
 
             routerFlow.setMessageProcessors(Arrays.<MessageProcessor>asList(apikitRouter));
 
-            muleContext.getRegistry().registerFlowConstruct(routerFlow);
-
-            for (ResourceActionBuilderImpl<RestRouterBuilder> resourceActionBuilder : resourceActionBuilders)
+            for (MessageProcessorChainBuilderImpl<RestRouterBuilder> resourceActionBuilder : resourceActionBuilders)
             {
                 resourceActionBuilder.build(muleContext);
             }
+
+            muleContext.getRegistry().registerFlowConstruct(routerFlow);
         }
         catch (EndpointException e)
         {

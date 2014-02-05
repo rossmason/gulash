@@ -15,7 +15,7 @@ public interface RestRouterBuilder extends MuleBuilder<Flow>
 
     RestRouterBuilder using(Map<String,Object> propertoes);
 
-    ResourceActionBuilder<RestRouterBuilder> implementResourceAction(ActionType action,String resource);
+    MessageProcessorChainBuilder<RestRouterBuilder> on(ActionType action, String resource);
 
 
 }
