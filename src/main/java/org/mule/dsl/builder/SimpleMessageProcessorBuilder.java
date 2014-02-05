@@ -29,9 +29,10 @@ public class SimpleMessageProcessorBuilder<T extends MessageProcessor> implement
         this.properties = properties;
     }
 
-    public void using(Map<String, Object> properties)
+    public MessageProcessorBuilder<T> using(Map<String, Object> properties)
     {
         this.properties = properties;
+        return this;
     }
 
     public T build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException

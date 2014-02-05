@@ -10,6 +10,7 @@
 
     <properties>
         <mule.version>3.5.0-cascade</mule.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
