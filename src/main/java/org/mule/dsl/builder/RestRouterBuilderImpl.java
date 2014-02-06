@@ -37,7 +37,7 @@ public class RestRouterBuilderImpl<P> implements RestRouterBuilder<P>
         this.parent = parent;
     }
 
-    public RestRouterBuilder using(Map<String, Object> properties)
+    public RestRouterBuilder<P> using(Map<String, Object> properties)
     {
         this.properties = properties;
         return this;
