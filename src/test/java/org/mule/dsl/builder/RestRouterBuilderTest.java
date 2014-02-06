@@ -1,18 +1,16 @@
 package org.mule.dsl.builder;
 
+import static org.mule.dsl.builder.Properties.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.context.DefaultMuleContextFactory;
 
-import com.google.common.collect.ImmutableMap;
 import com.jayway.restassured.RestAssured;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.raml.model.ActionType;
-
-import static org.mule.dsl.builder.Properties.properties;
 
 public class RestRouterBuilderTest
 {
