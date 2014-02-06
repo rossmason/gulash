@@ -22,18 +22,19 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.raml.model.ActionType;
 
 
-public class RestRouterBuilderImpl implements RestRouterBuilder
+public class RestRouterBuilderImpl<P> implements RestRouterBuilder<P>
 {
 
 
     private String ramlPath;
+    private P parent;
     private Map<String, Object> properties;
-    private List<MessageProcessorChainBuilderImpl<RestRouterBuilder>> resourceActionBuilders = new ArrayList<MessageProcessorChainBuilderImpl<RestRouterBuilder>>();
+    private List<MessageProcessorChainBuilder<?>> resourceActionBuilders = new ArrayList<MessageProcessorChainBuilder<?>>();
 
-    public RestRouterBuilder declareApi(String ramlPath)
+    RestRouterBuilderImpl(String ramlPath, P parent)
     {
         this.ramlPath = ramlPath;
-        return this;
+        this.parent = parent;
     }
 
     public RestRouterBuilder using(Map<String, Object> properties)
@@ -42,11 +43,16 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
         return this;
     }
 
-    public MessageProcessorChainBuilder<RestRouterBuilder> on(ActionType action, String resource)
+    public MessageProcessorChainBuilder<RestRouterBuilder<P>> on(ActionType action, String resource)
     {
-        MessageProcessorChainBuilderImpl<RestRouterBuilder> restRouterBuilderResourceActionBuilder = new MessageProcessorChainBuilderImpl<RestRouterBuilder>(this, action, resource);
+        MessageProcessorChainBuilderImpl<RestRouterBuilder<P>> restRouterBuilderResourceActionBuilder = new MessageProcessorChainBuilderImpl<RestRouterBuilder<P>>(this, action, resource);
         resourceActionBuilders.add(restRouterBuilderResourceActionBuilder);
         return restRouterBuilderResourceActionBuilder;
+    }
+
+    public P end()
+    {
+        return parent;
     }
 
     public Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException
@@ -63,12 +69,9 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
             inboundEndpoint = endpointURIEndpointBuilder.buildInboundEndpoint();
             muleContext.getRegistry().registerEndpoint(inboundEndpoint);
             routerFlow.setMessageSource(inboundEndpoint);
-
             final Router apikitRouter = configureApikitRouter(muleContext);
-
             routerFlow.setMessageProcessors(Arrays.<MessageProcessor>asList(apikitRouter));
-
-            for (MessageProcessorChainBuilderImpl<RestRouterBuilder> resourceActionBuilder : resourceActionBuilders)
+            for (MessageProcessorChainBuilder<?> resourceActionBuilder : resourceActionBuilders)
             {
                 resourceActionBuilder.build(muleContext);
             }

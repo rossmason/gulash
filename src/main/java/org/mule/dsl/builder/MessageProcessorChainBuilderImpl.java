@@ -43,9 +43,9 @@ public class MessageProcessorChainBuilderImpl<P> implements MessageProcessorChai
         return this;
     }
 
-    public MessageProcessorChainBuilder<P> chainLogger(Map<String, Object> properties)
+    public MessageProcessorChainBuilder<P> chainLogger()
     {
-        this.messageProcessorBuilders.add(new SimpleMessageProcessorBuilder(LoggerMessageProcessor.class, properties));
+        this.messageProcessorBuilders.add(new SimpleMessageProcessorBuilder(LoggerMessageProcessor.class));
         return this;
     }
 

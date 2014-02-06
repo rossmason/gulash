@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.raml.model.ActionType;
 
+import static org.mule.dsl.builder.Properties.properties;
 
 public class RestRouterBuilderTest
 {
@@ -27,12 +28,15 @@ public class RestRouterBuilderTest
     @Test
     public void simple() throws MuleException
     {
-        RestRouterBuilder routerBuilder = new RestRouterBuilderImpl();
+        ApikitBuilderImpl routerBuilder = new ApikitBuilderImpl();
         routerBuilder
-                .declareApi("rover.raml").using(ImmutableMap.<String, Object>of("consolePath", "/console", "name", "test"))
+                .declareApi("rover.raml")
+                /**/.using(properties("consolePath", "/console", "name", "test"))
                 /**/.on(ActionType.PUT, "/forward")
-                /**Then**/.chainLogger(ImmutableMap.<String, Object>of("message", "Payload is #[payload]", "level", "WARN"))
-                /**/.end();
+                /**//**/.chainLogger()
+                /**//**//**/.using(properties("message", "#[payload]"))
+                /**/.end()
+                .end();
 
 
         final MuleContext muleContext = new DefaultMuleContextFactory().createMuleContext();

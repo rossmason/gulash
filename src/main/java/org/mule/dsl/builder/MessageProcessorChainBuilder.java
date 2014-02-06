@@ -9,7 +9,7 @@ import java.util.Map;
 public interface MessageProcessorChainBuilder<P> extends MessageProcessorBuilder<Flow>
 {
 
-    MessageProcessorChainBuilder<P> chainLogger(Map<String, Object> properties);
+    MessageProcessorChainBuilder<P> chainLogger();
 
     MessageProcessorChainBuilder<P> chain(Class<? extends MessageProcessor> clazz);
 
