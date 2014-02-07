@@ -1,11 +1,9 @@
-package org.mule.dsl.builder;
+package org.mule.dsl.builder.core;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by machaval on 2/5/14.
- */
+
 public class Properties
 {
 

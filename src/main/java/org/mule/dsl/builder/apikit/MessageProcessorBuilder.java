@@ -1,6 +1,7 @@
-package org.mule.dsl.builder;
+package org.mule.dsl.builder.apikit;
 
 import org.mule.api.processor.MessageProcessor;
+import org.mule.dsl.builder.core.MuleBuilder;
 
 import java.util.Map;
 

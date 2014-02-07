@@ -1,4 +1,4 @@
-package org.mule.dsl.builder;
+package org.mule.dsl.builder.core;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
@@ -6,6 +6,7 @@ import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.LoggerMessageProcessor;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.construct.Flow;
+import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 import org.raml.model.ActionType;
 
 
-public class MessageProcessorChainBuilderImpl<P> implements MessageProcessorChainBuilder<P>
+public class FlowBuilderImpl<P> implements FlowBuilder<P>
 {
 
     private P parent;
@@ -23,7 +24,7 @@ public class MessageProcessorChainBuilderImpl<P> implements MessageProcessorChai
     private List<MessageProcessorBuilder<?>> messageProcessorBuilders = new ArrayList<MessageProcessorBuilder<?>>();
 
 
-    public MessageProcessorChainBuilderImpl(P parent, ActionType actionType, String resourceName)
+    public FlowBuilderImpl(P parent, ActionType actionType, String resourceName)
     {
         this.parent = parent;
         this.actionType = actionType;
@@ -31,25 +32,25 @@ public class MessageProcessorChainBuilderImpl<P> implements MessageProcessorChai
     }
 
 
-    public MessageProcessorChainBuilder<P> chain(Class<? extends MessageProcessor> clazz)
+    public FlowBuilder<P> chain(Class<? extends MessageProcessor> clazz)
     {
         messageProcessorBuilders.add(new SimpleMessageProcessorBuilder(clazz));
         return this;
     }
 
-    public MessageProcessorChainBuilder<P> chain(MessageProcessorBuilder builder)
+    public FlowBuilder<P> chain(MessageProcessorBuilder builder)
     {
         messageProcessorBuilders.add(builder);
         return this;
     }
 
-    public MessageProcessorChainBuilder<P> chainLogger()
+    public FlowBuilder<P> chainLogger()
     {
         this.messageProcessorBuilders.add(new SimpleMessageProcessorBuilder(LoggerMessageProcessor.class));
         return this;
     }
 
-    public MessageProcessorChainBuilder<P> using(Map<String, Object> properties)
+    public FlowBuilder<P> using(Map<String, Object> properties)
     {
         this.messageProcessorBuilders.get(this.messageProcessorBuilders.size() - 1).using(properties);
         return this;

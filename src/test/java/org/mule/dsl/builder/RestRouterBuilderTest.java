@@ -1,9 +1,10 @@
 package org.mule.dsl.builder;
 
-import static org.mule.dsl.builder.Properties.properties;
+import static org.mule.dsl.builder.core.Properties.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.context.DefaultMuleContextFactory;
+import org.mule.dsl.builder.apikit.ApikitBuilderImpl;
 
 import com.jayway.restassured.RestAssured;
 
@@ -35,6 +36,7 @@ public class RestRouterBuilderTest
                 /**//**//**/.using(properties("message", "#[payload]"))
                 /**/.end()
                 .end();
+
 
 
         final MuleContext muleContext = new DefaultMuleContextFactory().createMuleContext();
