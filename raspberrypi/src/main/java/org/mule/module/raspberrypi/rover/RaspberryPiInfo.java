@@ -5,7 +5,7 @@ import com.pi4j.system.SystemInfo;
 
 import java.io.IOException;
 
-public class RoverInfo
+public class RaspberryPiInfo
 {
 
     public Float getCPUTemperature()

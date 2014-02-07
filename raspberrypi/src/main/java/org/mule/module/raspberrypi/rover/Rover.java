@@ -17,7 +17,7 @@ public class Rover
     private GpioPinDigitalOutput backRightEngine;
 
 
-    private State currentState;
+    private Direction currentDirection;
 
     private boolean engineRunning = false;
 
@@ -57,7 +57,7 @@ public class Rover
         goRightEngine.setState(PinState.HIGH);
         backRightEngine.setState(PinState.LOW);
 
-        setCurrentState(State.FORWARD);
+        setCurrentDirection(Direction.FORWARD);
 
     }
 
@@ -69,7 +69,7 @@ public class Rover
 
         goRightEngine.setState(PinState.HIGH);
         backRightEngine.setState(PinState.LOW);
-        setCurrentState(State.LEFT);
+        setCurrentDirection(Direction.LEFT);
     }
 
     public void rotateRight()
@@ -79,7 +79,7 @@ public class Rover
 
         goRightEngine.setState(PinState.LOW);
         backRightEngine.setState(PinState.HIGH);
-        setCurrentState(State.RIGHT);
+        setCurrentDirection(Direction.RIGHT);
     }
 
     public void backwards()
@@ -89,7 +89,7 @@ public class Rover
 
         goRightEngine.setState(PinState.LOW);
         backRightEngine.setState(PinState.HIGH);
-        setCurrentState(State.BACKWARDS);
+        setCurrentDirection(Direction.BACKWARDS);
     }
 
 
@@ -101,14 +101,14 @@ public class Rover
         goRightEngine.setState(PinState.LOW);
         backRightEngine.setState(PinState.LOW);
 
-        setCurrentState(State.STOP);
+        setCurrentDirection(Direction.STOP);
 
     }
 
 
-    public State getCurrentState()
+    public Direction getCurrentDirection()
     {
-        return currentState;
+        return currentDirection;
     }
 
 
@@ -122,8 +122,8 @@ public class Rover
         }
     }
 
-    public void setCurrentState(State currentState)
+    public void setCurrentDirection(Direction currentDirection)
     {
-        this.currentState = currentState;
+        this.currentDirection = currentDirection;
     }
 }

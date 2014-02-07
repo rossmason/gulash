@@ -6,20 +6,20 @@ import org.mule.api.lifecycle.Startable;
 import org.mule.api.lifecycle.Stoppable;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.module.raspberrypi.rover.Rover;
-import org.mule.module.raspberrypi.rover.State;
+import org.mule.module.raspberrypi.rover.Direction;
 
 
 public class RoverMessageProcessor implements MessageProcessor, Startable, Stoppable
 {
 
     private Rover rover;
-    private State state;
+    private Direction direction;
 
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
-        state.execute(rover);
+        direction.execute(rover);
         return event;
     }
 
@@ -28,9 +28,9 @@ public class RoverMessageProcessor implements MessageProcessor, Startable, Stopp
         return rover;
     }
 
-    public void setState(State state)
+    public void setDirection(Direction direction)
     {
-        this.state = state;
+        this.direction = direction;
     }
 
     public void setRover(Rover rover)

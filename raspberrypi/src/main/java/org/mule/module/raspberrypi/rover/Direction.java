@@ -3,7 +3,7 @@ package org.mule.module.raspberrypi.rover;
 /**
  *
  */
-public enum State
+public enum Direction
 {
     FORWARD
             {
