@@ -7,17 +7,10 @@ import org.mule.dsl.builder.core.MuleBuilder;
 
 import java.util.Map;
 
-import org.raml.model.ActionType;
-
-public interface RestRouterBuilder<P> extends MuleBuilder<Flow>
+public interface RestRouterBuilder extends MuleBuilder<Flow>
 {
 
+    RestRouterBuilder using(Map<String, Object> properties);
 
-    RestRouterBuilder<P> using(Map<String, Object> propertoes);
-
-    FlowBuilder<RestRouterBuilder<P>> on(ActionType action, String resource);
-
-    P end();
-
-
+    RestRouterBuilder when(FlowBuilder flowBuilder);
 }

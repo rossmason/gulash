@@ -1,5 +1,7 @@
 package org.mule.dsl.builder.core;
 
+import org.mule.api.MuleContext;
+import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.construct.Flow;
 import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
@@ -7,18 +9,12 @@ import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 import java.util.Map;
 
 
-public interface FlowBuilder<P> extends MessageProcessorBuilder<Flow>
+public interface FlowBuilder extends MessageProcessorBuilder<Flow>
 {
 
-    FlowBuilder<P> chainLogger();
-
-    FlowBuilder<P> chain(Class<? extends MessageProcessor> clazz);
-
-    FlowBuilder<P> chain(MessageProcessorBuilder builder);
-
-    FlowBuilder<P> using(Map<String, Object> properties);
-
-    P end();
+    FlowBuilder chain(MessageProcessorBuilder builder);
 
 
+    @Override
+    Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException;
 }

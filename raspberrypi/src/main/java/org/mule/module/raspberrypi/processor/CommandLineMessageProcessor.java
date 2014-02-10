@@ -7,37 +7,48 @@ import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.context.MuleContextAware;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.api.transport.PropertyScope;
+import org.mule.util.AttributeEvaluator;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 public class CommandLineMessageProcessor implements MessageProcessor, MuleContextAware
 {
 
+    public static final String STATUS_PROPERTY_NAME = "STATUS";
     private String command;
-    private List<String> arguments;
+    private List<String> arguments = new ArrayList<String>();
     private MuleContext context;
     private String path;
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException
     {
-        String commandToRun = command;
-
-        if (command.startsWith("#["))
+        String commandToRun;
+        final AttributeEvaluator commandAttributeEvaluator = new AttributeEvaluator(command);
+        commandAttributeEvaluator.initialize(context.getExpressionManager());
+        if (commandAttributeEvaluator.isExpression())
         {
-            commandToRun = String.valueOf(context.getExpressionManager().evaluate(command, event));
+            commandToRun = String.valueOf(commandAttributeEvaluator.resolveValue(event.getMessage()));
         }
-        List<String> argumentsToRun = new ArrayList<String>();
+        else
+        {
+            commandToRun = commandAttributeEvaluator.getRawValue();
+        }
+        final List<String> argumentsToRun = new ArrayList<String>();
         for (String argument : arguments)
         {
-            if (argument.startsWith("#["))
+            final AttributeEvaluator argumentAttributeEvaluator = new AttributeEvaluator(argument);
+            argumentAttributeEvaluator.initialize(context.getExpressionManager());
+            if (argumentAttributeEvaluator.isExpression())
             {
-                argumentsToRun.add(String.valueOf(context.getExpressionManager().evaluate(argument, event)));
+                argumentsToRun.add(String.valueOf(argumentAttributeEvaluator.resolveValue(event.getMessage())));
             }
             else
             {
@@ -49,13 +60,24 @@ public class CommandLineMessageProcessor implements MessageProcessor, MuleContex
         try
         {
             File directory = null;
-            if (StringUtils.isEmpty(path))
+            if (!StringUtils.isEmpty(path))
             {
-                directory = new File(path);
+                AttributeEvaluator pathAttributeEvaluator = new AttributeEvaluator(path);
+                pathAttributeEvaluator.initialize(context.getExpressionManager());
+                if (pathAttributeEvaluator.isExpression())
+                {
+                    directory = new File(String.valueOf((pathAttributeEvaluator.resolveValue(event.getMessage()))));
+                }
+                else
+                {
+                    directory = new File(path);
+                }
             }
             exec = Runtime.getRuntime().exec(commandToRun, argumentsToRun.toArray(new String[argumentsToRun.size()]), directory);
-            int status = exec.waitFor();
-            event.getMessage().setPayload(status);
+            final int status = exec.waitFor();
+            final String consoleOutput = IOUtils.toString(exec.getInputStream());
+            event.getMessage().setPayload(consoleOutput);
+            event.getMessage().setProperty(STATUS_PROPERTY_NAME, status, PropertyScope.INVOCATION);
             return event;
         }
         catch (IOException e)

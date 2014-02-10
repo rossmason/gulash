@@ -1,10 +1,11 @@
 package org.mule.dsl.builder;
 
+import static org.mule.dsl.builder.apikit.Apikit.api;
+import static org.mule.dsl.builder.apikit.Apikit.request;
+import static org.mule.dsl.builder.core.Core.logger;
 import static org.mule.dsl.builder.core.Properties.properties;
-import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
-import org.mule.context.DefaultMuleContextFactory;
-import org.mule.dsl.builder.apikit.ApikitBuilderImpl;
+import org.mule.dsl.builder.core.Mule;
 
 import com.jayway.restassured.RestAssured;
 
@@ -27,23 +28,17 @@ public class RestRouterBuilderTest
     @Test
     public void simple() throws MuleException
     {
-        ApikitBuilderImpl routerBuilder = new ApikitBuilderImpl();
-        routerBuilder
-                .declareApi("rover.raml")
-                /**/.using(properties("consolePath", "/console", "name", "test"))
-                /**/.on(ActionType.PUT, "/forward")
-                /**//**/.chainLogger()
-                /**//**//**/.using(properties("message", "#[payload]"))
-                /**/.end()
-                .end();
+        Mule mule = new Mule();
+        mule.declare(
+                api("rover.raml")
+                        .using(properties("consolePath", "/console", "name", "test"))
+                        .when(request("/forward", ActionType.PUT)
+                                      .chain(logger().usingMessage("#[payload]"))
+                        )
+        );
 
 
-
-        final MuleContext muleContext = new DefaultMuleContextFactory().createMuleContext();
-        routerBuilder.build(muleContext);
-        muleContext.start();
-
-
+        mule.start();
         RestAssured.given().header("Accept", "*/*").body("hola")
                 .expect()
                 .response().body(CoreMatchers.containsString("hola"))

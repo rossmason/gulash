@@ -25,39 +25,34 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.raml.model.ActionType;
 
 
-public class RestRouterBuilderImpl<P> implements RestRouterBuilder<P>
+public class RestRouterBuilderImpl implements RestRouterBuilder
 {
 
 
     private String ramlPath;
-    private P parent;
-    private Map<String, Object> properties;
-    private List<FlowBuilder<?>> resourceActionBuilders = new ArrayList<FlowBuilder<?>>();
 
-    RestRouterBuilderImpl(String ramlPath, P parent)
+    private Map<String, Object> properties;
+    private List<FlowBuilder> resourceActionBuilders = new ArrayList<FlowBuilder>();
+
+    RestRouterBuilderImpl(String ramlPath)
     {
         this.ramlPath = ramlPath;
-        this.parent = parent;
+
         this.properties = new HashMap<String, Object>();
     }
 
-    public RestRouterBuilder<P> using(Map<String, Object> properties)
+    public RestRouterBuilder using(Map<String, Object> properties)
     {
         this.properties = properties;
         return this;
     }
 
-    public FlowBuilder<RestRouterBuilder<P>> on(ActionType action, String resource)
+    public RestRouterBuilder when(FlowBuilder flowBuilder)
     {
-        FlowBuilderImpl<RestRouterBuilder<P>> restRouterBuilderResourceActionBuilder = new FlowBuilderImpl<RestRouterBuilder<P>>(this, action, resource);
-        resourceActionBuilders.add(restRouterBuilderResourceActionBuilder);
-        return restRouterBuilderResourceActionBuilder;
+        resourceActionBuilders.add(flowBuilder);
+        return this;
     }
 
-    public P end()
-    {
-        return parent;
-    }
 
     public <T> T getProperty(String name, T defaultValue)
     {
@@ -87,7 +82,7 @@ public class RestRouterBuilderImpl<P> implements RestRouterBuilder<P>
             routerFlow.setMessageSource(inboundEndpoint);
             final Router apikitRouter = configureApikitRouter(muleContext);
             routerFlow.setMessageProcessors(Arrays.<MessageProcessor>asList(apikitRouter));
-            for (FlowBuilder<?> resourceActionBuilder : resourceActionBuilders)
+            for (FlowBuilder resourceActionBuilder : resourceActionBuilders)
             {
                 resourceActionBuilder.build(muleContext);
             }
