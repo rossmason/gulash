@@ -16,10 +16,12 @@ public class Core
         return new FlowBuilderImpl(name);
     }
 
-    public static InboundEndpointBuilder from(String address)
+    public static InboundEndpointBuilder endpoint(String address)
     {
         return new InboundEndpointBuilder(address);
     }
+
+    //Todo add Foreach, Poll and Choice
 
     public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> custom(Class<T> clazz)
     {

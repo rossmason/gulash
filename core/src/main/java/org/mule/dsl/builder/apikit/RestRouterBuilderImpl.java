@@ -2,13 +2,12 @@ package org.mule.dsl.builder.apikit;
 
 import static org.mule.dsl.builder.core.Core.custom;
 import static org.mule.dsl.builder.core.Core.flow;
-import static org.mule.dsl.builder.core.Core.from;
+import static org.mule.dsl.builder.core.Core.endpoint;
 import static org.mule.dsl.builder.core.Properties.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.construct.Flow;
 import org.mule.dsl.builder.core.FlowBuilder;
-import org.mule.dsl.builder.core.Properties;
 import org.mule.module.apikit.Configuration;
 import org.mule.module.apikit.Router;
 
@@ -73,23 +72,29 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
         final Configuration config = new Configuration();
         if (properties != null)
         {
-            try
-            {
-                BeanUtils.populate(config, properties);
-            }
-            catch (IllegalAccessException e)
-            {
-
-            }
-            catch (InvocationTargetException e)
-            {
-
-            }
+            applyProperties(config);
         }
         config.setRaml(ramlPath);
-        final FlowBuilder restRouter = flow("RestRouterFlow").from(from(address))
+        final FlowBuilder restRouter = flow("RestRouterFlow")
+                .from(endpoint(address))
                 .chain(custom(Router.class).using(properties("config", config)));
         return restRouter.build(muleContext);
+    }
+
+    private void applyProperties(Configuration config)
+    {
+        try
+        {
+            BeanUtils.populate(config, properties);
+        }
+        catch (IllegalAccessException e)
+        {
+
+        }
+        catch (InvocationTargetException e)
+        {
+
+        }
     }
 
     private String getAddress()
