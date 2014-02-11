@@ -1,28 +1,24 @@
 package org.mule.dsl.builder.apikit;
 
+import static org.mule.dsl.builder.core.Core.custom;
+import static org.mule.dsl.builder.core.Core.flow;
+import static org.mule.dsl.builder.core.Core.from;
+import static org.mule.dsl.builder.core.Properties.properties;
 import org.mule.api.MuleContext;
-import org.mule.api.MuleException;
 import org.mule.api.config.ConfigurationException;
-import org.mule.api.endpoint.EndpointException;
-import org.mule.api.endpoint.InboundEndpoint;
-import org.mule.api.lifecycle.InitialisationException;
-import org.mule.api.processor.MessageProcessor;
 import org.mule.construct.Flow;
 import org.mule.dsl.builder.core.FlowBuilder;
-import org.mule.dsl.builder.core.FlowBuilderImpl;
-import org.mule.endpoint.EndpointURIEndpointBuilder;
+import org.mule.dsl.builder.core.Properties;
 import org.mule.module.apikit.Configuration;
 import org.mule.module.apikit.Router;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.raml.model.ActionType;
 
 
 public class RestRouterBuilderImpl implements RestRouterBuilder
@@ -66,65 +62,43 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
         }
     }
 
-    public Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException
+    public Flow build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
     {
 
-        final Flow routerFlow = new Flow("RestRouterFlow", muleContext);
+        for (FlowBuilder resourceActionBuilder : resourceActionBuilders)
+        {
+            resourceActionBuilder.build(muleContext);
+        }
+        String address = getAddress();
+        final Configuration config = new Configuration();
+        if (properties != null)
+        {
+            try
+            {
+                BeanUtils.populate(config, properties);
+            }
+            catch (IllegalAccessException e)
+            {
+
+            }
+            catch (InvocationTargetException e)
+            {
+
+            }
+        }
+        config.setRaml(ramlPath);
+        final FlowBuilder restRouter = flow("RestRouterFlow").from(from(address))
+                .chain(custom(Router.class).using(properties("config", config)));
+        return restRouter.build(muleContext);
+    }
+
+    private String getAddress()
+    {
         final String host = getProperty("host", "localhost");
         final String port = getProperty("port", "8081");
         final String path = getProperty("path", "api");
-        final EndpointURIEndpointBuilder endpointURIEndpointBuilder = new EndpointURIEndpointBuilder("http://" + host + ":" + port + "/" + path, muleContext);
-        final InboundEndpoint inboundEndpoint;
-        try
-        {
-            inboundEndpoint = endpointURIEndpointBuilder.buildInboundEndpoint();
-            muleContext.getRegistry().registerEndpoint(inboundEndpoint);
-            routerFlow.setMessageSource(inboundEndpoint);
-            final Router apikitRouter = configureApikitRouter(muleContext);
-            routerFlow.setMessageProcessors(Arrays.<MessageProcessor>asList(apikitRouter));
-            for (FlowBuilder resourceActionBuilder : resourceActionBuilders)
-            {
-                resourceActionBuilder.build(muleContext);
-            }
-
-            muleContext.getRegistry().registerFlowConstruct(routerFlow);
-        }
-        catch (EndpointException e)
-        {
-            throw new ConfigurationException(e);
-
-        }
-        catch (InitialisationException e)
-        {
-            throw new ConfigurationException(e);
-        }
-        catch (MuleException e)
-        {
-            throw new ConfigurationException(e);
-        }
-        catch (InvocationTargetException e)
-        {
-            throw new ConfigurationException(e);
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new ConfigurationException(e);
-        }
-
-        return routerFlow;
+        return "http://" + host + ":" + port + "/" + path;
     }
 
-    private Router configureApikitRouter(MuleContext muleContext) throws IllegalAccessException, InvocationTargetException
-    {
-        final Router apikitRouter = new Router();
-        final Configuration config = new Configuration();
-        config.setRaml(ramlPath);
-        if (properties != null)
-        {
-            BeanUtils.populate(config, properties);
-        }
-        apikitRouter.setConfig(config);
-        apikitRouter.setMuleContext(muleContext);
-        return apikitRouter;
-    }
+
 }

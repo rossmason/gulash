@@ -13,9 +13,8 @@ public interface MuleBuilder<T> {
      *
      * @param muleContext the mule context
      * @return an instance of parameterized type
-     * @throws NullPointerException   if {@code muleContext} or {@code placeholder} params are null
-     * @throws ConfigurationException if theres ay problem building the parameterized type
+     * @throws ConfigurationException if any problem building the parameterized type
      * @throws IllegalStateException  if the actual builder state is invalid
      */
-    T build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException;
+    T build(MuleContext muleContext) throws  ConfigurationException, IllegalStateException;
 }

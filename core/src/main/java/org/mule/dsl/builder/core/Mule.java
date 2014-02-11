@@ -10,10 +10,12 @@ import org.mule.api.MuleException;
 import org.mule.api.client.MuleClient;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.client.DefaultLocalMuleClient;
+import org.mule.config.builders.SimpleConfigurationBuilder;
 import org.mule.construct.Flow;
 import org.mule.context.DefaultMuleContextFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

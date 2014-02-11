@@ -4,6 +4,7 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.api.source.MessageSource;
 import org.mule.construct.Flow;
 import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 
@@ -16,6 +17,7 @@ public class FlowBuilderImpl implements FlowBuilder
 {
 
 
+    private MessageSourceBuilder<?> messageSourceBuilder;
     private List<MessageProcessorBuilder<?>> messageProcessorBuilders = new ArrayList<MessageProcessorBuilder<?>>();
     private String name;
 
@@ -26,6 +28,12 @@ public class FlowBuilderImpl implements FlowBuilder
     }
 
 
+    public FlowBuilder from(MessageSourceBuilder<?> messageSourceBuilder)
+    {
+        this.messageSourceBuilder = messageSourceBuilder;
+        return this;
+    }
+
     public FlowBuilder chain(MessageProcessorBuilder builder)
     {
         messageProcessorBuilders.add(builder);
@@ -33,7 +41,7 @@ public class FlowBuilderImpl implements FlowBuilder
     }
 
 
-    public Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException
+    public Flow build(MuleContext muleContext) throws  ConfigurationException, IllegalStateException
     {
 
         final List<MessageProcessor> messageProcessorList = new ArrayList<MessageProcessor>();
@@ -44,6 +52,11 @@ public class FlowBuilderImpl implements FlowBuilder
         }
 
         final Flow flow = new Flow(name, muleContext);
+        if (messageSourceBuilder != null)
+        {
+            MessageSource messageSource = messageSourceBuilder.build(muleContext);
+            flow.setMessageSource(messageSource);
+        }
         flow.setMessageProcessors(messageProcessorList);
         try
         {

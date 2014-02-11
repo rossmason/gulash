@@ -16,6 +16,11 @@ public class Core
         return new FlowBuilderImpl(name);
     }
 
+    public static InboundEndpointBuilder from(String address)
+    {
+        return new InboundEndpointBuilder(address);
+    }
+
     public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> custom(Class<T> clazz)
     {
         return new CustomMessageProcessorBuilderImpl<T>(clazz);
