@@ -11,6 +11,11 @@ public class Core
         return new LoggerBuilder();
     }
 
+    public static ForeachBuilder foreach()
+    {
+        return new ForeachBuilder();
+    }
+
     public static FlowBuilder flow(String name)
     {
         return new FlowBuilderImpl(name);
@@ -21,7 +26,7 @@ public class Core
         return new InboundEndpointBuilder(address);
     }
 
-    //Todo add Foreach, Poll and Choice
+    //Todo add Poll and Choice
 
     public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> custom(Class<T> clazz)
     {

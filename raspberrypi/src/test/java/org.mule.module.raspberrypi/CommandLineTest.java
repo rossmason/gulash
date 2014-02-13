@@ -22,7 +22,7 @@ public class CommandLineTest
         mule.declare(
                 flow("testFlow")
                         .chain(exec("ls"))
-                        .chain(logger().usingMessage("#[payload]"))
+                        .chain(logger().withMessage("#[payload]"))
         );
 
         mule.start();

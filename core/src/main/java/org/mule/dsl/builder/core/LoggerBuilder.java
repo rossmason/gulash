@@ -14,13 +14,13 @@ public class LoggerBuilder implements MessageProcessorBuilder<LoggerMessageProce
     private String message;
     private String level;
 
-    public LoggerBuilder usingMessage(String message)
+    public LoggerBuilder withMessage(String message)
     {
         this.message = message;
         return this;
     }
 
-    public LoggerBuilder usingLevel(String level)
+    public LoggerBuilder as(String level)
     {
         this.level = level;
         return this;

@@ -13,20 +13,17 @@ import java.util.List;
 import java.util.Map;
 
 
-public class FlowBuilderImpl implements FlowBuilder
+public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuilder
 {
 
 
     private MessageSourceBuilder<?> messageSourceBuilder;
-    private List<MessageProcessorBuilder<?>> messageProcessorBuilders = new ArrayList<MessageProcessorBuilder<?>>();
     private String name;
-
 
     FlowBuilderImpl(String name)
     {
         this.name = name;
     }
-
 
     public FlowBuilder from(MessageSourceBuilder<?> messageSourceBuilder)
     {
@@ -36,20 +33,15 @@ public class FlowBuilderImpl implements FlowBuilder
 
     public FlowBuilder chain(MessageProcessorBuilder builder)
     {
-        messageProcessorBuilders.add(builder);
+        getMessageProcessorBuilders().add(builder);
         return this;
     }
 
 
-    public Flow build(MuleContext muleContext) throws  ConfigurationException, IllegalStateException
+    public Flow build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
     {
 
-        final List<MessageProcessor> messageProcessorList = new ArrayList<MessageProcessor>();
-
-        for (MessageProcessorBuilder<?> messageProcessorBuilder : messageProcessorBuilders)
-        {
-            messageProcessorList.add(messageProcessorBuilder.build(muleContext));
-        }
+        final List<MessageProcessor> messageProcessorList = buildPipelineMessageProcessors(muleContext);
 
         final Flow flow = new Flow(name, muleContext);
         if (messageSourceBuilder != null)

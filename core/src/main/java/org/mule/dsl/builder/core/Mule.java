@@ -25,6 +25,7 @@ public class Mule
 
     private List<MuleBuilder<?>> builders = new ArrayList<MuleBuilder<?>>();
     private MuleContext muleContext;
+    private List<StartListener> startListeners = new ArrayList<StartListener>();
 
     public Mule declare(MuleBuilder<? extends MessageProcessor> builder)
     {
@@ -33,7 +34,7 @@ public class Mule
     }
 
 
-    public void start() throws MuleException
+    public Mule start() throws MuleException
     {
 
         muleContext = new DefaultMuleContextFactory().createMuleContext();
@@ -42,6 +43,17 @@ public class Mule
             builder.build(muleContext);
         }
         muleContext.start();
+        for (StartListener startListener : startListeners)
+        {
+            startListener.onStart(this);
+        }
+        return this;
+    }
+
+    public Mule onStart(StartListener listener)
+    {
+        startListeners.add(listener);
+        return this;
     }
 
     public MuleClient client()

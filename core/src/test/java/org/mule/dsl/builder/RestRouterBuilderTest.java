@@ -28,12 +28,13 @@ public class RestRouterBuilderTest
     @Test
     public void simple() throws MuleException
     {
+
         Mule mule = new Mule();
         mule.declare(
                 api("rover.raml")
                         .using(properties("consolePath", "/console", "name", "test"))
                         .when(request("/forward", ActionType.PUT)
-                                      .chain(logger().usingMessage("#[payload]"))
+                                      .chain(logger().withMessage("#[payload]"))
                         )
         );
 
