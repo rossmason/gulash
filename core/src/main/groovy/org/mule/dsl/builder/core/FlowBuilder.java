@@ -14,7 +14,7 @@ public interface FlowBuilder extends MessageProcessorBuilder<Flow>
 
     FlowBuilder chain(MessageProcessorBuilder builder);
 
-    FlowBuilder from(MessageSourceBuilder<?> messageSourceBuilder);
+    FlowBuilder from(MessageSourceBuilder messageSourceBuilder);
 
     @Override
     Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException;

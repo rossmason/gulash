@@ -6,11 +6,7 @@ import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.api.source.MessageSource;
 import org.mule.construct.Flow;
-import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuilder
@@ -25,13 +21,13 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         this.name = name;
     }
 
-    public FlowBuilder from(MessageSourceBuilder<?> messageSourceBuilder)
+    public FlowBuilder from(MessageSourceBuilder messageSourceBuilder)
     {
         this.messageSourceBuilder = messageSourceBuilder;
         return this;
     }
 
-    public FlowBuilder chain(MessageProcessorBuilder builder)
+    public FlowBuilder chain(org.mule.dsl.builder.apikit.MessageProcessorBuilder builder)
     {
         getMessageProcessorBuilders().add(builder);
         return this;
