@@ -4,6 +4,13 @@ import org.mule.api.MuleContext
 import org.mule.api.config.ConfigurationException
 import org.mule.dsl.builder.apikit.MessageProcessorBuilder
 
+/**
+ * Created with IntelliJ IDEA.
+ * User: ivan
+ * Date: 2/13/14
+ * Time: 7:30 PM
+ * To change this template use File | Settings | File Templates.
+ */
 class GroovyBuilder implements MessageProcessorBuilder<GroovyMessageProcessor> {
 
 

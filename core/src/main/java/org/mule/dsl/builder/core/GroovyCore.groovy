@@ -1,15 +1,17 @@
 package org.mule.dsl.builder.core
 
+
 /**
  * Created with IntelliJ IDEA.
  * User: ivan
  * Date: 2/13/14
- * Time: 6:39 PM
+ * Time: 7:08 PM
  * To change this template use File | Settings | File Templates.
  */
-class test {
+class GroovyCore {
 
-    def sum(x,y) {
-        return x + y;
+    public static groovy(closure){
+        return new GroovyBuilder(closure);
     }
+
 }

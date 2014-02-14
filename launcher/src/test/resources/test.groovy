@@ -1,5 +1,4 @@
 import org.mule.api.MuleEvent
-import org.mule.api.annotations.param.Payload
 import org.mule.dsl.builder.core.StartListener
 import org.mule.dsl.builder.core.GroovyCore
 
@@ -13,7 +12,7 @@ mule.declare(
                                 println("function called");
                                 println(payload)
                                 return event
-                            }).withParam("pepe"))
+                            }).withParam("must evaluate #[payload]"))
         );
 
 mule.onStart(

@@ -4,7 +4,13 @@ import org.mule.api.MuleEvent
 import org.mule.api.MuleException
 import org.mule.api.processor.MessageProcessor
 
-
+/**
+ * Created with IntelliJ IDEA.
+ * User: ivan
+ * Date: 2/13/14
+ * Time: 7:31 PM
+ * To change this template use File | Settings | File Templates.
+ */
 class GroovyMessageProcessor implements MessageProcessor {
 
     def Closure closure

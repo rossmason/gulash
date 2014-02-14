@@ -7,6 +7,7 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.api.source.MessageSource;
 import org.mule.construct.Flow;
 
+import java.util.List;
 
 
 public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuilder
