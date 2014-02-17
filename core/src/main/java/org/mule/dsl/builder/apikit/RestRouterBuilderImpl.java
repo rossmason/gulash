@@ -99,7 +99,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
 
     private String getAddress()
     {
-        final String host = getProperty("host", "localhost");
+        final String host = getProperty("host", "0.0.0.0");
         final String port = getProperty("port", "8081");
         final String path = getProperty("path", "api");
         return "http://" + host + ":" + port + "/" + path;
