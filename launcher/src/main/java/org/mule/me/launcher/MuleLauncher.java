@@ -8,7 +8,9 @@ public class MuleLauncher
 
     public static void main(String[] args) throws Exception
     {
-        new GroovyRunner().run(new File(args[0]));
+        File muleHome = new File(".");
+        new GroovyRunner().run(new File(args[0]), muleHome);
+
     }
 
 }

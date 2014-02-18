@@ -8,16 +8,18 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.client.MuleClient;
+import org.mule.api.config.MuleProperties;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.client.DefaultLocalMuleClient;
-import org.mule.config.builders.SimpleConfigurationBuilder;
+import org.mule.config.DefaultMuleConfiguration;
+import org.mule.config.builders.DefaultsConfigurationBuilder;
 import org.mule.construct.Flow;
 import org.mule.context.DefaultMuleContextFactory;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Properties;
 
 
 public class Mule
@@ -26,6 +28,17 @@ public class Mule
     private List<MuleBuilder<?>> builders = new ArrayList<MuleBuilder<?>>();
     private MuleContext muleContext;
     private List<StartListener> startListeners = new ArrayList<StartListener>();
+    private File muleHome;
+
+    public Mule(File muleHome)
+    {
+        this.muleHome = muleHome;
+    }
+
+    public Mule()
+    {
+        this(new File("."));
+    }
 
     public Mule declare(MuleBuilder<? extends MessageProcessor> builder)
     {
@@ -37,7 +50,11 @@ public class Mule
     public Mule start() throws MuleException
     {
 
-        muleContext = new DefaultMuleContextFactory().createMuleContext();
+        System.out.println("Starting mule with mule home at " + muleHome.getAbsolutePath());
+        Properties properties = new Properties();
+        properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, muleHome.getAbsolutePath());
+        muleContext = new DefaultMuleContextFactory().createMuleContext(new DefaultsConfigurationBuilder(), properties, new DefaultMuleConfiguration());
+
         for (MuleBuilder<?> builder : builders)
         {
             builder.build(muleContext);

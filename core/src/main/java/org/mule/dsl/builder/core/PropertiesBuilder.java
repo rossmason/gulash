@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Properties
+public class PropertiesBuilder
 {
 
     public static Map<String, Object> properties(Object... properties)
@@ -12,7 +12,7 @@ public class Properties
         Map<String, Object> result = new HashMap<String, Object>();
         if (properties.length % 2 != 0)
         {
-            throw new IllegalArgumentException("Properties should be key value pair");
+            throw new IllegalArgumentException("PropertiesBuilder should be key value pair");
         }
         for (int i = 0; i < properties.length; i = i + 2)
         {

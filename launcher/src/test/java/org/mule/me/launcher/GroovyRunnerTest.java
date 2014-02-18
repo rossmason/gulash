@@ -16,6 +16,6 @@ public class GroovyRunnerTest
     {
         URL resource = getClass().getClassLoader().getResource("test.groovy");
 
-        new GroovyRunner().run(new File(resource.toURI()));
+        new GroovyRunner().run(new File(resource.toURI()),new File("."));
     }
 }

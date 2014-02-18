@@ -3,7 +3,7 @@ package org.mule.dsl.builder.apikit;
 import static org.mule.dsl.builder.core.Core.invoke;
 import static org.mule.dsl.builder.core.Core.flow;
 import static org.mule.dsl.builder.core.Core.endpoint;
-import static org.mule.dsl.builder.core.Properties.properties;
+import static org.mule.dsl.builder.core.PropertiesBuilder.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.construct.Flow;
