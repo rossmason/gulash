@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import groovy.lang.Closure;
 
@@ -16,7 +16,7 @@ public class GroovyBuilder implements MessageProcessorBuilder<GroovyMessageProce
     private Closure closure;
     private List params;
 
-    GroovyBuilder(Closure closure)
+    public GroovyBuilder(Closure closure)
     {
         this.closure = closure;
         params = new ArrayList();

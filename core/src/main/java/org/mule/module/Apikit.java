@@ -1,7 +1,9 @@
-package org.mule.dsl.builder.apikit;
+package org.mule.module;
 
-import org.mule.dsl.builder.core.Core;
-import org.mule.dsl.builder.core.PrivateFlowBuilder;
+import org.mule.module.Core;
+import org.mule.module.builder.apikit.RestRouterBuilder;
+import org.mule.module.builder.apikit.RestRouterBuilderImpl;
+import org.mule.module.builder.core.PrivateFlowBuilder;
 
 import org.raml.model.ActionType;
 

@@ -10,6 +10,10 @@ public class RoverMotionMessageProcessor extends AbstractRoverMessageProcessor
 
     private Direction direction;
 
+    public RoverMotionMessageProcessor(Direction direction)
+    {
+        this.direction = direction;
+    }
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException

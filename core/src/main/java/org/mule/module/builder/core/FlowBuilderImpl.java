@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
@@ -18,7 +18,7 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
     private MessageSourceBuilder<?> messageSourceBuilder;
     private String name;
 
-    FlowBuilderImpl(String name)
+    public FlowBuilderImpl(String name)
     {
         this.name = name;
     }

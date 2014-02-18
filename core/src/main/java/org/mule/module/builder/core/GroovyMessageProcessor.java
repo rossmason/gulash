@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import groovy.lang.Closure;
 import org.mule.api.MuleEvent;

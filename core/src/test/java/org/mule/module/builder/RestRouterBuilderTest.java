@@ -1,11 +1,11 @@
-package org.mule.dsl.builder;
+package org.mule.module.builder;
 
-import static org.mule.dsl.builder.apikit.Apikit.api;
-import static org.mule.dsl.builder.apikit.Apikit.request;
-import static org.mule.dsl.builder.core.Core.log;
-import static org.mule.dsl.builder.core.PropertiesBuilder.properties;
+import static org.mule.module.Apikit.api;
+import static org.mule.module.Apikit.request;
+import static org.mule.module.Core.log;
+import static org.mule.module.builder.core.PropertiesBuilder.properties;
 import org.mule.api.MuleException;
-import org.mule.dsl.builder.core.Mule;
+import org.mule.module.builder.core.Mule;
 
 import com.jayway.restassured.RestAssured;
 

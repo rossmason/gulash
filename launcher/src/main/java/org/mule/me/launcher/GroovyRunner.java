@@ -2,11 +2,11 @@ package org.mule.me.launcher;
 
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleMessage;
-import org.mule.dsl.builder.apikit.Apikit;
-import org.mule.dsl.builder.core.Core;
-import org.mule.dsl.builder.core.Mule;
-import org.mule.dsl.builder.core.PropertiesBuilder;
-import org.mule.dsl.builder.core.StartListener;
+import org.mule.module.Apikit;
+import org.mule.module.Core;
+import org.mule.module.builder.core.Mule;
+import org.mule.module.builder.core.PropertiesBuilder;
+import org.mule.module.builder.core.StartListener;
 
 import java.io.File;
 

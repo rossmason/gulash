@@ -1,13 +1,13 @@
-package org.mule.dsl.builder.apikit;
+package org.mule.module.builder.apikit;
 
-import static org.mule.dsl.builder.core.Core.invoke;
-import static org.mule.dsl.builder.core.Core.flow;
-import static org.mule.dsl.builder.core.Core.endpoint;
-import static org.mule.dsl.builder.core.PropertiesBuilder.properties;
+import static org.mule.module.Core.invoke;
+import static org.mule.module.Core.flow;
+import static org.mule.module.Core.endpoint;
+import static org.mule.module.builder.core.PropertiesBuilder.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.construct.Flow;
-import org.mule.dsl.builder.core.PrivateFlowBuilder;
+import org.mule.module.builder.core.PrivateFlowBuilder;
 import org.mule.module.apikit.Configuration;
 import org.mule.module.apikit.Router;
 
@@ -29,7 +29,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
     private Map<String, Object> properties;
     private List<PrivateFlowBuilder> resourceActionBuilders = new ArrayList<PrivateFlowBuilder>();
 
-    RestRouterBuilderImpl(String ramlPath)
+   public RestRouterBuilderImpl(String ramlPath)
     {
         this.ramlPath = ramlPath;
 

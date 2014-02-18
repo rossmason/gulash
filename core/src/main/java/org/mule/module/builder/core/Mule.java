@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import org.mule.DefaultMuleEvent;
 import org.mule.DefaultMuleMessage;
@@ -9,7 +9,7 @@ import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.client.MuleClient;
 import org.mule.api.config.MuleProperties;
-import org.mule.api.processor.MessageProcessor;
+import org.mule.api.registry.RegistrationException;
 import org.mule.client.DefaultLocalMuleClient;
 import org.mule.config.DefaultMuleConfiguration;
 import org.mule.config.builders.DefaultsConfigurationBuilder;
@@ -40,7 +40,7 @@ public class Mule
         this(new File("."));
     }
 
-    public Mule declare(MuleBuilder<? extends MessageProcessor> builder)
+    public Mule declare(MuleBuilder<?> builder)
     {
         builders.add(builder);
         return this;
@@ -89,5 +89,10 @@ public class Mule
             return flow.process(defaultMuleEvent);
         }
         throw new DefaultMuleException("Target flow was not found " + name);
+    }
+
+    public <T> T lookup(Class<T> clazz) throws RegistrationException
+    {
+        return muleContext.getRegistry().lookupObject(clazz);
     }
 }

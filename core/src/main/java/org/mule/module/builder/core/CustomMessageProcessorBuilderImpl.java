@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
@@ -17,7 +17,7 @@ public class CustomMessageProcessorBuilderImpl<T extends MessageProcessor> imple
     private Class<? extends MessageProcessor> messageProcessorClazz;
     private Map<String, Object> properties;
 
-    CustomMessageProcessorBuilderImpl(Class<? extends MessageProcessor> messageProcessorClazz)
+    public CustomMessageProcessorBuilderImpl(Class<? extends MessageProcessor> messageProcessorClazz)
     {
         this.messageProcessorClazz = messageProcessorClazz;
         this.properties = new HashMap<String, Object>();

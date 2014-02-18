@@ -1,12 +1,12 @@
 package org.mule.module.raspberrypi;
 
 
-import static org.mule.dsl.builder.core.Core.flow;
-import static org.mule.dsl.builder.core.Core.log;
-import static org.mule.module.raspberrypi.builder.RaspberryPi.exec;
+import static org.mule.module.Core.flow;
+import static org.mule.module.Core.log;
+import static org.mule.module.RaspberryPi.exec;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
-import org.mule.dsl.builder.core.Mule;
+import org.mule.module.builder.core.Mule;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -31,8 +31,9 @@ public class CommandLineTest
         Object payload = muleEvent.getMessage().getPayload();
         Assert.assertThat(payload, CoreMatchers.instanceOf(String.class));
         Assert.assertThat(((String) payload).isEmpty(), CoreMatchers.is(false));
-
-
     }
+
+
+
 
 }

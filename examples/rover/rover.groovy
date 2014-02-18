@@ -1,33 +1,16 @@
-import org.mule.module.raspberrypi.processor.RoverMotionMessageProcessor;
-import org.mule.module.raspberrypi.processor.RoverStatusMessageProcessor;
-import org.mule.dsl.builder.core.PrivateFlowBuilder;
-import org.mule.module.raspberrypi.rover.Direction;
 import org.mule.module.raspberrypi.rover.MockRover;
 import org.mule.module.raspberrypi.rover.Rover;
-import org.raml.model.ActionType;
+import static org.mule.module.raspberrypi.builder.RaspberryPi.*;
 
-     Rover rover = new MockRover();
-    
-            
-        mule.declare(
+
+     
+        mule.declare(global(MockRover.class).as("rover"))                
+        .declare(
                 api("rover.raml")
                         .using(properties("consolePath", "/console", "name", "roverConfig"))
-                        .on(requestFlow(Direction.FORWARD,rover))
-                        .on(requestFlow(Direction.BACKWARDS,rover))
-                        .on(requestFlow(Direction.LEFT,rover))
-                        .on(requestFlow(Direction.RIGHT,rover))
-                        .on(requestFlow(Direction.STOP,rover))
-                        .on(request("/motion/status", ActionType.PUT)
-                                    .then(log("#[payload]"),
-                                        invoke(RoverStatusMessageProcessor.class).using(properties("rover", rover))
-                                        )
-                            )
-        );
-    
-
-   static PrivateFlowBuilder requestFlow(Direction direction, Rover rover)
-    {
-        return request("/motion/" + direction.name().toLowerCase(), ActionType.PUT)
-                .then(log("#[payload]") ,
-                      invoke(RoverMotionMessageProcessor.class).using(properties("rover", rover, "direction", direction)));
-    }
+                        .on(request("/motion/forward" , ActionType.PUT).then(rover().forward()))
+                        .on(request("/motion/backard" , ActionType.PUT).then(rover().backard()))
+                        .on(request("/motion/left" , ActionType.PUT).then(rover().turnLeft()))
+                        .on(request("/motion/right" , ActionType.PUT).then(rover().turnRight()))                        
+                      
+        );      

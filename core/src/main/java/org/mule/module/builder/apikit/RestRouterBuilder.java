@@ -1,9 +1,9 @@
-package org.mule.dsl.builder.apikit;
+package org.mule.module.builder.apikit;
 
 
 import org.mule.construct.Flow;
-import org.mule.dsl.builder.core.MuleBuilder;
-import org.mule.dsl.builder.core.PrivateFlowBuilder;
+import org.mule.module.builder.core.MuleBuilder;
+import org.mule.module.builder.core.PrivateFlowBuilder;
 
 import java.util.Map;
 

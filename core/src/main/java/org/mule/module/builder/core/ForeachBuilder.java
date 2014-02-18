@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.core;
+package org.mule.module.builder.core;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
@@ -17,7 +17,7 @@ public class ForeachBuilder extends AbstractPipelineBuilder implements MessagePr
     private int batchSize = 1;
     private String collectionExpression;
 
-    ForeachBuilder()
+    public ForeachBuilder()
     {
     }
 
