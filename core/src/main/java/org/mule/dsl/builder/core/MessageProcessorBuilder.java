@@ -1,4 +1,4 @@
-package org.mule.dsl.builder.apikit;
+package org.mule.dsl.builder.core;
 
 import org.mule.api.processor.MessageProcessor;
 import org.mule.dsl.builder.core.MuleBuilder;

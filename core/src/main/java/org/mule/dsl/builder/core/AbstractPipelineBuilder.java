@@ -3,7 +3,6 @@ package org.mule.dsl.builder.core;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
-import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

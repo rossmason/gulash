@@ -35,7 +35,7 @@ public class PyRover implements Rover
 
             // create gpio controller
             gpio = GpioFactory.getInstance();
-            // provision gpio pin #01 as an output pin and turn when
+            // provision gpio pin #01 as an output pin and turn on
 
             goLeftEngine = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "GoLeft", PinState.LOW);
             goRightEngine = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "GoRight", PinState.LOW);

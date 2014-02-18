@@ -2,7 +2,7 @@ package org.mule.dsl.builder;
 
 import static org.mule.dsl.builder.apikit.Apikit.api;
 import static org.mule.dsl.builder.apikit.Apikit.request;
-import static org.mule.dsl.builder.core.Core.logger;
+import static org.mule.dsl.builder.core.Core.log;
 import static org.mule.dsl.builder.core.Properties.properties;
 import org.mule.api.MuleException;
 import org.mule.dsl.builder.core.Mule;
@@ -33,8 +33,8 @@ public class RestRouterBuilderTest
         mule.declare(
                 api("rover.raml")
                         .using(properties("consolePath", "/console", "name", "test"))
-                        .when(request("/forward", ActionType.PUT)
-                                      .chain(logger().withMessage("#[payload]"))
+                        .on(request("/forward", ActionType.PUT)
+                                    .then(log("#[payload]"))
                         )
         );
 

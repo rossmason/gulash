@@ -2,7 +2,7 @@ package org.mule.module.raspberrypi.builder;
 
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
-import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
+import org.mule.dsl.builder.core.MessageProcessorBuilder;
 import org.mule.module.raspberrypi.processor.CommandLineMessageProcessor;
 
 import java.util.Arrays;

@@ -19,7 +19,7 @@
           </dependency>
           <dependency>
               <groupId>org.mule.me</groupId>
-              <artifactId>launcher</artifactId>
+              <artifactId>core</artifactId>
               <version>${project.version}</version>
           </dependency>
           <dependency>
@@ -29,6 +29,7 @@
               <scope>test</scope>
           </dependency>
       </dependencies>
+
 
 
     <repositories>

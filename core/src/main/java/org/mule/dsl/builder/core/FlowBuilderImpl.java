@@ -7,6 +7,7 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.api.source.MessageSource;
 import org.mule.construct.Flow;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,15 +23,15 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         this.name = name;
     }
 
-    public FlowBuilder from(MessageSourceBuilder messageSourceBuilder)
+    public PrivateFlowBuilder on(MessageSourceBuilder messageSourceBuilder)
     {
         this.messageSourceBuilder = messageSourceBuilder;
         return this;
     }
 
-    public FlowBuilder chain(org.mule.dsl.builder.apikit.MessageProcessorBuilder builder)
+    public PrivateFlowBuilder then(MessageProcessorBuilder... builder)
     {
-        getMessageProcessorBuilders().add(builder);
+        getMessageProcessorBuilders().addAll(Arrays.<MessageProcessorBuilder<?>>asList(builder));
         return this;
     }
 

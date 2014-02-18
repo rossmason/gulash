@@ -1,13 +1,13 @@
 package org.mule.dsl.builder.apikit;
 
-import static org.mule.dsl.builder.core.Core.custom;
+import static org.mule.dsl.builder.core.Core.invoke;
 import static org.mule.dsl.builder.core.Core.flow;
 import static org.mule.dsl.builder.core.Core.endpoint;
 import static org.mule.dsl.builder.core.Properties.properties;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.construct.Flow;
-import org.mule.dsl.builder.core.FlowBuilder;
+import org.mule.dsl.builder.core.PrivateFlowBuilder;
 import org.mule.module.apikit.Configuration;
 import org.mule.module.apikit.Router;
 
@@ -27,7 +27,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
     private String ramlPath;
 
     private Map<String, Object> properties;
-    private List<FlowBuilder> resourceActionBuilders = new ArrayList<FlowBuilder>();
+    private List<PrivateFlowBuilder> resourceActionBuilders = new ArrayList<PrivateFlowBuilder>();
 
     RestRouterBuilderImpl(String ramlPath)
     {
@@ -42,7 +42,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
         return this;
     }
 
-    public RestRouterBuilder when(FlowBuilder flowBuilder)
+    public RestRouterBuilder on(PrivateFlowBuilder flowBuilder)
     {
         resourceActionBuilders.add(flowBuilder);
         return this;
@@ -64,7 +64,7 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
     public Flow build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
     {
 
-        for (FlowBuilder resourceActionBuilder : resourceActionBuilders)
+        for (PrivateFlowBuilder resourceActionBuilder : resourceActionBuilders)
         {
             resourceActionBuilder.build(muleContext);
         }
@@ -75,9 +75,9 @@ public class RestRouterBuilderImpl implements RestRouterBuilder
             applyProperties(config);
         }
         config.setRaml(ramlPath);
-        final FlowBuilder restRouter = flow("RestRouterFlow")
-                .from(endpoint(address))
-                .chain(custom(Router.class).using(properties("config", config)));
+        final PrivateFlowBuilder restRouter = flow("RestRouterFlow")
+                .on(endpoint(address))
+                .then(invoke(Router.class).using(properties("config", config)));
         return restRouter.build(muleContext);
     }
 

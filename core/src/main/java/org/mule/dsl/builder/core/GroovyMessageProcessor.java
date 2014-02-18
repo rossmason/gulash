@@ -9,8 +9,8 @@ import java.util.List;
 
 class GroovyMessageProcessor implements MessageProcessor {
 
-    Closure closure;
-    List params;
+    private Closure closure;
+    private List params;
 
     public GroovyMessageProcessor(groovy.lang.Closure closure, java.util.List params){
         this.closure = closure;

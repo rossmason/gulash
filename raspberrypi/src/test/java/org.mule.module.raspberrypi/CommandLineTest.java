@@ -2,7 +2,7 @@ package org.mule.module.raspberrypi;
 
 
 import static org.mule.dsl.builder.core.Core.flow;
-import static org.mule.dsl.builder.core.Core.logger;
+import static org.mule.dsl.builder.core.Core.log;
 import static org.mule.module.raspberrypi.builder.RaspberryPi.exec;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
@@ -21,8 +21,8 @@ public class CommandLineTest
         Mule mule = new Mule();
         mule.declare(
                 flow("testFlow")
-                        .chain(exec("ls"))
-                        .chain(logger().withMessage("#[payload]"))
+                        .then(exec("ls"),
+                              log("#[payload]"))
         );
 
         mule.start();

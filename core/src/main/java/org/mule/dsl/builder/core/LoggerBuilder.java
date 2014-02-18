@@ -3,7 +3,6 @@ package org.mule.dsl.builder.core;
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.LoggerMessageProcessor;
-import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -14,10 +13,9 @@ public class LoggerBuilder implements MessageProcessorBuilder<LoggerMessageProce
     private String message;
     private String level;
 
-    public LoggerBuilder withMessage(String message)
+    public LoggerBuilder(String message)
     {
         this.message = message;
-        return this;
     }
 
     public LoggerBuilder as(String level)

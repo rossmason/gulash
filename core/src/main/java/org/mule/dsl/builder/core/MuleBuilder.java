@@ -9,7 +9,7 @@ import org.mule.api.config.ConfigurationException;
 public interface MuleBuilder<T> {
 
     /**
-     * Builds the parameterized type based when builder internal state and the given parameters.
+     * Builds the parameterized type based on builder internal state and the given parameters.
      *
      * @param muleContext the mule context
      * @return an instance of parameterized type

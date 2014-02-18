@@ -7,9 +7,9 @@ import org.mule.api.processor.MessageProcessor;
 public class Core
 {
 
-    public static LoggerBuilder logger()
+    public static LoggerBuilder log(String message)
     {
-        return new LoggerBuilder();
+        return new LoggerBuilder(message);
     }
 
     public static ForeachBuilder foreach()
@@ -29,12 +29,12 @@ public class Core
 
     //Todo add Poll and Choice
 
-    public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> custom(Class<T> clazz)
+    public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> invoke(Class<T> clazz)
     {
         return new CustomMessageProcessorBuilderImpl<T>(clazz);
     }
 
-    public static GroovyBuilder groovy(Closure closure){
+    public static GroovyBuilder call(Closure closure){
         return new GroovyBuilder(closure);
     }
 

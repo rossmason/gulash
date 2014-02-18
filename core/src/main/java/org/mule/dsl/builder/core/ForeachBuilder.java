@@ -4,17 +4,13 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
-import org.mule.dsl.builder.apikit.MessageProcessorBuilder;
 import org.mule.routing.Foreach;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-/**
- * Created by machaval on 2/11/14.
- */
+
 public class ForeachBuilder extends AbstractPipelineBuilder implements MessageProcessorBuilder<Foreach>
 {
 

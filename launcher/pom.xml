@@ -10,6 +10,38 @@
     </parent>
     <artifactId>launcher</artifactId>
 
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <finalName>mule-me</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+
+                    <descriptors>
+
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- this is used for inheritance merges -->
+                        <phase>package</phase>
+                        <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.mule.me</groupId>
@@ -26,6 +58,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+
 
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
