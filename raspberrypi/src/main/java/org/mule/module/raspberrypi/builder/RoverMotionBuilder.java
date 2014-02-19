@@ -15,7 +15,7 @@ public class RoverMotionBuilder implements MessageProcessorBuilder<RoverMotionMe
 
     private Direction direction;
 
-    RoverMotionBuilder()
+    public RoverMotionBuilder()
     {
     }
 
@@ -44,7 +44,7 @@ public class RoverMotionBuilder implements MessageProcessorBuilder<RoverMotionMe
     }
 
     @Override
-    public RoverMotionMessageProcessor build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public RoverMotionMessageProcessor create(MuleContext muleContext)
     {
         return new RoverMotionMessageProcessor(direction);
     }

@@ -13,6 +13,7 @@ import org.mule.api.registry.RegistrationException;
 import org.mule.client.DefaultLocalMuleClient;
 import org.mule.config.DefaultMuleConfiguration;
 import org.mule.config.builders.DefaultsConfigurationBuilder;
+import org.mule.config.dsl.Builder;
 import org.mule.construct.Flow;
 import org.mule.context.DefaultMuleContextFactory;
 
@@ -25,7 +26,7 @@ import java.util.Properties;
 public class Mule
 {
 
-    private List<MuleBuilder<?>> builders = new ArrayList<MuleBuilder<?>>();
+    private List<Builder<?>> builders = new ArrayList<Builder<?>>();
     private MuleContext muleContext;
     private List<StartListener> startListeners = new ArrayList<StartListener>();
     private File muleHome;
@@ -40,7 +41,7 @@ public class Mule
         this(new File("."));
     }
 
-    public Mule declare(MuleBuilder<?> builder)
+    public Mule declare(Builder<?> builder)
     {
         builders.add(builder);
         return this;
@@ -55,9 +56,9 @@ public class Mule
         properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, muleHome.getAbsolutePath());
         muleContext = new DefaultMuleContextFactory().createMuleContext(new DefaultsConfigurationBuilder(), properties, new DefaultMuleConfiguration());
 
-        for (MuleBuilder<?> builder : builders)
+        for (Builder<?> builder : builders)
         {
-            builder.build(muleContext);
+            builder.create(muleContext);
         }
         muleContext.start();
         for (StartListener startListener : startListeners)

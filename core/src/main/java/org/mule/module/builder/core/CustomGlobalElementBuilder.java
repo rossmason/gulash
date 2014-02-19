@@ -28,7 +28,7 @@ public class CustomGlobalElementBuilder<T> implements GlobalElementBuilder<T>
     }
 
     @Override
-    public T build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public T create(MuleContext muleContext)
     {
         try
         {

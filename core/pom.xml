@@ -30,6 +30,7 @@
                     <groupId>org.mule.modules</groupId>
                     <artifactId>mule-module-spring-config</artifactId>
                 </exclusion>
+
                 <exclusion>
                     <groupId>org.mule.modules</groupId>
                     <artifactId>mule-module-json</artifactId>
@@ -37,6 +38,14 @@
                 <exclusion>
                     <groupId>org.mule.transports</groupId>
                     <artifactId>mule-transport-http</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mailapi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mozilla</groupId>
+                    <artifactId>rhino</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -51,6 +60,12 @@
             <groupId>org.mule.transports</groupId>
             <artifactId>mule-transport-http</artifactId>
             <version>${mule.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mule.modules</groupId>
+                    <artifactId>mule-module-spring-config</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -61,6 +76,10 @@
                 <exclusion>
                     <groupId>org.mule.modules</groupId>
                     <artifactId>mule-module-spring-config</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -1,7 +1,6 @@
 package org.mule.module.builder;
 
 import static org.mule.module.Apikit.api;
-import static org.mule.module.Apikit.request;
 import static org.mule.module.Core.log;
 import static org.mule.module.builder.core.PropertiesBuilder.properties;
 import org.mule.api.MuleException;
@@ -32,10 +31,11 @@ public class RestRouterBuilderTest
         Mule mule = new Mule();
         mule.declare(
                 api("rover.raml")
-                        .using(properties("consolePath", "/console", "name", "test"))
-                        .on(request("/forward", ActionType.PUT)
-                                    .then(log("#[payload]"))
+                        .on("/forward", ActionType.PUT)
+                        .then(
+                                log("#[payload]")
                         )
+
         );
 
 

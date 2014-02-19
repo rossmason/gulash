@@ -23,7 +23,7 @@ public class GroovyBuilder implements MessageProcessorBuilder<GroovyMessageProce
     }
 
     @Override
-    public GroovyMessageProcessor build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public GroovyMessageProcessor create(MuleContext muleContext)
     {
         return new GroovyMessageProcessor(this.closure, this.params);
     }

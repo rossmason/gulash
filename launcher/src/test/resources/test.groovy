@@ -1,4 +1,5 @@
 import org.mule.api.MuleEvent
+import org.mule.api.MuleMessage
 
 
 
@@ -9,7 +10,7 @@ mule.declare(
                 .then(log("#[payload]"),
                       call(
                               {
-                                  MuleEvent event, payload ->
+                                  MuleMessage event, payload ->
                                       println("function called");
                                       println(payload)
                                       return event

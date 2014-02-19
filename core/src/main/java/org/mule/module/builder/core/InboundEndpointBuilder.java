@@ -28,7 +28,7 @@ public class InboundEndpointBuilder implements MessageSourceBuilder<InboundEndpo
     }
 
     @Override
-    public InboundEndpoint build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public InboundEndpoint create(MuleContext muleContext)
     {
         final EndpointURIEndpointBuilder endpointURIEndpointBuilder = new EndpointURIEndpointBuilder(url, muleContext);
         try

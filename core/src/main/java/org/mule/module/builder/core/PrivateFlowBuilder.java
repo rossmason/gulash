@@ -13,5 +13,5 @@ public interface PrivateFlowBuilder extends MessageProcessorBuilder<Flow>
     PrivateFlowBuilder then(MessageProcessorBuilder... builder);
 
     @Override
-    Flow build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException;
+    Flow create(MuleContext muleContext);
 }

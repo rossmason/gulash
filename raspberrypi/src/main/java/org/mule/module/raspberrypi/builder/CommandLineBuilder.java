@@ -20,7 +20,7 @@ public class CommandLineBuilder implements MessageProcessorBuilder<CommandLineMe
     private List<String> arguments;
     private String path;
 
-    CommandLineBuilder(String command)
+    public CommandLineBuilder(String command)
     {
         this.command = command;
     }
@@ -38,7 +38,7 @@ public class CommandLineBuilder implements MessageProcessorBuilder<CommandLineMe
     }
 
     @Override
-    public CommandLineMessageProcessor build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public CommandLineMessageProcessor create(MuleContext muleContext)
     {
         CommandLineMessageProcessor commandLineMessageProcessor = new CommandLineMessageProcessor();
         if (!StringUtils.isEmpty(command))

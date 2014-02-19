@@ -15,12 +15,12 @@ public class AbstractPipelineBuilder
 
     private List<MessageProcessorBuilder<?>> messageProcessorBuilders = new ArrayList<MessageProcessorBuilder<?>>();
 
-    protected List<MessageProcessor> buildPipelineMessageProcessors(MuleContext muleContext) throws ConfigurationException
+    protected List<MessageProcessor> buildPipelineMessageProcessors(MuleContext muleContext)
     {
         List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>();
         for (MessageProcessorBuilder<?> messageProcessorBuilder : getMessageProcessorBuilders())
         {
-            messageProcessors.add(messageProcessorBuilder.build(muleContext));
+            messageProcessors.add(messageProcessorBuilder.create(muleContext));
         }
         return messageProcessors;
     }

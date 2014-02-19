@@ -3,8 +3,10 @@ package org.mule.module.builder.core;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.config.ConfigurationException;
+import org.mule.api.exception.MessagingExceptionHandler;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.api.source.MessageSource;
+import org.mule.config.dsl.Builder;
 import org.mule.construct.Flow;
 
 import java.util.Arrays;
@@ -17,6 +19,7 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
 
     private MessageSourceBuilder<?> messageSourceBuilder;
     private String name;
+    private Builder<MessagingExceptionHandler> exceptionBuilder;
 
     public FlowBuilderImpl(String name)
     {
@@ -29,6 +32,13 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         return this;
     }
 
+    @Override
+    public PrivateFlowBuilder onException(Builder<MessagingExceptionHandler> exceptionBuilder)
+    {
+        this.exceptionBuilder = exceptionBuilder;
+        return this;
+    }
+
     public PrivateFlowBuilder then(MessageProcessorBuilder... builder)
     {
         getMessageProcessorBuilders().addAll(Arrays.<MessageProcessorBuilder<?>>asList(builder));
@@ -36,7 +46,7 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
     }
 
 
-    public Flow build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public Flow create(MuleContext muleContext)
     {
 
         final List<MessageProcessor> messageProcessorList = buildPipelineMessageProcessors(muleContext);
@@ -44,10 +54,14 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         final Flow flow = new Flow(name, muleContext);
         if (messageSourceBuilder != null)
         {
-            MessageSource messageSource = messageSourceBuilder.build(muleContext);
+            MessageSource messageSource = messageSourceBuilder.create(muleContext);
             flow.setMessageSource(messageSource);
         }
         flow.setMessageProcessors(messageProcessorList);
+        if (exceptionBuilder != null)
+        {
+            flow.setExceptionListener(exceptionBuilder.create(muleContext));
+        }
         try
         {
             muleContext.getRegistry().registerFlowConstruct(flow);

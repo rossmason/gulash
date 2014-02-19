@@ -6,6 +6,7 @@ import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.routing.Foreach;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +22,10 @@ public class ForeachBuilder extends AbstractPipelineBuilder implements MessagePr
     {
     }
 
+    public ForeachBuilder(String collectionExpression)
+    {
+        this.collectionExpression = collectionExpression;
+    }
 
     public ForeachBuilder usingBatchSize(int batchSize)
     {
@@ -28,21 +33,15 @@ public class ForeachBuilder extends AbstractPipelineBuilder implements MessagePr
         return this;
     }
 
-    public ForeachBuilder usingCollectionExpression(String collectionExpression)
-    {
-        this.collectionExpression = collectionExpression;
-        return this;
-    }
 
-
-    public ForeachBuilder chain(MessageProcessorBuilder builder)
+    public ForeachBuilder then(MessageProcessorBuilder... builders)
     {
-        getMessageProcessorBuilders().add(builder);
+        getMessageProcessorBuilders().addAll(Arrays.<MessageProcessorBuilder<?>>asList(builders));
         return this;
     }
 
     @Override
-    public Foreach build(MuleContext muleContext) throws ConfigurationException, IllegalStateException
+    public Foreach create(MuleContext muleContext)
     {
 
         Foreach foreach = new Foreach();

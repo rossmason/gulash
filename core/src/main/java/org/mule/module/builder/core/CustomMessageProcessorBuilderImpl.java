@@ -35,7 +35,7 @@ public class CustomMessageProcessorBuilderImpl<T extends MessageProcessor> imple
         return this;
     }
 
-    public T build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException
+    public T create(MuleContext muleContext)
     {
 
         MessageProcessor mp = null;

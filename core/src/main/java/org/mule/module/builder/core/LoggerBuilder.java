@@ -26,7 +26,7 @@ public class LoggerBuilder implements MessageProcessorBuilder<LoggerMessageProce
 
 
     @Override
-    public LoggerMessageProcessor build(MuleContext muleContext) throws NullPointerException, ConfigurationException, IllegalStateException
+    public LoggerMessageProcessor create(MuleContext muleContext)
     {
         LoggerMessageProcessor logger = new LoggerMessageProcessor();
         if (!StringUtils.isEmpty(message))

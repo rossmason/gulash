@@ -28,6 +28,11 @@ public class Core
         return new ForeachBuilder();
     }
 
+    public static ForeachBuilder foreach(String collectionExpression)
+    {
+        return new ForeachBuilder(collectionExpression);
+    }
+
     public static FlowBuilder flow(String name)
     {
         return new FlowBuilderImpl(name);

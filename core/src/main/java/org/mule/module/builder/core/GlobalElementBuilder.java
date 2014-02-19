@@ -1,7 +1,9 @@
 package org.mule.module.builder.core;
 
 
-public interface GlobalElementBuilder<T> extends MuleBuilder<T>
+import org.mule.config.dsl.Builder;
+
+public interface GlobalElementBuilder<T> extends Builder<T>
 {
 
     GlobalElementBuilder<T> as(String name);
