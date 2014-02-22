@@ -39,9 +39,9 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         return this;
     }
 
-    public PrivateFlowBuilder then(MessageProcessorBuilder... builder)
+    public PrivateFlowBuilder then(Builder<? extends MessageProcessor>... builder)
     {
-        getMessageProcessorBuilders().addAll(Arrays.<MessageProcessorBuilder<?>>asList(builder));
+        getMessageProcessorBuilders().addAll(Arrays.asList(builder));
         return this;
     }
 

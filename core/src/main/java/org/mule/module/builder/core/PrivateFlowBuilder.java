@@ -2,6 +2,8 @@ package org.mule.module.builder.core;
 
 import org.mule.api.MuleContext;
 import org.mule.api.config.ConfigurationException;
+import org.mule.api.processor.MessageProcessor;
+import org.mule.config.dsl.Builder;
 import org.mule.construct.Flow;
 
 /**
@@ -10,7 +12,7 @@ import org.mule.construct.Flow;
 public interface PrivateFlowBuilder extends MessageProcessorBuilder<Flow>
 {
 
-    PrivateFlowBuilder then(MessageProcessorBuilder... builder);
+    PrivateFlowBuilder then(Builder<? extends MessageProcessor>... builder);
 
     @Override
     Flow create(MuleContext muleContext);

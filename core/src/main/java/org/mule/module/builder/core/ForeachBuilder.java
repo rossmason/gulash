@@ -4,6 +4,7 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.config.ConfigurationException;
 import org.mule.api.processor.MessageProcessor;
+import org.mule.config.dsl.Builder;
 import org.mule.routing.Foreach;
 
 import java.util.Arrays;
@@ -34,9 +35,9 @@ public class ForeachBuilder extends AbstractPipelineBuilder implements MessagePr
     }
 
 
-    public ForeachBuilder then(MessageProcessorBuilder... builders)
+    public ForeachBuilder then(Builder<? extends MessageProcessor>... builders)
     {
-        getMessageProcessorBuilders().addAll(Arrays.<MessageProcessorBuilder<?>>asList(builders));
+        getMessageProcessorBuilders().addAll(Arrays.asList(builders));
         return this;
     }
 
