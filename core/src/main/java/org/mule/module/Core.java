@@ -4,6 +4,7 @@ package org.mule.module;
 import groovy.lang.Closure;
 
 import org.mule.api.processor.MessageProcessor;
+import org.mule.module.builder.core.ChoiceBuilder;
 import org.mule.module.builder.core.CustomGlobalElementBuilder;
 import org.mule.module.builder.core.CustomMessageProcessorBuilder;
 import org.mule.module.builder.core.CustomMessageProcessorBuilderImpl;
@@ -36,6 +37,11 @@ public class Core
     public static FlowBuilder flow(String name)
     {
         return new FlowBuilderImpl(name);
+    }
+
+    public static ChoiceBuilder choice()
+    {
+        return new ChoiceBuilder();
     }
 
     public static <T> GlobalElementBuilder<T> global(Class<T> globalElementClass)
