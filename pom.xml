@@ -18,6 +18,7 @@
         <module>core</module>
         <module>raspberrypi</module>
         <module>launcher</module>
+        <module>devkit-plugin</module>
     </modules>
 
     <repositories>

@@ -15,6 +15,16 @@
             <groupId>org.mule</groupId>
             <artifactId>mule-core</artifactId>
             <version>${mule.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>asm</groupId>
+                    <artifactId>asm</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>asm</groupId>
+                    <artifactId>asm-commons</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

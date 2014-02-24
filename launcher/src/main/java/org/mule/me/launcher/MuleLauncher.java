@@ -11,36 +11,48 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang.ArrayUtils;
 
 public class MuleLauncher
 {
 
     public static final String CREATE_OPTION = "c";
+    public static final String HELP_OPTION = "help";
 
     public static void main(String[] args) throws Exception
     {
 
         final File muleHome = new File(".");
 
-        Options options = createOptions();
+        final Options options = createOptions();
 
         // create the parser
-        CommandLineParser parser = new BasicParser();
+        final CommandLineParser parser = new BasicParser();
         try
         {
             // parse the command line arguments
-            CommandLine line = parser.parse(options, args);
-            if (line.hasOption("help"))
+            final CommandLine line = parser.parse(options, args);
+            if (line.hasOption(HELP_OPTION))
             {
                 printHelp(options);
             }
             else if (line.hasOption(CREATE_OPTION))
             {
-                new ScaffoldGenerator().generateScaffold(new File(line.getOptionValue(CREATE_OPTION)));
+                final ScaffoldGenerator scaffoldGenerator = new ScaffoldGenerator();
+                scaffoldGenerator.generateScaffold(new File(line.getOptionValue(CREATE_OPTION)));
             }
             else
             {
-                new GroovyRunner().run(new File(args[0]), muleHome);
+                String[] argsArray = line.getArgs();
+                if (!ArrayUtils.isEmpty(argsArray))
+                {
+                    final GroovyRunner groovyRunner = new GroovyRunner();
+                    groovyRunner.run(new File(argsArray[argsArray.length - 1]), muleHome);
+                }
+                else
+                {
+                    printHelp(options);
+                }
             }
         }
         catch (ParseException exp)
@@ -55,7 +67,7 @@ public class MuleLauncher
     {
         // automatically generate the help statement
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("mule", options);
+        formatter.printHelp("mule <MuleFile>", options);
     }
 
     private static Options createOptions()
