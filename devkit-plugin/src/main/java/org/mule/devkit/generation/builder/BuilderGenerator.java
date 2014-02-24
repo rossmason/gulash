@@ -65,7 +65,6 @@ public class BuilderGenerator implements ModuleGenerator
         generateBuilder(module, moduleFactoryClass);
 
 
-
         //generateGlobalConfig
 
     }
@@ -96,16 +95,16 @@ public class BuilderGenerator implements ModuleGenerator
 
             if (!isInternalParameter(variable))
             {
-                final org.mule.devkit.model.code.Type parameterType = ref(variable.getJavaType());
-
                 final String defaultValue = variable.getDefaultValue();
                 new FieldBuilder(processorBuilderClass)
                         .name(fieldName)
-                        .type(parameterType)
+                        .type(Object.class)
                         .privateVisibility()
                         .initialValue(defaultValue).build();
-                final GeneratedMethod fieldMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass.elementType(), fieldName);
-                fieldMethod.body().assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
+                //TODO Replace with two methods one for expression and one with the real type
+                final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass.elementType(), fieldName);
+                fieldExpressionMethod.param(Object.class, fieldName);
+                fieldExpressionMethod.body().assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
                 createMethodBlock.invoke(resultVariable, "set" + NameUtils.camel(fieldName)).arg(fieldName);
 
             }
