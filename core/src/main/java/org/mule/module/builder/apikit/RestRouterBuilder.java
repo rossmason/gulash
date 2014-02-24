@@ -4,17 +4,21 @@ import static org.mule.module.Core.endpoint;
 import static org.mule.module.Core.flow;
 import static org.mule.module.Core.invoke;
 import static org.mule.module.builder.core.PropertiesBuilder.properties;
+
 import org.mule.api.MuleContext;
-import org.mule.api.config.ConfigurationException;
+import org.mule.api.exception.MessagingExceptionHandler;
 import org.mule.config.dsl.Builder;
 import org.mule.construct.Flow;
 import org.mule.module.Core;
 import org.mule.module.apikit.Configuration;
+import org.mule.module.apikit.MappingExceptionListener;
+import org.mule.module.apikit.RestMappingExceptionStrategy;
 import org.mule.module.apikit.Router;
 import org.mule.module.builder.core.MessageProcessorBuilder;
 import org.mule.module.builder.core.PrivateFlowBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.raml.model.ActionType;
@@ -92,8 +96,38 @@ public class RestRouterBuilder  implements Builder<Flow>
         config.setRaml(ramlPath);
         final PrivateFlowBuilder restRouter = flow("RestRouterFlow")
                 .on(endpoint(address))
-                .then(invoke(Router.class).using(properties("config", config)));
+                .then(invoke(Router.class).using(properties("config", config)))
+                .onException(getExceptionBuilder());
         return restRouter.create(muleContext);
+    }
+
+    private Builder<MessagingExceptionHandler> getExceptionBuilder()
+    {
+        return new Builder<MessagingExceptionHandler>()
+        {
+            @Override
+            public MessagingExceptionHandler create(MuleContext muleContext)
+            {
+                RestMappingExceptionStrategy es = new RestMappingExceptionStrategy();
+                es.setGlobalName("rest-router-es");
+                List<MappingExceptionListener> exceptionListeners = new ArrayList<MappingExceptionListener>();
+                exceptionListeners.add(createExceptionListener(404, "org.mule.module.apikit.exception.NotFoundException"));
+                exceptionListeners.add(createExceptionListener(405, "org.mule.module.apikit.exception.MethodNotAllowedException"));
+                exceptionListeners.add(createExceptionListener(415, "org.mule.module.apikit.exception.UnsupportedMediaTypeException"));
+                exceptionListeners.add(createExceptionListener(406, "org.mule.module.apikit.exception.NotAcceptableException"));
+                exceptionListeners.add(createExceptionListener(400, "org.mule.module.apikit.exception.BadRequestException"));
+                es.setExceptionListeners(exceptionListeners);
+                return es;
+            }
+
+            private MappingExceptionListener createExceptionListener(int status, String... exception)
+            {
+                MappingExceptionListener mappingExceptionListener = new MappingExceptionListener();
+                mappingExceptionListener.setStatusCode(status);
+                mappingExceptionListener.setExceptions(Arrays.asList(exception));
+                return mappingExceptionListener;
+            }
+        };
     }
 
     private String getAddress()
