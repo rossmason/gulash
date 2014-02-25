@@ -12,13 +12,14 @@
         <mule.version>3.5.0-cascade</mule.version>
         <apikit.version>1.2-SNAPSHOT</apikit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.6</jdk.version>
     </properties>
 
     <modules>
         <module>core</module>
         <module>raspberrypi</module>
         <module>launcher</module>
-        <module>devkit-plugin</module>
+        <module>dsl-devkit-plugin</module>        
     </modules>
 
     <repositories>
@@ -26,6 +27,16 @@
             <name>mule-soft</name>
             <id>mulesoft</id>
             <url>http://repository-master.mulesoft.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>mule-releases</id>
+            <name>mule-releases</name>
+            <url>http://repository-master.mulesoft.org/releases/</url>
+        </repository>
+        <repository>
+            <id>mulesoft-snapshots</id>
+            <name>MuleSoft Snapshot Repository</name>
+            <url>http://repository-master.mulesoft.org/snapshots/</url>
         </repository>
     </repositories>
 

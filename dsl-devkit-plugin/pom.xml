@@ -9,26 +9,32 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>devkit-plugin</artifactId>
+    <artifactId>dsl-devkit-plugin</artifactId>
 
+    <properties>
+        <devkit.version>3.5.0-cascade</devkit.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.mule.tools.devkit</groupId>
             <artifactId>mule-devkit-generation-api</artifactId>
-            <version>3.5.0-cascade</version>
+            <version>${devkit.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mule.tools.devkit</groupId>
             <artifactId>mule-devkit-annotations-model</artifactId>
-            <version>3.5.0-bighorn</version>
+            <version>${devkit.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -43,6 +49,7 @@
             <groupId>qdox</groupId>
             <artifactId>qdox</artifactId>
             <version>1.6.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -68,16 +75,19 @@
             <groupId>org.mule.tools.devkit</groupId>
             <artifactId>mule-devkit-code-model</artifactId>
             <version>3.5.0-bighorn</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-devkit-support</artifactId>
             <version>3.5.0-bighorn</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mule.tools.devkit</groupId>
             <artifactId>mule-devkit-generation-core</artifactId>
             <version>3.5.0-bighorn</version>
+            <scope>provided</scope>
         </dependency>
 
 
