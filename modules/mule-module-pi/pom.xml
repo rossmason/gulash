@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.mule.module</groupId>
+    <artifactId>mule-module-pi</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>mule-module</packaging>
+    <name>Mule Pi Cloud Connector</name>
+
+    <parent>
+        <groupId>org.mule.me.modules</groupId>
+        <artifactId>mule-modules-me-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <junit.version>4.9</junit.version>
+        <mockito.version>1.8.2</mockito.version>
+        <jdk.version>1.6</jdk.version>
+        <category>Community</category>
+        <licensePath>LICENSE.md</licensePath>
+        <devkit.studio.package.skip>false</devkit.studio.package.skip>
+    </properties>
+
+    <scm>
+        <connection>scm:git:git://github.com:mulesoft/mule-module-pi.git</connection>
+        <developerConnection>scm:git:git@github.com:mulesoft/mule-module-pi.git</developerConnection>
+        <url>http://github.com/mulesoft/mule-module-pi</url>
+    </scm>
+
+</project>
