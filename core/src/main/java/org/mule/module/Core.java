@@ -4,6 +4,7 @@ package org.mule.module;
 import groovy.lang.Closure;
 
 import org.mule.api.processor.MessageProcessor;
+import org.mule.config.dsl.Builder;
 import org.mule.module.core.builder.ChoiceBuilder;
 import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilder;
@@ -14,6 +15,8 @@ import org.mule.module.core.builder.ForeachBuilder;
 import org.mule.module.core.builder.GroovyBuilder;
 import org.mule.module.core.builder.InboundEndpointBuilder;
 import org.mule.module.core.builder.LoggerBuilder;
+import org.mule.module.core.builder.PollBuilder;
+import org.mule.module.core.builder.SetPayloadBuilder;
 
 public class Core
 {
@@ -38,6 +41,16 @@ public class Core
         return new FlowBuilderImpl(name);
     }
 
+    public static SetPayloadBuilder setPayload(String expression)
+    {
+        return new SetPayloadBuilder(expression);
+    }
+
+    public static PollBuilder poll(Builder<MessageProcessor> pollOver)
+    {
+        return new PollBuilder(pollOver);
+    }
+
     public static ChoiceBuilder choice()
     {
         return new ChoiceBuilder();
@@ -52,8 +65,6 @@ public class Core
     {
         return new InboundEndpointBuilder(address);
     }
-
-    //Todo add Poll and Choice
 
     public static <T extends MessageProcessor> CustomMessageProcessorBuilder<T> invoke(Class<T> clazz)
     {

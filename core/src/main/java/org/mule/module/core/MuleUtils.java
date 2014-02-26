@@ -6,7 +6,7 @@ package org.mule.module.core;
 public class MuleUtils
 {
 
-    private static String logo = "              .;':.                  \n" +
+    private static String logo = "                  .;':.                  \n" +
                                  "               ,+++++++++,               \n" +
                                  "             `+++++++++++++.             \n" +
                                  "            ,+++++++++++++#+,            \n" +
