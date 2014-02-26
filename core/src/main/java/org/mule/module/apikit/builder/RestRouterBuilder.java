@@ -1,9 +1,9 @@
-package org.mule.module.builder.apikit;
+package org.mule.module.apikit.builder;
 
 import static org.mule.module.Core.endpoint;
 import static org.mule.module.Core.flow;
 import static org.mule.module.Core.invoke;
-import static org.mule.module.builder.core.PropertiesBuilder.properties;
+import static org.mule.module.core.builder.PropertiesBuilder.properties;
 
 import org.mule.api.MuleContext;
 import org.mule.api.exception.MessagingExceptionHandler;
@@ -14,8 +14,8 @@ import org.mule.module.apikit.Configuration;
 import org.mule.module.apikit.MappingExceptionListener;
 import org.mule.module.apikit.RestMappingExceptionStrategy;
 import org.mule.module.apikit.Router;
-import org.mule.module.builder.core.MessageProcessorBuilder;
-import org.mule.module.builder.core.PrivateFlowBuilder;
+import org.mule.module.core.builder.MessageProcessorBuilder;
+import org.mule.module.core.builder.PrivateFlowBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -4,17 +4,16 @@ package org.mule.module;
 import groovy.lang.Closure;
 
 import org.mule.api.processor.MessageProcessor;
-import org.mule.module.builder.core.ChoiceBuilder;
-import org.mule.module.builder.core.CustomGlobalElementBuilder;
-import org.mule.module.builder.core.CustomMessageProcessorBuilder;
-import org.mule.module.builder.core.CustomMessageProcessorBuilderImpl;
-import org.mule.module.builder.core.FlowBuilder;
-import org.mule.module.builder.core.FlowBuilderImpl;
-import org.mule.module.builder.core.ForeachBuilder;
-import org.mule.module.builder.core.GlobalElementBuilder;
-import org.mule.module.builder.core.GroovyBuilder;
-import org.mule.module.builder.core.InboundEndpointBuilder;
-import org.mule.module.builder.core.LoggerBuilder;
+import org.mule.module.core.builder.ChoiceBuilder;
+import org.mule.module.core.builder.JavaBeanElementBuilder;
+import org.mule.module.core.builder.CustomMessageProcessorBuilder;
+import org.mule.module.core.builder.CustomMessageProcessorBuilderImpl;
+import org.mule.module.core.builder.FlowBuilder;
+import org.mule.module.core.builder.FlowBuilderImpl;
+import org.mule.module.core.builder.ForeachBuilder;
+import org.mule.module.core.builder.GroovyBuilder;
+import org.mule.module.core.builder.InboundEndpointBuilder;
+import org.mule.module.core.builder.LoggerBuilder;
 
 public class Core
 {
@@ -44,9 +43,9 @@ public class Core
         return new ChoiceBuilder();
     }
 
-    public static <T> GlobalElementBuilder<T> global(Class<T> globalElementClass)
+    public static <T> JavaBeanElementBuilder<T> bean(Class<T> globalElementClass)
     {
-        return new CustomGlobalElementBuilder<T>(globalElementClass);
+        return new JavaBeanElementBuilder<T>(globalElementClass);
     }
 
     public static InboundEndpointBuilder endpoint(String address)

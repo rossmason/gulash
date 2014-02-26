@@ -2,7 +2,7 @@ package org.mule.module.raspberrypi;
 
 import org.mule.api.MuleException;
 import org.mule.module.Core;
-import org.mule.module.builder.core.Mule;
+import org.mule.module.core.Mule;
 import org.mule.module.RaspberryPi;
 import org.mule.module.raspberrypi.rover.Direction;
 import org.mule.module.raspberrypi.rover.MockRover;
@@ -19,7 +19,7 @@ public class RoverTest
     public void testRover() throws MuleException
     {
         Mule mule = new Mule();
-        mule.declare(Core.global(MockRover.class).as("TestRover"));
+        mule.declare(Core.bean(MockRover.class).as("TestRover"));
         mule.declare(Core.flow("test").then(RaspberryPi.rover().backward()));
         mule.start();
         mule.callFlow("test","test");

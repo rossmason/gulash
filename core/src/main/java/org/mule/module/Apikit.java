@@ -1,6 +1,6 @@
 package org.mule.module;
 
-import org.mule.module.builder.apikit.RestRouterBuilder;
+import org.mule.module.apikit.builder.RestRouterBuilder;
 
 
 public class Apikit

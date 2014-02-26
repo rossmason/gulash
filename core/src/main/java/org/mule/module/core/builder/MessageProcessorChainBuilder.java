@@ -1,10 +1,11 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.builder;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.api.processor.MessageProcessorChain;
 import org.mule.config.dsl.Builder;
+import org.mule.module.core.BuilderConfigurationException;
 import org.mule.processor.chain.DefaultMessageProcessorChainBuilder;
 
 import java.util.Arrays;

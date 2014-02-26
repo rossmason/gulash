@@ -4,9 +4,9 @@ import org.mule.api.MuleEvent;
 import org.mule.api.MuleMessage;
 import org.mule.module.Apikit;
 import org.mule.module.Core;
-import org.mule.module.builder.core.Mule;
-import org.mule.module.builder.core.PropertiesBuilder;
-import org.mule.module.builder.core.StartListener;
+import org.mule.module.core.Mule;
+import org.mule.module.core.builder.PropertiesBuilder;
+import org.mule.module.core.StartListener;
 import org.mule.util.FileUtils;
 
 import java.io.File;

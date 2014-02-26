@@ -4,13 +4,11 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mule.module.Apikit.api;
 import static org.mule.module.Core.log;
-import static org.mule.module.builder.core.PropertiesBuilder.properties;
 import org.mule.api.MuleException;
-import org.mule.module.builder.core.Mule;
+import org.mule.module.core.Mule;
 
 import com.jayway.restassured.RestAssured;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.raml.model.ActionType;

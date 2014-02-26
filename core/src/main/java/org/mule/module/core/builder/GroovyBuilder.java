@@ -1,9 +1,9 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.builder;
 
 import groovy.lang.Closure;
 
 import org.mule.api.MuleContext;
-import org.mule.api.config.ConfigurationException;
+import org.mule.module.core.GroovyMessageProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class GroovyBuilder implements MessageProcessorBuilder<GroovyMessageProce
         return new GroovyMessageProcessor(this.closure, this.params);
     }
 
-    public GroovyBuilder withParam(Object param)
+    public GroovyBuilder argument(Object param)
     {
         params.add(param);
         return this;

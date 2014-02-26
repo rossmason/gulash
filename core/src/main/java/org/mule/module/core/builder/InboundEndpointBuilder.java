@@ -1,9 +1,8 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.builder;
 
 import org.mule.MessageExchangePattern;
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
-import org.mule.api.config.ConfigurationException;
 import org.mule.api.endpoint.EndpointException;
 import org.mule.api.endpoint.InboundEndpoint;
 import org.mule.api.lifecycle.InitialisationException;

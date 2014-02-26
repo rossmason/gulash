@@ -1,4 +1,4 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.builder;
 
 
 public interface FlowBuilder extends PrivateFlowBuilder

@@ -1,6 +1,7 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.processor;
 
 import groovy.lang.Closure;
+
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.MuleMessage;
@@ -8,30 +9,37 @@ import org.mule.api.processor.MessageProcessor;
 
 import java.util.List;
 
-class GroovyMessageProcessor implements MessageProcessor {
+public class GroovyMessageProcessor implements MessageProcessor
+{
 
     private Closure closure;
     private List params;
 
-    public GroovyMessageProcessor(groovy.lang.Closure closure, java.util.List params){
+    public GroovyMessageProcessor(groovy.lang.Closure closure, java.util.List params)
+    {
         this.closure = closure;
         this.params = params;
     }
 
     @Override
-    public MuleEvent process(MuleEvent event) throws MuleException {
+    public MuleEvent process(MuleEvent event) throws MuleException
+    {
 
         if (closure.getParameterTypes().length >= 1
-                && closure.getParameterTypes()[0].isAssignableFrom(MuleMessage.class)){
+            && closure.getParameterTypes()[0].isAssignableFrom(MuleMessage.class))
+        {
             Object[] eventParam = {event.getMessage()};
             closure = closure.curry(eventParam);
         }
 
         //here should be evaluate and transform code for params
-        if (params.size() > 0) {
+        if (params.size() > 0)
+        {
             closure = closure.curry(params.toArray());
             event.getMessage().setPayload(closure.call());
-        } else {
+        }
+        else
+        {
             event.getMessage().setPayload(closure.call());
         }
 

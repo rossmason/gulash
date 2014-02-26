@@ -3,7 +3,7 @@ package org.mule.module.builder;
 import static org.mule.module.Core.*;
 
 import org.mule.api.MuleException;
-import org.mule.module.builder.core.Mule;
+import org.mule.module.core.Mule;
 
 
 import org.junit.Test;

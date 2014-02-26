@@ -1,4 +1,4 @@
-package org.mule.module.builder.core;
+package org.mule.module.core;
 
 import org.mule.DefaultMuleEvent;
 import org.mule.DefaultMuleMessage;

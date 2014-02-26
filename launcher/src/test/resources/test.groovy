@@ -15,7 +15,7 @@ mule.declare(
                                       println(payload)
                                       return event
                               }
-                      ).withParam("must evaluate #[payload]")
+                      ).argument("must evaluate #[payload]")
         )
 );
 

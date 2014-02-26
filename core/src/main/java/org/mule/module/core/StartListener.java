@@ -1,4 +1,4 @@
-package org.mule.module.builder.core;
+package org.mule.module.core;
 
 /**
  * Created by machaval on 2/11/14.

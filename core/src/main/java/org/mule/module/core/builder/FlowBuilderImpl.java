@@ -1,8 +1,7 @@
-package org.mule.module.builder.core;
+package org.mule.module.core.builder;
 
 import org.mule.api.MuleContext;
 import org.mule.api.MuleException;
-import org.mule.api.config.ConfigurationException;
 import org.mule.api.exception.MessagingExceptionHandler;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.api.source.MessageSource;

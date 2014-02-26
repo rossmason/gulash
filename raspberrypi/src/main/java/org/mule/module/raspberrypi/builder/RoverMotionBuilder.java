@@ -1,8 +1,7 @@
 package org.mule.module.raspberrypi.builder;
 
 import org.mule.api.MuleContext;
-import org.mule.api.config.ConfigurationException;
-import org.mule.module.builder.core.MessageProcessorBuilder;
+import org.mule.module.core.builder.MessageProcessorBuilder;
 import org.mule.module.raspberrypi.processor.RoverMotionMessageProcessor;
 import org.mule.module.raspberrypi.rover.Direction;
 

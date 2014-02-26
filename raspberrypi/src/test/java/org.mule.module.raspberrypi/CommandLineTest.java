@@ -6,7 +6,7 @@ import static org.mule.module.Core.log;
 import static org.mule.module.RaspberryPi.exec;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
-import org.mule.module.builder.core.Mule;
+import org.mule.module.core.Mule;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
