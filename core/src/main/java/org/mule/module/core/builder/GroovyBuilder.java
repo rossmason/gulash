@@ -3,7 +3,7 @@ package org.mule.module.core.builder;
 import groovy.lang.Closure;
 
 import org.mule.api.MuleContext;
-import org.mule.module.core.GroovyMessageProcessor;
+import org.mule.module.core.processor.GroovyMessageProcessor;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,6 +5,7 @@ import org.mule.api.MuleMessage;
 import org.mule.module.Apikit;
 import org.mule.module.Core;
 import org.mule.module.core.Mule;
+import org.mule.module.core.MuleUtils;
 import org.mule.module.core.builder.PropertiesBuilder;
 import org.mule.module.core.StartListener;
 import org.mule.util.FileUtils;
@@ -28,6 +29,8 @@ public class GroovyRunner
 
     public void run(File groovyFile, File muleHome) throws Exception
     {
+        MuleUtils.printMuleLogo();
+        long start = System.currentTimeMillis();
         final CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         final ImportCustomizer importCustomizer = new ImportCustomizer();
         importCustomizer.addStaticStars(Core.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName());
@@ -59,6 +62,7 @@ public class GroovyRunner
         final GroovyShell shell = new GroovyShell(executionClassLoader, binding, compilerConfiguration);
         shell.evaluate(groovyFile);
         mule.start();
+        System.out.println("Start time is " + (System.currentTimeMillis() - start));
     }
 
 }
