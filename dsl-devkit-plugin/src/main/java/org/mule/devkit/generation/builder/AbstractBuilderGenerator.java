@@ -82,13 +82,17 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
     }
 
 
-    protected void createBuilder(GeneratedClass moduleFactoryClass, Method<Type> processorMethod, org.mule.devkit.model.code.Type messageProcessorClass, GeneratedClass processorBuilderClass)
+    protected void createBuilder(GeneratedClass moduleFactoryClass, Method<Type> processorMethod, org.mule.devkit.model.code.Type buildedObjectType, GeneratedClass builderClass)
     {
-        final GeneratedMethod createMethod = processorBuilderClass.method(Modifier.PUBLIC, messageProcessorClass, CREATE_METHOD_NAME);
+        final GeneratedMethod createMethod = builderClass.method(Modifier.PUBLIC, buildedObjectType, CREATE_METHOD_NAME);
         createMethod.param(MuleContext.class, CONTEXT_ARG_NAME);
         final GeneratedBlock createMethodBlock = createMethod.body();
-        final GeneratedVariable resultVariable = createMethodBlock.decl(messageProcessorClass, RESULT_VARIABLE_NAME);
-        createMethodBlock.assign(resultVariable, ExpressionFactory._new(messageProcessorClass).arg(processorMethod.getName()));
+        final GeneratedVariable resultVariable = createMethodBlock.decl(buildedObjectType, RESULT_VARIABLE_NAME);
+        createMethodBlock.assign(resultVariable, ExpressionFactory._new(buildedObjectType).arg(processorMethod.getName()));
+        GeneratedMethod constructor = builderClass.constructor(Modifier.PUBLIC);
+        String name = processorMethod.getName();
+        GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, builderClass, name);
+        GeneratedInvocation newBuilderExpression = ExpressionFactory._new(builderClass);
 
         for (Parameter<Method<Type>> variable : processorMethod.getParameters())
         {
@@ -96,20 +100,32 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
 
             if (!isInternalParameter(variable))
             {
-                final String defaultValue = variable.getDefaultValue();
-                addField(fieldName, Object.class, processorBuilderClass, defaultValue);
-                createMethodBlock.invoke(resultVariable, "set" + StringUtils.capitalize(fieldName)).arg(ExpressionFactory.ref(fieldName));
-
+                if (variable.isOptional())
+                {
+                    final String defaultValue = variable.getDefaultValue();
+                    addField(fieldName, Object.class, builderClass, defaultValue);
+                    createMethodBlock.invoke(resultVariable, "set" + StringUtils.capitalize(fieldName)).arg(ExpressionFactory.ref(fieldName));
+                }
+                else
+                {
+                    new FieldBuilder(builderClass).name(fieldName).type(Object.class).privateVisibility().build();
+                    constructor.param(Object.class, fieldName);
+                    constructor.body().assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
+                    //Declare parameter in the static factory method
+                    processorFactoryMethod.param(Object.class, fieldName);
+                    //use it in the constructor
+                    newBuilderExpression.arg(ExpressionFactory.ref(fieldName));
+                }
             }
         }
 
 
-        new FieldBuilder(processorBuilderClass)
+        new FieldBuilder(builderClass)
                 .name(CONFIG_REF_VARIABLE_NAME)
                 .type(String.class)
                 .privateVisibility().build();
 
-        final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, "with");
+        final GeneratedMethod fieldExpressionMethod = builderClass.method(Modifier.PUBLIC, builderClass, "with");
         fieldExpressionMethod.param(String.class, CONFIG_REF_VARIABLE_NAME);
         GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(CONFIG_REF_VARIABLE_NAME), ExpressionFactory.ref(CONFIG_REF_VARIABLE_NAME));
@@ -122,9 +138,9 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         createMethodBlock.invoke(resultVariable, "setModuleObject").arg(lookupObject);
 
         createMethodBlock._return(resultVariable);
-        String name = processorMethod.getName();
-        GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, processorBuilderClass, name);
-        processorFactoryMethod.body()._return(ExpressionFactory._new(processorBuilderClass));
+
+
+        processorFactoryMethod.body()._return(newBuilderExpression);
     }
 
     protected void addField(String fieldName, Class<?> type, GeneratedClass processorBuilderClass, String defaultValue)

@@ -20,7 +20,7 @@
         <junit.version>4.10</junit.version>
         <mockito.version>1.8.5</mockito.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.7</jdk.version>
         <connector.test.version>2.0.3</connector.test.version>
     </properties>
 
@@ -88,29 +88,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <configuration>
-                            <compilerArgument>-proc:none</compilerArgument>
-                            <source>${jdk.version}</source>
-                            <target>${jdk.version}</target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <configuration>
-                            <compilerArgument>-proc:none</compilerArgument>
-                            <source>${jdk.version}</source>
-                            <target>${jdk.version}</target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.mule.tools.devkit</groupId>
                 <artifactId>mule-devkit-maven-plugin</artifactId>

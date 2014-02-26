@@ -14,14 +14,15 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <properties>
-        <junit.version>4.9</junit.version>
-        <mockito.version>1.8.2</mockito.version>
-        <jdk.version>1.6</jdk.version>
-        <category>Community</category>
-        <licensePath>LICENSE.md</licensePath>
-        <devkit.studio.package.skip>false</devkit.studio.package.skip>
-    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+            <version>0.0.5</version>
+        </dependency>
+    </dependencies>
+
 
     <scm>
         <connection>scm:git:git://github.com:mulesoft/mule-module-pi.git</connection>
