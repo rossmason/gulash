@@ -1,4 +1,4 @@
-GUle
+Gule
 ==========
 ![Gule](https://raw.github.com/machaval/mule-light/master/logo.png)
 Groovy + Mule    = GUle 
