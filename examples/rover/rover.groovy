@@ -4,7 +4,7 @@ import static org.mule.module.RaspberryPi.*;
 
 
 
-        mule.declare(global(MockRover.class).as("rover"))                
+        mule.declare(bean(MockRover.class).as("rover"))
         .declare(
                 api("rover.raml")
                         .on("/motion/forward" , ActionType.PUT).then(rover().forward(),
