@@ -10,7 +10,7 @@
 
     <parent>
         <groupId>org.mule.me.modules</groupId>
-        <artifactId>mule-modules-me-parent</artifactId>
+        <artifactId>mule-devkitmodules-me-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 

@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>org.mule.me</groupId>
-    <artifactId>mule-me-modules-parent</artifactId>
+    <artifactId>mule-modules-me-parent</artifactId>
 
     <modules>
         <module>runtime</module>
