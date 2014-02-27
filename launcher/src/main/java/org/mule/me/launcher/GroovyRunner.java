@@ -5,10 +5,9 @@ import org.mule.api.MuleMessage;
 import org.mule.module.Apikit;
 import org.mule.module.Core;
 import org.mule.module.core.Mule;
-import org.mule.module.core.MuleUtils;
+import org.mule.module.core.StartListener;
 import org.mule.module.core.TimePeriod;
 import org.mule.module.core.builder.PropertiesBuilder;
-import org.mule.module.core.StartListener;
 import org.mule.util.FileUtils;
 
 import java.io.File;
@@ -17,7 +16,6 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -31,7 +29,7 @@ public class GroovyRunner
 
     public void run(File groovyFile, File muleHome) throws Exception
     {
-        MuleUtils.printMuleLogo();
+        //MuleUtils.printMuleLogo();
         long start = System.currentTimeMillis();
         final CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         final ImportCustomizer importCustomizer = new ImportCustomizer();
@@ -64,7 +62,7 @@ public class GroovyRunner
         final GroovyShell shell = new GroovyShell(executionClassLoader, binding, compilerConfiguration);
         shell.evaluate(groovyFile);
         mule.start();
-        System.out.println("Start time is " + (System.currentTimeMillis() - start));
+        System.out.println("Starting time was " + (System.currentTimeMillis() - start) + "ms");
     }
 
 }
