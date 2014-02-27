@@ -1,4 +1,4 @@
-Mule Light
+Mule ME
 ==========
 
 The goal of this project is to create a small java/groovy dsl on top of mule
