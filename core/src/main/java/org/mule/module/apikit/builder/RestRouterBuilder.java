@@ -24,7 +24,7 @@ import java.util.List;
 import org.raml.model.ActionType;
 
 
-public class RestRouterBuilder  implements Builder<Flow>
+public class RestRouterBuilder implements Builder<Flow>
 {
 
 
@@ -37,11 +37,10 @@ public class RestRouterBuilder  implements Builder<Flow>
     public RestRouterBuilder(String ramlPath)
     {
         this.ramlPath = ramlPath;
-
     }
 
 
-    public RestRouterBuilder usingBaseUri(String baseUri)
+    public RestRouterBuilder baseUri(String baseUri)
     {
         this.baseUri = baseUri;
         return this;
@@ -59,7 +58,8 @@ public class RestRouterBuilder  implements Builder<Flow>
         return this;
     }
 
-    public RestRouterBuilder usingConsolePath(String consolePath){
+    public RestRouterBuilder consolePath(String consolePath)
+    {
         this.consolePath = consolePath;
         return this;
     }

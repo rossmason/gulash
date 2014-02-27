@@ -62,13 +62,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mule.me</groupId>
-            <artifactId>raspberrypi</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.9</version>

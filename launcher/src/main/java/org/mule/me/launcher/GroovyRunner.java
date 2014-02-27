@@ -6,6 +6,7 @@ import org.mule.module.Apikit;
 import org.mule.module.Core;
 import org.mule.module.core.Mule;
 import org.mule.module.core.MuleUtils;
+import org.mule.module.core.TimePeriod;
 import org.mule.module.core.builder.PropertiesBuilder;
 import org.mule.module.core.StartListener;
 import org.mule.util.FileUtils;
@@ -16,6 +17,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -33,7 +35,7 @@ public class GroovyRunner
         long start = System.currentTimeMillis();
         final CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         final ImportCustomizer importCustomizer = new ImportCustomizer();
-        importCustomizer.addStaticStars(Core.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName());
+        importCustomizer.addStaticStars(Core.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName(), TimePeriod.class.getName());
         importCustomizer.addImports(StartListener.class.getName());
         importCustomizer.addImports(MuleEvent.class.getName());
         importCustomizer.addImports(MuleMessage.class.getName());

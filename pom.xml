@@ -17,9 +17,10 @@
 
     <modules>
         <module>core</module>
-        <module>raspberrypi</module>
         <module>launcher</module>
-        <module>dsl-devkit-plugin</module>        
+        <module>dsl-devkit-plugin</module> 
+        <module>devkit-modules</module>
+        <module>modules</module>
     </modules>
 
     <repositories>

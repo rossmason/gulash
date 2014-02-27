@@ -1,9 +1,0 @@
-<!-- BEGIN_INCLUDE(gpio:pinOn) -->
-    <gpio:pin-on pin="#[map-payload:content]" />
-<!-- END_INCLUDE(gpio:pinOn) -->
-<!-- BEGIN_INCLUDE(gpio:pinOff) -->
-    <gpio:pin-off pin="#[map-payload:content]" />
-<!-- END_INCLUDE(gpio:pinOff) -->
-<!-- BEGIN_INCLUDE(gpio:listenPin) -->
-    <gpio:listen-pin pin="#[map-payload:content]" />
-<!-- END_INCLUDE(gpio:listenPin) -->
