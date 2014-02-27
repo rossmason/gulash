@@ -2,7 +2,7 @@ Mule ME
 ==========
 
 The goal of this project is to create a small java/groovy dsl on top of mule
-esb.
+esb. And that it should be very easy to contribute and extend.
 
 Java Example
 
@@ -37,7 +37,7 @@ Features
 --------
 
 * Supports some mule core element
- * Foreach/Choice
+ * Foreach/Choice/Flow/Exception Strategy
  * Logger/Set Payload
  * Poll
 * Supports APIKit
