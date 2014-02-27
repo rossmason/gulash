@@ -1,7 +1,7 @@
 Gule
 ==========
 ![Gule](https://raw.github.com/machaval/mule-light/master/logo.png)
-Groovy + Mule    = GUle 
+Groovy + Mule    = Gule 
 The goal of this project is to create a small java/groovy dsl on top of mule
 esb. And that it should be very easy to contribute and extend.
 
