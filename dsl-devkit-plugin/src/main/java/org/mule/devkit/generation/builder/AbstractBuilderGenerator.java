@@ -24,7 +24,6 @@ import org.mule.devkit.model.code.Modifier;
 import org.mule.devkit.model.code.TypeReference;
 import org.mule.devkit.model.code.builders.FieldBuilder;
 import org.mule.devkit.model.module.Module;
-import org.mule.devkit.model.module.ProcessorMethod;
 
 import java.util.Arrays;
 import java.util.List;
@@ -104,7 +103,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
                 if (variable.isOptional())
                 {
                     final String defaultValue = variable.getDefaultValue();
-                    addField(fieldName, Object.class, builderClass, defaultValue);
+                    addObjectField(fieldName, ref(variable.asTypeMirror()), builderClass, defaultValue);
                     createMethodBlock.invoke(resultVariable, "set" + StringUtils.capitalize(fieldName)).arg(ExpressionFactory.ref(fieldName));
                 }
                 else
@@ -144,13 +143,14 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         processorFactoryMethod.body()._return(newBuilderExpression);
     }
 
-    protected void addField(String fieldName, Class<?> type, GeneratedClass processorBuilderClass, String defaultValue)
+    protected void addObjectField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
     {
+        GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(type, defaultValue);
         new FieldBuilder(processorBuilderClass)
                 .name(fieldName)
-                .type(type)
+                .type(Object.class)
                 .privateVisibility()
-                .initialValue(defaultValue).build();
+                .initialValue(defaultValueGeneratedExpression).build();
         //TODO Replace with two methods one for expression and one with the real type
         final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, fieldName);
         fieldExpressionMethod.param(type, fieldName);
@@ -162,16 +162,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
     protected void addField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
     {
 
-        GeneratedExpression defaultValueGeneratedExpression = null;
-        if (!StringUtils.isEmpty(defaultValue))
-        {
-            String defaultValueExpression = defaultValue;
-            if (type.fullName().equals(String.class.getName()))
-            {
-                defaultValueExpression = "\"" + defaultValue + "\"";
-            }
-            defaultValueGeneratedExpression = ExpressionFactory.direct(defaultValueExpression);
-        }
+        GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(type, defaultValue);
         new FieldBuilder(processorBuilderClass)
                 .name(fieldName)
                 .type(type)
@@ -183,6 +174,21 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
         fieldMethodBody._return(ExpressionFactory._this());
+    }
+
+    private GeneratedExpression getDefaultValueExpression(org.mule.devkit.model.code.Type type, String defaultValue)
+    {
+        GeneratedExpression defaultValueGeneratedExpression = null;
+        if (!StringUtils.isEmpty(defaultValue))
+        {
+            String defaultValueExpression = defaultValue;
+            if (type.fullName().equals(String.class.getName()))
+            {
+                defaultValueExpression = "\"" + defaultValue + "\"";
+            }
+            defaultValueGeneratedExpression = ExpressionFactory.direct(defaultValueExpression);
+        }
+        return defaultValueGeneratedExpression;
     }
 
     private boolean isInternalParameter(Parameter variable)

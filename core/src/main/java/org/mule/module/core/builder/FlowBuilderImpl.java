@@ -16,7 +16,7 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
 {
 
 
-    private MessageSourceBuilder<?> messageSourceBuilder;
+    private Builder<? extends MessageSource> messageSourceBuilder;
     private String name;
     private Builder<MessagingExceptionHandler> exceptionBuilder;
 
@@ -25,7 +25,7 @@ public class FlowBuilderImpl extends AbstractPipelineBuilder implements FlowBuil
         this.name = name;
     }
 
-    public PrivateFlowBuilder on(MessageSourceBuilder messageSourceBuilder)
+    public PrivateFlowBuilder on(Builder<? extends MessageSource> messageSourceBuilder)
     {
         this.messageSourceBuilder = messageSourceBuilder;
         return this;

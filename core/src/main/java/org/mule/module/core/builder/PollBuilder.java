@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by machaval on 2/26/14.
  */
-public class PollBuilder implements MessageSourceBuilder<InboundEndpoint>
+public class PollBuilder implements Builder<InboundEndpoint>
 {
 
     private Builder<MessageProcessor> messageProcessorBuilder;

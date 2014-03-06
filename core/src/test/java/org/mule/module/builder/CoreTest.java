@@ -3,6 +3,7 @@ package org.mule.module.builder;
 import static org.mule.module.Core.*;
 
 import org.mule.api.MuleException;
+import org.mule.module.Core;
 import org.mule.module.core.Mule;
 
 
@@ -26,6 +27,14 @@ public class CoreTest
                 )
         );
         mule.start();
+
+
+
+
+        Mule mule2 = new Mule();
+        mule2.declare(Core.flow("shoki")
+                                .on(Core.endpoint("http://localhost:8081"))
+                                    .then(Core.log("Shoki sos un genio")));
 
 
     }

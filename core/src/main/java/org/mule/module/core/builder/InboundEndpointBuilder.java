@@ -6,10 +6,11 @@ import org.mule.api.MuleException;
 import org.mule.api.endpoint.EndpointException;
 import org.mule.api.endpoint.InboundEndpoint;
 import org.mule.api.lifecycle.InitialisationException;
+import org.mule.config.dsl.Builder;
 import org.mule.endpoint.EndpointURIEndpointBuilder;
 
 
-public class InboundEndpointBuilder implements MessageSourceBuilder<InboundEndpoint>
+public class InboundEndpointBuilder implements Builder<InboundEndpoint>
 {
 
     private String url;
