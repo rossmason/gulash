@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Mule Twitter Cloud Connector
+
+    Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
+
+    The software in this package is published under the terms of the CPAL v1.0
+    license, a copy of which has been included with this distribution in the
+    LICENSE.txt file.
+
+-->
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:spring="http://www.springframework.org/schema/beans"
+    xmlns:twitter="http://www.mulesoft.org/schema/mule/twitter"
+    xmlns:json="http://www.mulesoft.org/schema/mule/json"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                          http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/3.2/mule.xsd
+                          http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/3.2/mule-json.xsd
+                          http://www.mulesoft.org/schema/mule/twitter http://www.mulesoft.org/schema/mule/twitter/2.3/mule-twitter.xsd">
+                          
+    <twitter:config consumerKey="${twitter.consumer.key}" consumerSecret="${twitter.consumer.secret}"/>
+    
+    <flow name="twitterTest">
+        <inbound-endpoint address="http://localhost:9002/public"/>
+        <response>
+            <json:object-to-json-transformer/>
+        </response>
+        <twitter:get-public-timeline/>
+    </flow>
+    
+    <flow name="updatestatus">
+        <inbound-endpoint address="http://localhost:9002/update"/>
+        <response>
+            <json:object-to-json-transformer/>
+        </response>
+        <twitter:update-status status="hello world"/>
+    </flow>
+    
+    <flow name="request-authorization">
+        <inbound-endpoint address="http://localhost:9002/request-authorization"/>
+        <twitter:request-authorization callbackUrl="http://localhost:9002/set-oauth-verifier"/>
+        <message-properties-transformer>
+            <add-message-property key="http.status" value="302"/>
+            <add-message-property key="Location" value="#[payload]"/>
+        </message-properties-transformer>
+    </flow>
+    
+    <flow name="set-oauth-verifier">
+        <inbound-endpoint address="http://localhost:9002/set-oauth-verifier"/>
+        <logger level="ERROR"/>
+        <twitter:set-oauth-verifier oauthVerifier="#[header:inbound:verifier]"/>
+    </flow>
+    
+</mule>

@@ -25,8 +25,9 @@
     </properties>
 
 
-      <modules>
-        <module>mule-module-pi</module>            
+    <modules>
+        <module>mule-module-pi</module>
+        <module>mule-module-twitter</module>
     </modules>
 
     <build>
@@ -319,16 +320,16 @@
             <layout>default</layout>
         </repository>
         <repository>
-	        <id>codehaus-snapshots</id>
-	        <name>Codehaus Maven 2.x Snapshots Repository</name>
-			<url>http://snapshots.repository.codehaus.org</url>
- 			<snapshots>
- 				<enabled>true</enabled>
- 			</snapshots>
- 			<releases>
- 				<enabled>false</enabled>
- 			</releases>
- 		</repository>
+            <id>codehaus-snapshots</id>
+            <name>Codehaus Maven 2.x Snapshots Repository</name>
+            <url>http://snapshots.repository.codehaus.org</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
     </repositories>
 
     <pluginRepositories>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>${TWITTER_CREDENTIALS}</value>
+		</property>
+	</bean>
+	
+	<bean id="randomShortString" class="org.mule.modules.tests.ConnectorTestUtils"
+	factory-method="generateRandomShortString" scope="prototype" />
+ 
+ 	<util:map id="aRandomStatus" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object" scope="prototype">
+		<entry key="status" value-ref="randomShortString" />
+	</util:map>
+	
+	<bean id="aRandomMentionStatus" class="java.lang.String">
+	    <constructor-arg value="#{'@' + ${twitter.sandbox.userScreenName} + aRandomStatus.status}" />
+	</bean>
+	
+	<util:map id="aRandomMention" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object" scope="prototype">
+		<entry key="status" value-ref="randomShortString" />
+	</util:map>
+ 
+ 	<util:map id="sandbox" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="userId" value="${twitter.sandbox.userId}" />
+		<entry key="userName" value="${twitter.sandbox.userName}" />
+		<entry key="userScreenName" value="${twitter.sandbox.userScreenName}" />
+	</util:map>
+ 
+ 	<util:map id="auxSandbox" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="userId" value="${twitter.auxSandbox.userId}" />
+		<entry key="userName" value="${twitter.auxSandbox.userName}" />
+		<entry key="userScreenName" value="${twitter.auxSandbox.userScreenName}" />
+	</util:map>
+	
+	<util:map id="auxAuxSandbox" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="userId" value="${twitter.auxAuxSandbox.userId}" />
+		<entry key="userName" value="${twitter.auxAuxSandbox.userName}" />
+		<entry key="userScreenName" value="${twitter.auxAuxSandbox.userScreenName}" />
+	</util:map>
+	
+	<util:map id="getAvailableTrendsTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="name" value-ref="randomShortString" />
+		<entry key="containedWithin" value="fbd6d2f5a4e4a15e" />
+		<entry key="token" value="-33.9769" />
+		<entry key="latitude" value="18.5080" />
+		<entry key="longitude" value="-33.9769" />
+	</util:map>
+	
+	<util:map id="createPlaceTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="name" value-ref="randomShortString" />
+		<entry key="containedWithin" value="fbd6d2f5a4e4a15e" />
+		<entry key="token" value="-33.9769" />
+		<entry key="latitude" value="18.5080" />
+		<entry key="longitude" value="-33.9769" />
+	</util:map>
+
+	<util:map id="getGeoDetailsTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="id" value="8b9ec16fdc0d7e55" />
+	</util:map>
+	
+	<util:map id="placeByWOEID" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="woeid" value="23424775" />
+	</util:map>
+	
+	<util:map id="getHomeTimelineTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="count" value="2" />
+		<entry key="page" value="1" />
+	</util:map>
+	
+	<util:map id="getMentionsTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="count" value="2" />
+		<entry key="page" value="1" />
+	</util:map>
+	
+	<util:map id="getRetweetsOfMeTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="count" value="2" />
+		<entry key="page" value="1" />
+	</util:map>
+
+ 	<util:map id="getUserTimelineByScreenNameTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+ 		<entry key="screeName" value="${twitter.sandbox.userScreenName}" />
+		<entry key="count" value="2" />
+		<entry key="page" value="1" />
+	</util:map>
+ 
+  	<util:map id="getUserTimelineByUserIdTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+ 		<entry key="userId" value="${twitter.sandbox.userId}" />
+		<entry key="count" value="2" />
+		<entry key="page" value="1" />
+	</util:map>
+	
+	<util:map id="reverseGeoCodesByCoordinatesTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="latitude" value="18.5080" />
+		<entry key="longitude" value="-33.9769" />
+	</util:map>
+	
+	<util:map id="searchPlacesTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="latitude" value="18.5080" />
+		<entry key="longitude" value="-33.9769" />
+		<entry key="id" value="8b9ec16fdc0d7e55" />
+	</util:map>
+	
+	<util:map id="sendDirectMessageByScreenNameTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="message" value-ref="randomShortString" />
+		<entry key="screenName" value="${twitter.auxSandbox.userScreenName}" />
+		<entry key="senderSandboxUserName" value="${twitter.sandbox.userScreenName}" />
+		<entry key="recipientSandboxUserName" value="${twitter.auxSandbox.userScreenName}" /
+	</util:map>
+	
+	<util:map id="sendDirectMessageByUserIdTestData" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="message" value-ref="randomShortString" />
+		<entry key="userId" value="${twitter.auxSandbox.userId}" />
+		<entry key="senderSandboxUserName" value="${twitter.sandbox.userId}" />
+		<entry key="recipientSandboxUserName" value="${twitter.auxSandbox.userId}" /
+	</util:map>
+		
+	<util:map id="aTweetToQueryFor" map-class="java.util.HashMap" key-type="java.lang.String" value-type="java.lang.Object">
+		<entry key="status" value="Reminder: Blue Angels practice today http://t.co/L9JXJ2ee" />
+	</util:map>	
+
+</beans>

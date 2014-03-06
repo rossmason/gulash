@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-configuration xmlns="http://www.mulesoft.com/tooling/messageflow" name="twitter-demo">
+    <global-element type="http://www.mulesoft.org/schema/mule/twitter/config" name="Twitter" entity-id="Twitter#1">
+        <properties>
+            <property name="proxyUsername"/>
+            <property name="useSSL"/>
+            <property value="${twitter.consumerKey}" name="consumerKey"/>
+            <property value="${twitter.accessKey}" name="accessKey"/>
+            <property name="proxyHost"/>
+            <property value="Twitter" name="name"/>
+            <property value="${twitter.accessSecret}" name="accessSecret"/>
+            <property name="proxyPort"/>
+            <property name="proxyPassword"/>
+            <property value="${twitter.consumerSecret}" name="consumerSecret"/>
+            <property value="1" name="auxiliary;index"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/twitter/connection-pooling-profile;0">
+                <property value="WHEN_EXHAUSTED_GROW" name="exhaustedAction"/>
+                <property value="true" name="isProcessed$$$$"/>
+                <property value="2" name="auxiliary;index"/>
+                <property value="2" name="auxiliary;wrapIn"/>
+                <property value="INITIALISE_ONE" name="initialisationPolicy"/>
+            </property-collection>
+        </properties>
+    </global-element>
+    <flow SubFlow="false" name="show-user" entity-id="498f2114-24c6-4cb6-adf5-634f96de2b2b">
+        <properties>
+            <property name="processingStrategy"/>
+            <property name="processingStrategy2"/>
+            <property name="bussinessEventsLabel"/>
+            <property name="tracking:enable-default-events"/>
+            <property value="3" name="auxiliary;index"/>
+        </properties>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="compartment-lane#1">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/http/endpoint" name="HTTP" entity-id="HTTP#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8081" name="port"/>
+                    <property value="localhost" name="host"/>
+                    <property name="businessEventsLabel"/>
+                    <property name="followRedirects"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property name="keep-alive"/>
+                    <property name="contentType"/>
+                    <property name="disableTransportTransformer"/>
+                    <property name="password"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="tracking:enable-default-events"/>
+                    <property name="ref"/>
+                    <property name="transformer-refs"/>
+                    <property name="httpLabel"/>
+                    <property name="address"/>
+                    <property value="showUser" name="path"/>
+                    <property name="encoding"/>
+                    <property name="responseTransformer-refs"/>
+                    <property name="method"/>
+                    <property name="user"/>
+                    <property name="responseTimeout"/>
+                    <property name="mimeType"/>
+                    <property value="4" name="auxiliary;index"/>
+                    <property name="connector-ref"/>
+                </properties>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/twitter/twitter-connector" name="Show user" entity-id="Twitter#2">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name=""/>
+                    <property name="accessKey"/>
+                    <property name="accessSecret"/>
+                    <property value="http://www.mulesoft.org/schema/mule/twitter/show-user" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="Twitter" name="config-ref"/>
+                    <property value="5" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="Object to JSON#1">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property name="sourceClass"/>
+                    <property name="returnClass"/>
+                    <property name="ignoreBadInput"/>
+                    <property name="encoding"/>
+                    <property name="mapper-ref"/>
+                    <property name="mimeType"/>
+                    <property value="6" name="auxiliary;index"/>
+                </properties>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="update-status" entity-id="7b3d94e6-3cf1-4d3d-a33d-5fa16b26a2e8">
+        <properties>
+            <property name="auxiliary;moved-from"/>
+            <property name="updated"/>
+            <property value="" name="processingStrategy2"/>
+            <property value="" name="bussinessEventsLabel"/>
+            <property value="true" name="auxiliary;erased;processingStrategy2"/>
+            <property value="false" name="tracking:enable-default-events"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/ee/tracking/transaction;1678027943">
+                <property value="true" name="isProcessed$$$$"/>
+            </property-collection>
+        </properties>
+        <description></description>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="99c7e512-3b97-482b-8532-e8521efdf664">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="37aa0f92-f137-4721-a043-3ace4db3cc77">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8081" name="port"/>
+                    <property value="true" name="auxiliary;erased;mimeType"/>
+                    <property value="" name="contentType"/>
+                    <property value="" name="password"/>
+                    <property value="false" name="tracking:enable-default-events"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="updated"/>
+                    <property value="true" name="auxiliary;erased;encoding"/>
+                    <property value="updateStatus" name="path"/>
+                    <property value="" name="encoding"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="" name="mimeType"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="true" name="auxiliary;erased;contentType"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="businessEventsLabel"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="ref"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="httpLabel"/>
+                    <property value="" name="address"/>
+                    <property value="" name="user"/>
+                    <property value="" name="connector-ref"/>
+                </properties>
+                <description></description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/twitter/twitter-connector" name="Update status" entity-id="db76e1ee-9e01-4dc2-bbc9-cf9661864516">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="" name=""/>
+                    <property value="-1" name="inReplyTo"/>
+                    <property value="" name="accessKey"/>
+                    <property value="This is twitter status from Mule" name="status"/>
+                    <property name="updated"/>
+                    <property value="" name="accessSecret"/>
+                    <property value="http://www.mulesoft.org/schema/mule/twitter/update-status" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="" name="longitude"/>
+                    <property value="" name="latitude"/>
+                    <property value="Twitter" name="config-ref"/>
+                </properties>
+                <description></description>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="307e7a79-90bb-4ccc-8db3-649e42e3eeac">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="send-direct-message-by-screen-name" entity-id="92ce1c0f-857c-46fc-88a5-56980dfc24bc">
+        <properties>
+            <property name="updated"/>
+            <property value="" name="processingStrategy2"/>
+            <property value="" name="bussinessEventsLabel"/>
+            <property value="true" name="auxiliary;erased;processingStrategy2"/>
+            <property value="false" name="tracking:enable-default-events"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/ee/tracking/transaction;572788354">
+                <property value="true" name="isProcessed$$$$"/>
+            </property-collection>
+        </properties>
+        <description></description>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="3e8345e8-cdaf-484b-a446-c0b2563e897c">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="62cc39be-3a7a-45f9-b675-6f902aa76a4f">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="8081" name="port"/>
+                    <property value="true" name="auxiliary;erased;mimeType"/>
+                    <property value="" name="contentType"/>
+                    <property value="" name="password"/>
+                    <property value="false" name="tracking:enable-default-events"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="updated"/>
+                    <property value="true" name="auxiliary;erased;encoding"/>
+                    <property value="sendDirectMessageByScreenName" name="path"/>
+                    <property value="" name="encoding"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="" name="mimeType"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="true" name="auxiliary;erased;contentType"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="businessEventsLabel"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="ref"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="httpLabel"/>
+                    <property value="" name="address"/>
+                    <property value="" name="user"/>
+                    <property value="" name="connector-ref"/>
+                </properties>
+                <description></description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/twitter/twitter-connector" name="Send direct message by screen name" entity-id="c7eb6a84-361b-4bd5-9ccf-6d5bd76c62f4">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+                <properties>
+                    <property value="" name=""/>
+                    <property value="#[header:INBOUND:message]" name="message"/>
+                    <property value="" name="accessKey"/>
+                    <property name="updated"/>
+                    <property value="" name="accessSecret"/>
+                    <property value="#[header:INBOUND:screenName]" name="screenName"/>
+                    <property value="http://www.mulesoft.org/schema/mule/twitter/send-direct-message-by-screen-name" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="Twitter" name="config-ref"/>
+                </properties>
+                <description></description>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="a9b883d6-fd80-48b7-8cd7-a1285135d38c">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+            </pattern>
+        </lane>
+    </flow>
+    <flow SubFlow="false" name="get-user-timeline-by-user-id" entity-id="4637ce77-5042-472f-a23e-646005eac3ed">
+        <properties>
+            <property name="updated"/>
+            <property value="" name="processingStrategy2"/>
+            <property value="" name="bussinessEventsLabel"/>
+            <property value="true" name="auxiliary;erased;processingStrategy2"/>
+            <property value="false" name="tracking:enable-default-events"/>
+            <property-collection name="@http://www.mulesoft.org/schema/mule/ee/tracking/transaction;1727097144">
+                <property value="true" name="isProcessed$$$$"/>
+            </property-collection>
+        </properties>
+        <description></description>
+        <lane isChoiceOtherwiseLane="false" index="0" hadOnlyOneElement="false" entity-id="c75196a1-7f46-444d-8868-3134c4b22d98">
+            <graphicalData height="0" width="0" y="0" x="0"/>
+            <endpoint message-exchange-pattern="RequestResponse" direction="Inbound" type="http://www.mulesoft.org/schema/mule/https/endpoint" name="HTTP" entity-id="24ba17c6-ce5a-4f0b-b46f-a517cc9b381d">
+                <graphicalData height="169" width="68" y="769" x="19"/>
+                <properties>
+                    <property value="8081" name="port"/>
+                    <property value="true" name="auxiliary;erased;mimeType"/>
+                    <property value="" name="contentType"/>
+                    <property value="" name="password"/>
+                    <property value="false" name="tracking:enable-default-events"/>
+                    <property value="request-response" name="exchange-pattern"/>
+                    <property name="updated"/>
+                    <property value="true" name="auxiliary;erased;encoding"/>
+                    <property value="getUserTimelineByUserId" name="path"/>
+                    <property value="" name="encoding"/>
+                    <property value="" name="responseTransformer-refs"/>
+                    <property value="" name="mimeType"/>
+                    <property value="10000" name="responseTimeout"/>
+                    <property value="true" name="auxiliary;erased;contentType"/>
+                    <property value="localhost" name="host"/>
+                    <property value="" name="businessEventsLabel"/>
+                    <property value="http://www.mulesoft.org/schema/mule/http/endpoint" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="false" name="keep-alive"/>
+                    <property value="false" name="disableTransportTransformer"/>
+                    <property value="" name="ref"/>
+                    <property value="" name="transformer-refs"/>
+                    <property value="" name="httpLabel"/>
+                    <property value="" name="address"/>
+                    <property value="" name="user"/>
+                    <property value="" name="connector-ref"/>
+                </properties>
+                <description></description>
+            </endpoint>
+            <pattern type="http://www.mulesoft.org/schema/mule/twitter/twitter-connector" name="Get user timeline by user id" entity-id="87536496-8962-4090-a4ee-e35dd7274b72">
+                <graphicalData height="67" width="68" y="769" x="147"/>
+                <properties>
+                    <property value="" name=""/>
+                    <property value="-1" name="sinceId"/>
+                    <property value="" name="accessKey"/>
+                    <property value="20" name="count"/>
+                    <property name="updated"/>
+                    <property value="1" name="page"/>
+                    <property value="#[header:INBOUND:userId]" name="userId"/>
+                    <property value="http://www.mulesoft.org/schema/mule/twitter/get-user-timeline-by-user-id" name="org.mule.tooling.ui.modules.core.widgets.meta.ModeAttribute"/>
+                    <property value="" name="accessSecret"/>
+                    <property value="Twitter" name="config-ref"/>
+                </properties>
+                <description></description>
+            </pattern>
+            <pattern type="http://www.mulesoft.org/schema/mule/json/object-to-json-transformer" name="Object to JSON" entity-id="3f4f6fbb-e519-4ed3-ba24-1a816fad0d5f">
+                <graphicalData height="0" width="0" y="0" x="0"/>
+            </pattern>
+        </lane>
+    </flow>
+    <description></description>
+</mule-configuration>

@@ -72,9 +72,9 @@ public class MuleLauncher
 
     private static Options createOptions()
     {
-        Option ramlFile = OptionBuilder.withArgName("raml file")
+        Option ramlFile = OptionBuilder.withArgName("Raml file")
                 .hasArg()
-                .withDescription("Create an escafolder based on .")
+                .withDescription("Create a script based on the specified Raml file.")
                 .create("c");
         Option help = new Option("help", "Print this message");
 

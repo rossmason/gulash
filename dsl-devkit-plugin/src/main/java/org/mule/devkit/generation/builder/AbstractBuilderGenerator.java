@@ -14,6 +14,7 @@ import org.mule.devkit.model.Type;
 import org.mule.devkit.model.code.ExpressionFactory;
 import org.mule.devkit.model.code.GeneratedBlock;
 import org.mule.devkit.model.code.GeneratedClass;
+import org.mule.devkit.model.code.GeneratedExpression;
 import org.mule.devkit.model.code.GeneratedFieldReference;
 import org.mule.devkit.model.code.GeneratedInvocation;
 import org.mule.devkit.model.code.GeneratedMethod;
@@ -160,11 +161,22 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
 
     protected void addField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
     {
+
+        GeneratedExpression defaultValueGeneratedExpression = null;
+        if (!StringUtils.isEmpty(defaultValue))
+        {
+            String defaultValueExpression = defaultValue;
+            if (type.fullName().equals(String.class.getName()))
+            {
+                defaultValueExpression = "\"" + defaultValue + "\"";
+            }
+            defaultValueGeneratedExpression = ExpressionFactory.direct(defaultValueExpression);
+        }
         new FieldBuilder(processorBuilderClass)
                 .name(fieldName)
                 .type(type)
                 .privateVisibility()
-                .initialValue(defaultValue).build();
+                .initialValue(defaultValueGeneratedExpression).build();
         //TODO Replace with two methods one for expression and one with the real type
         final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, fieldName);
         fieldExpressionMethod.param(type, fieldName);

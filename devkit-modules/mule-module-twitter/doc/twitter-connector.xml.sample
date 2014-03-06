@@ -1,0 +1,161 @@
+<!-- BEGIN_INCLUDE(twitter:search) -->
+        <twitter:search query="#[payload]"/>
+<!-- END_INCLUDE(twitter:search) -->
+
+<!-- BEGIN_INCLUDE(twitter:getHomeTimeline) -->
+        <twitter:get-home-timeline/>
+<!-- END_INCLUDE(twitter:getHomeTimeline) -->
+
+<!-- BEGIN_INCLUDE(twitter:getUserTimelineByScreenName) -->
+        <twitter:get-user-timeline-by-screen-name screenName="someScreenName" />
+<!-- END_INCLUDE(twitter:getUserTimelineByScreenName) -->
+
+<!-- BEGIN_INCLUDE(twitter:getUserTimelineByUserId) -->
+        <twitter:get-user-timeline-by-user-id userId="321" />
+<!-- END_INCLUDE(twitter:getUserTimelineByUserId) -->
+
+<!-- BEGIN_INCLUDE(twitter:getUserTimeline) -->
+        <twitter:get-user-timeline />
+<!-- END_INCLUDE(twitter:getUserTimeline) -->
+
+<!-- BEGIN_INCLUDE(twitter:getMentions) -->
+        <twitter:get-mentions-timeline />
+<!-- END_INCLUDE(twitter:getMentions) -->
+
+<!-- BEGIN_INCLUDE(twitter:getRetweetsOfMe) -->
+        <twitter:get-retweets-of-me />
+<!-- END_INCLUDE(twitter:getRetweetsOfMe) -->
+
+<!-- BEGIN_INCLUDE(twitter:showStatus) -->
+        <twitter:show-status id="321" />
+<!-- END_INCLUDE(twitter:showStatus) -->
+
+<!-- BEGIN_INCLUDE(twitter:showUser) -->
+        <twitter:show-user />
+<!-- END_INCLUDE(twitter:showUser) -->
+
+<!-- BEGIN_INCLUDE(twitter:getFollowers) -->
+        <twitter:get-followers cursor="-1" />
+<!-- END_INCLUDE(twitter:getFollowers) -->
+
+<!-- BEGIN_INCLUDE(twitter:updateStatus) -->
+        <twitter:update-status status="hello world"/>
+<!-- END_INCLUDE(twitter:updateStatus) -->
+
+<!-- BEGIN_INCLUDE(twitter:destroyStatus) -->
+        <twitter:destroy-status statusId="321" />
+<!-- END_INCLUDE(twitter:destroyStatus) -->
+
+<!-- BEGIN_INCLUDE(twitter:retweetStatus) -->
+        <twitter:retweet-status statusId="321" />
+<!-- END_INCLUDE(twitter:retweetStatus) -->
+
+<!-- BEGIN_INCLUDE(twitter:getRetweets) -->
+        <twitter:get-retweets statusId="321" />
+<!-- END_INCLUDE(twitter:getRetweets) -->
+
+<!-- BEGIN_INCLUDE(twitter:getRetweetedBy) -->
+        <twitter:get-retweeted-by-me />
+<!-- END_INCLUDE(twitter:getRetweetedBy) -->
+
+<!-- BEGIN_INCLUDE(twitter:getRetweetedByIds) -->
+        <twitter:get-retweeted-by-ids statusId="321" />
+<!-- END_INCLUDE(twitter:getRetweetedByIds) -->
+
+<!-- BEGIN_INCLUDE(twitter:setOauthVerifier) -->
+        <twitter:set-oauth-verifier oauthVerifier="444" />
+<!-- END_INCLUDE(twitter:setOauthVerifier) -->
+
+<!-- BEGIN_INCLUDE(twitter:requestAuthorization) -->
+        <twitter:request-authorization />
+<!-- END_INCLUDE(twitter:requestAuthorization) -->
+
+<!-- BEGIN_INCLUDE(twitter:reverseGeoCode) -->
+        <twitter:reverse-geo-code latitude="11.22" longitude="33.11" />
+<!-- END_INCLUDE(twitter:reverseGeoCode) -->
+
+<!-- BEGIN_INCLUDE(twitter:getSimilarPlaces) -->
+        <twitter:get-similar-places latitude="11.22" longitude="33.11" placeName="city" />
+<!-- END_INCLUDE(twitter:getSimilarPlaces) -->
+
+<!-- BEGIN_INCLUDE(twitter:searchPlaces) -->
+      <twitter:search-places latitude="#[header:latitude]" longitude="#[header:longitude]" />
+<!-- END_INCLUDE(twitter:searchPlaces) -->
+
+<!-- BEGIN_INCLUDE(twitter:getGeoDetails) -->
+      <twitter:get-geo-details id="#[header:geocodeId]"/>
+<!-- END_INCLUDE(twitter:getGeoDetails) -->
+
+<!-- BEGIN_INCLUDE(twitter:createPlace) -->
+      <twitter:create-place
+           token="#[header:token]"
+           containedWithin="#[header:containedWithin]"
+           placeName="#[header:placeName]"
+           latitude="#[header:latitude]"
+           longitude="#[header:longitude]"
+           streetAddress="[header:address]"/>
+<!-- END_INCLUDE(twitter:createPlace) -->
+
+<!-- BEGIN_INCLUDE(twitter:getAvailableTrends) -->
+      <twitter:get-available-trends/>
+<!-- END_INCLUDE(twitter:getAvailableTrends) -->
+
+<!-- BEGIN_INCLUDE(twitter:getPlaceTrends) -->
+      <twitter:get-place-trends/>
+<!-- END_INCLUDE(twitter:getPlaceTrends) -->
+
+<!-- BEGIN_INCLUDE(twitter:getClosestTrends) -->
+      <twitter:get-closest-trends latitude="#[header:latitude]"
+                                    longitude="#[header:longitude]" />
+<!-- END_INCLUDE(twitter:getClosestTrends) -->
+
+<!-- BEGIN_INCLUDE(twitter:getLocationTrends) -->
+      <twitter:get-location-trends woeid="1" />
+<!-- END_INCLUDE(twitter:getLocationTrends) -->
+
+<!-- BEGIN_INCLUDE(twitter:filteredStream) -->
+        <twitter:filtered-stream>
+            <twitter:keywords>
+                <twitter:keyword>muleesb</twitter:keyword>
+                <twitter:keyword>mulesoft</twitter:keyword>
+            </twitter:keywords>
+        </twitter:filtered-stream>
+<!-- END_INCLUDE(twitter:filteredStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:sampleStream) -->
+        <twitter:sample-stream />
+<!-- END_INCLUDE(twitter:sampleStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:firehoseStream) -->
+        <twitter:firehose-stream count="100" />
+<!-- END_INCLUDE(twitter:firehoseStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:linkStream) -->
+        <twitter:link-stream count="100" />
+<!-- END_INCLUDE(twitter:linkStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:userStream) -->
+        <twitter:user-stream>
+            <twitter:keywords>
+                <twitter:keyword>enterprise</twitter:keyword>
+                <twitter:keyword>integration</twitter:keyword>
+            </twitter:keywords>
+        </twitter:user-stream>
+<!-- END_INCLUDE(twitter:userStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:siteStream) -->
+        <twitter:site-stream>
+            <twitter:user-ids>
+                <twitter:user-id>321</twitter:user-id>
+                <twitter:user-id>123</twitter:user-id>
+            </twitter:user-ids>
+        </twitter:site-stream>
+<!-- END_INCLUDE(twitter:siteStream) -->
+
+<!-- BEGIN_INCLUDE(twitter:sendDirectMessageByScreenName) -->
+        <twitter:send-direct-message-by-screen-name screenName="someScreenName" message="bla bla" />
+<!-- END_INCLUDE(twitter:sendDirectMessageByScreenName) -->
+
+<!-- BEGIN_INCLUDE(twitter:sendDirectMessageByUserId) -->
+        <twitter:send-direct-message-by-user-id userId="321" message="bla bla" />
+<!-- END_INCLUDE(twitter:sendDirectMessageByUserId) -->

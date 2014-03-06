@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:twitter="http://www.mulesoft.org/schema/mule/twitter" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/twitter http://www.mulesoft.org/schema/mule/twitter/2.4/mule-twitter.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <twitter:config name="Twitter" accessKey="${twitter.accessKey}" accessSecret="${twitter.accessSecret}" consumerKey="${twitter.consumerKey}" consumerSecret="${twitter.consumerSecret}" doc:name="Twitter">
+        <twitter:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </twitter:config>
+    <flow name="show-user" doc:name="show-user">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="showUser" doc:name="HTTP"/>
+        <twitter:show-user config-ref="Twitter" doc:name="Show user"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="update-status" doc:name="update-status">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="updateStatus" doc:name="HTTP"/>
+        <twitter:update-status config-ref="Twitter" status="This is twitter status from Mule" doc:name="Update status"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="send-direct-message-by-screen-name" doc:name="send-direct-message-by-screen-name">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="sendDirectMessageByScreenName" doc:name="HTTP"/>
+        <twitter:send-direct-message-by-screen-name config-ref="Twitter" message="#[header:INBOUND:message]" screenName="#[header:INBOUND:screenName]" doc:name="Send direct message by screen name"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="get-user-timeline-by-user-id" doc:name="get-user-timeline-by-user-id">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="getUserTimelineByUserId" doc:name="HTTP"/>
+        <twitter:get-user-timeline-by-user-id config-ref="Twitter" userId="#[header:INBOUND:userId]" doc:name="Get user timeline by user id"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+</mule>
