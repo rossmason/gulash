@@ -58,7 +58,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
     @Override
     public boolean shouldGenerate(Module module)
     {
-        return false;
+        return true;
     }
 
     public GeneratedClass getModuleFactoryClass()
@@ -80,6 +80,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
     {
         return ctx().getCodeModel().ref(fullyQualifiedClassName);
     }
+
 
 
     protected void createBuilder(GeneratedClass moduleFactoryClass, Method<Type> processorMethod, org.mule.devkit.model.code.Type buildedObjectType, GeneratedClass builderClass)
@@ -104,7 +105,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
                 {
                     final String defaultValue = variable.getDefaultValue();
                     addObjectField(fieldName, ref(variable.asTypeMirror()), builderClass, defaultValue);
-                    createMethodBlock.invoke(resultVariable, "set" + StringUtils.capitalize(fieldName)).arg(ExpressionFactory.ref(fieldName));
+                    createMethodBlock.invoke(resultVariable, getSetterMethod(fieldName)).arg(ExpressionFactory.ref(fieldName));
                 }
                 else
                 {
@@ -141,6 +142,11 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
 
 
         processorFactoryMethod.body()._return(newBuilderExpression);
+    }
+
+    protected String getSetterMethod(String fieldName)
+    {
+        return "set" + StringUtils.capitalize(fieldName);
     }
 
     protected void addObjectField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
@@ -191,7 +197,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         return defaultValueGeneratedExpression;
     }
 
-    private boolean isInternalParameter(Parameter variable)
+    protected boolean isInternalParameter(Parameter variable)
     {
         if (variable.asType().isNestedProcessor() || (variable.asType().isArrayOrList() && variable.getTypeArguments().size() > 0 && variable.getTypeArguments().get(0).isNestedProcessor()))
         {

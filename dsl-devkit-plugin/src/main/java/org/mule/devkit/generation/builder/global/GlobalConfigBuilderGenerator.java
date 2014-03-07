@@ -1,10 +1,11 @@
-package org.mule.devkit.generation.builder;
+package org.mule.devkit.generation.builder.global;
 
 import org.mule.api.MuleContext;
 import org.mule.api.registry.MuleRegistry;
 import org.mule.config.dsl.Builder;
 import org.mule.devkit.generation.api.GenerationException;
 import org.mule.devkit.generation.api.Product;
+import org.mule.devkit.generation.builder.AbstractBuilderGenerator;
 import org.mule.devkit.generation.utils.NameUtils;
 import org.mule.devkit.model.Field;
 import org.mule.devkit.model.code.ExpressionFactory;
@@ -26,14 +27,14 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 
-public class ConfigBuilderGenerator extends AbstractBuilderGenerator
+public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
 {
 
 
     public static final String CONFIG_POSTFIX = "Config";
     public static final String NAME_FIELD_NAME = "name";
 
-    public ConfigBuilderGenerator(GeneratedClass moduleFactoryClass)
+    public GlobalConfigBuilderGenerator(GeneratedClass moduleFactoryClass)
     {
         super(moduleFactoryClass);
     }
@@ -46,20 +47,7 @@ public class ConfigBuilderGenerator extends AbstractBuilderGenerator
 
     private void generateConfig(Module module, GeneratedClass moduleFactoryClass)
     {
-        GeneratedClass configClass;
-        if (module instanceof ManagedConnectionModule)
-        {
-            // Config
-            configClass = ctx().getProduct(Product.CONNECTION_MANAGER, module);
-        }
-        else if (module instanceof OAuthModule)
-        {
-            configClass = ctx().getProduct(Product.OAUTH_MANAGER, module);
-        }
-        else
-        {
-            configClass = ctx().getProduct(Product.PROCESS_ADAPTER, module);
-        }
+        GeneratedClass configClass = getConfigClass(module);
 
         final GeneratedClass configBuilderClass = createClass(BUILDER_PACKAGE, NameUtils.camel(module.getModuleName()) + CONFIG_POSTFIX + BUILDER_NAME);
         configBuilderClass._implements(ref(Builder.class).narrow(configClass));
@@ -69,13 +57,7 @@ public class ConfigBuilderGenerator extends AbstractBuilderGenerator
         final GeneratedVariable resultVariable = createMethodBlock.decl(configClass, RESULT_VARIABLE_NAME);
         createMethodBlock.assign(resultVariable, ExpressionFactory._new(configClass));
 
-        final List<Field> configurableFields = module.getConfigurableFields();
-        for (Field configurableField : configurableFields)
-        {
-            String fieldName = configurableField.getName();
-            addField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
-            createMethodBlock.invoke(resultVariable, configurableField.getSetter().getName()).arg(ExpressionFactory.ref(fieldName));
-        }
+        addFields(module, configBuilderClass, createMethodBlock, resultVariable);
 
         new FieldBuilder(configBuilderClass)
                 .name(NAME_FIELD_NAME)
@@ -103,5 +85,25 @@ public class ConfigBuilderGenerator extends AbstractBuilderGenerator
         GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, configBuilderClass, StringUtils.uncapitalize(module.getModuleName()) + CONFIG_POSTFIX);
         processorFactoryMethod.body()._return(ExpressionFactory._new(configBuilderClass));
 
+    }
+
+    protected void addFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
+    {
+        final List<Field> configurableFields = module.getConfigurableFields();
+        for (Field configurableField : configurableFields)
+        {
+            if(!configurableField.isOptional()){
+                //todo change it to be at the constructor do we want to use closure like config({acessSecret : "",accessToken : ""})
+
+            }
+            String fieldName = configurableField.getName();
+            addField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
+            createMethodBlock.invoke(resultVariable, configurableField.getSetter().getName()).arg(ExpressionFactory.ref(fieldName));
+        }
+    }
+
+    protected GeneratedClass getConfigClass(Module module)
+    {
+        return ctx().getProduct(Product.PROCESS_ADAPTER, module);
     }
 }

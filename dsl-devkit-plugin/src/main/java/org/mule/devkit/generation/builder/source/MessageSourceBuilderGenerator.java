@@ -1,8 +1,9 @@
-package org.mule.devkit.generation.builder;
+package org.mule.devkit.generation.builder.source;
 
 import org.mule.config.dsl.Builder;
 import org.mule.devkit.generation.api.GenerationException;
 import org.mule.devkit.generation.api.Product;
+import org.mule.devkit.generation.builder.AbstractBuilderGenerator;
 import org.mule.devkit.model.code.GeneratedClass;
 import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.SourceMethod;

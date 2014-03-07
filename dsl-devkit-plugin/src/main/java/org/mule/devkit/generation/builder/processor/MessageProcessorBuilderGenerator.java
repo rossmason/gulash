@@ -1,8 +1,21 @@
-package org.mule.devkit.generation.builder;
+package org.mule.devkit.generation.builder.processor;
 
+import org.mule.api.MuleContext;
 import org.mule.config.dsl.Builder;
 import org.mule.devkit.generation.api.Product;
+import org.mule.devkit.generation.builder.AbstractBuilderGenerator;
+import org.mule.devkit.model.Method;
+import org.mule.devkit.model.Parameter;
+import org.mule.devkit.model.Type;
+import org.mule.devkit.model.code.ExpressionFactory;
+import org.mule.devkit.model.code.GeneratedBlock;
 import org.mule.devkit.model.code.GeneratedClass;
+import org.mule.devkit.model.code.GeneratedFieldReference;
+import org.mule.devkit.model.code.GeneratedInvocation;
+import org.mule.devkit.model.code.GeneratedMethod;
+import org.mule.devkit.model.code.GeneratedVariable;
+import org.mule.devkit.model.code.Modifier;
+import org.mule.devkit.model.code.builders.FieldBuilder;
 import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.ProcessorMethod;
 
@@ -34,6 +47,9 @@ public class MessageProcessorBuilderGenerator extends AbstractBuilderGenerator
             createBuilder(moduleFactoryClass, processorMethod, messageProcessorClass, processorBuilderClass);
         }
     }
+
+
+
 
     public String getMessageProcessorClassName(Module module, ProcessorMethod processorMethod)
     {

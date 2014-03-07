@@ -4,11 +4,18 @@ import org.mule.devkit.generation.api.Context;
 import org.mule.devkit.generation.api.GenerationException;
 import org.mule.devkit.generation.api.ModuleGenerator;
 import org.mule.devkit.generation.api.Product;
+import org.mule.devkit.generation.builder.global.GlobalConfigBuilderGenerator;
+import org.mule.devkit.generation.builder.global.ManageConnectionModuleGlobalConfigBuilderGenerator;
+import org.mule.devkit.generation.builder.global.OAuthModuleGlobalConfigBuilderGenerator;
+import org.mule.devkit.generation.builder.processor.MessageProcessorBuilderGenerator;
+import org.mule.devkit.generation.builder.source.MessageSourceBuilderGenerator;
 import org.mule.devkit.generation.utils.NameUtils;
 import org.mule.devkit.model.code.GeneratedClass;
 import org.mule.devkit.model.code.GeneratedPackage;
 import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.ModuleKind;
+import org.mule.devkit.model.module.connectivity.ManagedConnectionModule;
+import org.mule.devkit.model.module.oauth.OAuthModule;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,9 +43,10 @@ public class BuilderGenerator implements ModuleGenerator
         final String className = NameUtils.camel(module.getModuleName());
         final GeneratedClass moduleFactoryClass = createClass("org.mule.module", className);
         //Config builder
-        final ConfigBuilderGenerator configBuilderGenerator = new ConfigBuilderGenerator(moduleFactoryClass);
-        configBuilderGenerator.setCtx(ctx());
-        configBuilderGenerator.generate(module);
+
+        final GlobalConfigBuilderGenerator globalConfigBuilderGenerator = createConfigBuilderGenerator(module, moduleFactoryClass);
+        globalConfigBuilderGenerator.setCtx(ctx());
+        globalConfigBuilderGenerator.generate(module);
 
         final MessageProcessorBuilderGenerator messageProcessorBuilderGenerator = new MessageProcessorBuilderGenerator(moduleFactoryClass);
         messageProcessorBuilderGenerator.setCtx(ctx());
@@ -48,6 +56,22 @@ public class BuilderGenerator implements ModuleGenerator
         messageSourceBuilderGenerator.setCtx(ctx());
         messageSourceBuilderGenerator.generate(module);
 
+    }
+
+    private GlobalConfigBuilderGenerator createConfigBuilderGenerator(Module module, GeneratedClass moduleFactoryClass)
+    {
+        if (module instanceof ManagedConnectionModule)
+        {
+            return new ManageConnectionModuleGlobalConfigBuilderGenerator(moduleFactoryClass);
+        }
+        else if (module instanceof OAuthModule)
+        {
+            return new OAuthModuleGlobalConfigBuilderGenerator(moduleFactoryClass);
+        }
+        else
+        {
+            return new GlobalConfigBuilderGenerator(moduleFactoryClass);
+        }
     }
 
     private GeneratedClass createClass(String packageName, String className)
