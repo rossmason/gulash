@@ -17,7 +17,7 @@ public class SimpleTwitterTest
     public void testTwitterChangeStatus()
     {
         Mule mule = new Mule();
-        mule.declare(twitterConfig()
+        mule.declare(twitterConfig("","")
                              .consumerKey("")
                              .consumerSecret("")
                              .accessKey("")

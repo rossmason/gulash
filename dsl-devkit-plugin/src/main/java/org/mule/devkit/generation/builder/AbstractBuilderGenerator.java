@@ -15,6 +15,7 @@ import org.mule.devkit.model.code.ExpressionFactory;
 import org.mule.devkit.model.code.GeneratedBlock;
 import org.mule.devkit.model.code.GeneratedClass;
 import org.mule.devkit.model.code.GeneratedExpression;
+import org.mule.devkit.model.code.GeneratedField;
 import org.mule.devkit.model.code.GeneratedFieldReference;
 import org.mule.devkit.model.code.GeneratedInvocation;
 import org.mule.devkit.model.code.GeneratedMethod;
@@ -82,7 +83,6 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
     }
 
 
-
     protected void createBuilder(GeneratedClass moduleFactoryClass, Method<Type> processorMethod, org.mule.devkit.model.code.Type buildedObjectType, GeneratedClass builderClass)
     {
         final GeneratedMethod createMethod = builderClass.method(Modifier.PUBLIC, buildedObjectType, CREATE_METHOD_NAME);
@@ -104,7 +104,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
                 if (variable.isOptional())
                 {
                     final String defaultValue = variable.getDefaultValue();
-                    addObjectField(fieldName, ref(variable.asTypeMirror()), builderClass, defaultValue);
+                    declareFieldOfTypeObject(fieldName, ref(variable.asTypeMirror()), builderClass, defaultValue);
                     createMethodBlock.invoke(resultVariable, getSetterMethod(fieldName)).arg(ExpressionFactory.ref(fieldName));
                 }
                 else
@@ -121,10 +121,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         }
 
 
-        new FieldBuilder(builderClass)
-                .name(CONFIG_REF_VARIABLE_NAME)
-                .type(String.class)
-                .privateVisibility().build();
+        new FieldBuilder(builderClass).name(CONFIG_REF_VARIABLE_NAME).type(String.class).privateVisibility().build();
 
         final GeneratedMethod fieldExpressionMethod = builderClass.method(Modifier.PUBLIC, builderClass, "with");
         fieldExpressionMethod.param(String.class, CONFIG_REF_VARIABLE_NAME);
@@ -149,37 +146,29 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         return "set" + StringUtils.capitalize(fieldName);
     }
 
-    protected void addObjectField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
+    protected GeneratedField declareFieldOfTypeObject(String fieldName, org.mule.devkit.model.code.Type realType, GeneratedClass processorBuilderClass, String defaultValue)
     {
-        GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(type, defaultValue);
-        new FieldBuilder(processorBuilderClass)
-                .name(fieldName)
-                .type(Object.class)
-                .privateVisibility()
-                .initialValue(defaultValueGeneratedExpression).build();
-        //TODO Replace with two methods one for expression and one with the real type
+        final GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(realType, defaultValue);
+        final GeneratedField field = new FieldBuilder(processorBuilderClass).name(fieldName).type(Object.class).privateVisibility().initialValue(defaultValueGeneratedExpression).build();
         final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, fieldName);
-        fieldExpressionMethod.param(type, fieldName);
-        GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
+        fieldExpressionMethod.param(realType, fieldName);
+        final GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
         fieldMethodBody._return(ExpressionFactory._this());
+        return field;
     }
 
-    protected void addField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
+    protected GeneratedField declareField(String fieldName, org.mule.devkit.model.code.Type type, GeneratedClass processorBuilderClass, String defaultValue)
     {
 
-        GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(type, defaultValue);
-        new FieldBuilder(processorBuilderClass)
-                .name(fieldName)
-                .type(type)
-                .privateVisibility()
-                .initialValue(defaultValueGeneratedExpression).build();
-        //TODO Replace with two methods one for expression and one with the real type
+        final GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(type, defaultValue);
+        final GeneratedField field = new FieldBuilder(processorBuilderClass).name(fieldName).type(type).privateVisibility().initialValue(defaultValueGeneratedExpression).build();
         final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, fieldName);
         fieldExpressionMethod.param(type, fieldName);
-        GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
+        final GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
         fieldMethodBody._return(ExpressionFactory._this());
+        return field;
     }
 
     private GeneratedExpression getDefaultValueExpression(org.mule.devkit.model.code.Type type, String defaultValue)

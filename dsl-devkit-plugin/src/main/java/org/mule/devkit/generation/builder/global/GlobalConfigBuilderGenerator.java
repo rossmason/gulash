@@ -12,16 +12,16 @@ import org.mule.devkit.model.code.ExpressionFactory;
 import org.mule.devkit.model.code.GeneratedBlock;
 import org.mule.devkit.model.code.GeneratedCatchBlock;
 import org.mule.devkit.model.code.GeneratedClass;
+import org.mule.devkit.model.code.GeneratedField;
+import org.mule.devkit.model.code.GeneratedInvocation;
 import org.mule.devkit.model.code.GeneratedMethod;
 import org.mule.devkit.model.code.GeneratedTry;
 import org.mule.devkit.model.code.GeneratedVariable;
 import org.mule.devkit.model.code.Modifier;
-import org.mule.devkit.model.code.TypeReference;
 import org.mule.devkit.model.code.builders.FieldBuilder;
 import org.mule.devkit.model.module.Module;
-import org.mule.devkit.model.module.connectivity.ManagedConnectionModule;
-import org.mule.devkit.model.module.oauth.OAuthModule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,12 +57,9 @@ public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
         final GeneratedVariable resultVariable = createMethodBlock.decl(configClass, RESULT_VARIABLE_NAME);
         createMethodBlock.assign(resultVariable, ExpressionFactory._new(configClass));
 
-        addFields(module, configBuilderClass, createMethodBlock, resultVariable);
+        List<GeneratedField> constructorFields = declareConfigBuilderFields(module, configBuilderClass, createMethodBlock, resultVariable);
 
-        new FieldBuilder(configBuilderClass)
-                .name(NAME_FIELD_NAME)
-                .type(String.class)
-                .privateVisibility().build();
+        new FieldBuilder(configBuilderClass).name(NAME_FIELD_NAME).type(String.class).privateVisibility().build();
 
         final GeneratedMethod fieldExpressionMethod = configBuilderClass.method(Modifier.PUBLIC, configBuilderClass, "as");
         fieldExpressionMethod.param(String.class, NAME_FIELD_NAME);
@@ -83,23 +80,40 @@ public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
 
         //Static Factory method for builder
         GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, configBuilderClass, StringUtils.uncapitalize(module.getModuleName()) + CONFIG_POSTFIX);
-        processorFactoryMethod.body()._return(ExpressionFactory._new(configBuilderClass));
+        GeneratedInvocation newExpression = ExpressionFactory._new(configBuilderClass);
+
+        for (GeneratedField constructorField : constructorFields)
+        {
+            processorFactoryMethod.param(constructorField.type(), constructorField.name());
+            newExpression.arg(ExpressionFactory.ref(constructorField.name()));
+        }
+        processorFactoryMethod.body()._return(newExpression);
 
     }
 
-    protected void addFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
+    protected List<GeneratedField> declareConfigBuilderFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
     {
+        final List<GeneratedField> requiredFields = new ArrayList<GeneratedField>();
+        GeneratedMethod constructor = configBuilderClass.constructor(Modifier.PUBLIC);
         final List<Field> configurableFields = module.getConfigurableFields();
         for (Field configurableField : configurableFields)
         {
-            if(!configurableField.isOptional()){
-                //todo change it to be at the constructor do we want to use closure like config({acessSecret : "",accessToken : ""})
+            final String fieldName = configurableField.getName();
 
+            if (!configurableField.isOptional())
+            {
+                GeneratedField field = declareField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
+                constructor.param(ref(configurableField.asTypeMirror()), fieldName);
+                constructor.body().assign(field, ExpressionFactory.ref(fieldName));
+                requiredFields.add(field);
             }
-            String fieldName = configurableField.getName();
-            addField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
+            else
+            {
+                declareField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
+            }
             createMethodBlock.invoke(resultVariable, configurableField.getSetter().getName()).arg(ExpressionFactory.ref(fieldName));
         }
+        return requiredFields;
     }
 
     protected GeneratedClass getConfigClass(Module module)

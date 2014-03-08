@@ -6,6 +6,7 @@ import org.mule.devkit.model.Parameter;
 import org.mule.devkit.model.code.ExpressionFactory;
 import org.mule.devkit.model.code.GeneratedBlock;
 import org.mule.devkit.model.code.GeneratedClass;
+import org.mule.devkit.model.code.GeneratedField;
 import org.mule.devkit.model.code.GeneratedVariable;
 import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.connectivity.ConnectMethod;
@@ -30,18 +31,19 @@ public class ManageConnectionModuleGlobalConfigBuilderGenerator extends GlobalCo
 
 
     @Override
-    protected void addFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
+    protected List<GeneratedField> declareConfigBuilderFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
     {
-        super.addFields(module, configBuilderClass, createMethodBlock, resultVariable);
+        List<GeneratedField> requiredFields = super.declareConfigBuilderFields(module, configBuilderClass, createMethodBlock, resultVariable);
         ManagedConnectionModule managedConnectionModule = (ManagedConnectionModule) module;
         ConnectMethod connectMethod = managedConnectionModule.getConnectMethod();
         List<Parameter<Method<ManagedConnectionModule>>> parameters = connectMethod.getParameters();
         for (Parameter<Method<ManagedConnectionModule>> parameter : parameters)
         {
             String fieldName = parameter.getName();
-            addField(fieldName, ref(parameter.asTypeMirror()), configBuilderClass, parameter.getDefaultValue());
+            declareField(fieldName, ref(parameter.asTypeMirror()), configBuilderClass, parameter.getDefaultValue());
             createMethodBlock.invoke(resultVariable, getSetterMethod(fieldName)).arg(ExpressionFactory.ref(fieldName));
         }
+        return requiredFields;
     }
 
     @Override
