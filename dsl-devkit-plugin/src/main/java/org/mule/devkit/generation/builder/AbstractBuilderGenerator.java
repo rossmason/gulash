@@ -82,7 +82,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         return ctx().getCodeModel().ref(fullyQualifiedClassName);
     }
 
-
+    //Creates a builder based on all the parameters of the specified method
     protected void createBuilder(GeneratedClass moduleFactoryClass, Method<Type> processorMethod, org.mule.devkit.model.code.Type buildedObjectType, GeneratedClass builderClass)
     {
         final GeneratedMethod createMethod = builderClass.method(Modifier.PUBLIC, buildedObjectType, CREATE_METHOD_NAME);

@@ -93,8 +93,9 @@ public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
 
     protected List<GeneratedField> declareConfigBuilderFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
     {
+        //Generate builder for all the fields that are @Configurable
         final List<GeneratedField> requiredFields = new ArrayList<GeneratedField>();
-        GeneratedMethod constructor = configBuilderClass.constructor(Modifier.PUBLIC);
+        final GeneratedMethod constructor = configBuilderClass.constructor(Modifier.PUBLIC);
         final List<Field> configurableFields = module.getConfigurableFields();
         for (Field configurableField : configurableFields)
         {

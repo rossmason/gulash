@@ -33,10 +33,11 @@ public class ManageConnectionModuleGlobalConfigBuilderGenerator extends GlobalCo
     @Override
     protected List<GeneratedField> declareConfigBuilderFields(Module module, GeneratedClass configBuilderClass, GeneratedBlock createMethodBlock, GeneratedVariable resultVariable)
     {
-        List<GeneratedField> requiredFields = super.declareConfigBuilderFields(module, configBuilderClass, createMethodBlock, resultVariable);
-        ManagedConnectionModule managedConnectionModule = (ManagedConnectionModule) module;
-        ConnectMethod connectMethod = managedConnectionModule.getConnectMethod();
-        List<Parameter<Method<ManagedConnectionModule>>> parameters = connectMethod.getParameters();
+        final List<GeneratedField> requiredFields = super.declareConfigBuilderFields(module, configBuilderClass, createMethodBlock, resultVariable);
+        //Add also the connection managed parameters
+        final ManagedConnectionModule managedConnectionModule = (ManagedConnectionModule) module;
+        final ConnectMethod connectMethod = managedConnectionModule.getConnectMethod();
+        final List<Parameter<Method<ManagedConnectionModule>>> parameters = connectMethod.getParameters();
         for (Parameter<Method<ManagedConnectionModule>> parameter : parameters)
         {
             String fieldName = parameter.getName();

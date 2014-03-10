@@ -33,11 +33,6 @@ public class MessageProcessorBuilderGenerator extends AbstractBuilderGenerator
     @Override
     public void generate(Module module)
     {
-        generateMessageProcessorsBuilders(module, getModuleFactoryClass());
-    }
-
-    void generateMessageProcessorsBuilders(Module module, GeneratedClass moduleFactoryClass)
-    {
         final List<ProcessorMethod> processorMethods = module.getProcessorMethods();
         for (ProcessorMethod processorMethod : processorMethods)
         {
@@ -48,12 +43,8 @@ public class MessageProcessorBuilderGenerator extends AbstractBuilderGenerator
         }
     }
 
-
-
-
     public String getMessageProcessorClassName(Module module, ProcessorMethod processorMethod)
     {
-
         return ((GeneratedClass) ctx().getProduct(Product.MESSAGE_PROCESSOR, module, processorMethod.getName())).fullName();
     }
 

@@ -6,7 +6,7 @@ import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.oauth.OAuthModule;
 
 /**
- * Created by machaval on 3/7/14.
+ * TODO need to check with someone what are the other parameters that we need for OAuth
  */
 public class OAuthModuleGlobalConfigBuilderGenerator extends GlobalConfigBuilderGenerator
 {
