@@ -105,7 +105,7 @@ public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
             {
                 GeneratedField field = declareField(fieldName, ref(configurableField.asTypeMirror()), configBuilderClass, configurableField.getDefaultValue());
                 constructor.param(ref(configurableField.asTypeMirror()), fieldName);
-                constructor.body().assign(field, ExpressionFactory.ref(fieldName));
+                constructor.body().assign(ExpressionFactory.refthis(field.name()), ExpressionFactory.ref(fieldName));
                 requiredFields.add(field);
             }
             else

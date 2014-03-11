@@ -105,7 +105,6 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
                 {
                     final String defaultValue = variable.getDefaultValue();
                     declareFieldOfTypeObject(fieldName, ref(variable.asTypeMirror()), builderClass, defaultValue);
-                    createMethodBlock.invoke(resultVariable, getSetterMethod(fieldName)).arg(ExpressionFactory.ref(fieldName));
                 }
                 else
                 {
@@ -117,6 +116,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
                     //use it in the constructor
                     newBuilderExpression.arg(ExpressionFactory.ref(fieldName));
                 }
+                createMethodBlock.invoke(resultVariable, getSetterMethod(fieldName)).arg(ExpressionFactory.ref(fieldName));
             }
         }
 
@@ -181,7 +181,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
             {
                 defaultValueExpression = "\"" + defaultValue + "\"";
             }
-            defaultValueGeneratedExpression = ExpressionFactory.direct(defaultValueExpression);
+            defaultValueGeneratedExpression = ExpressionFactory.cast(type, ExpressionFactory.direct(defaultValueExpression));
         }
         return defaultValueGeneratedExpression;
     }
