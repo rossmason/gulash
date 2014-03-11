@@ -6,6 +6,7 @@ import groovy.lang.Closure;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
 import org.mule.module.core.builder.ChoiceBuilder;
+import org.mule.module.core.builder.FlowRefBuilder;
 import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilderImpl;
@@ -59,6 +60,11 @@ public class Core
     public static <T> JavaBeanElementBuilder<T> bean(Class<T> globalElementClass)
     {
         return new JavaBeanElementBuilder<T>(globalElementClass);
+    }
+
+    public static FlowRefBuilder ref(String flowName)
+    {
+        return new FlowRefBuilder(flowName);
     }
 
     public static InboundEndpointBuilder endpoint(String address)
