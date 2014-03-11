@@ -48,6 +48,8 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
 
     private final static List<String> INTERNAL_PARAMETER = Arrays.asList(HttpCallback.class.getName(), SourceCallback.class.getName(), MuleMessage.class.getName(), MuleEvent.class.getName());
 
+    public static final String CONFIG_REF_METHOD_NAME = "using";
+
     protected final GeneratedClass moduleFactoryClass;
     private Context context;
 
@@ -123,7 +125,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
 
         new FieldBuilder(builderClass).name(CONFIG_REF_VARIABLE_NAME).type(String.class).privateVisibility().build();
 
-        final GeneratedMethod fieldExpressionMethod = builderClass.method(Modifier.PUBLIC, builderClass, "with");
+        final GeneratedMethod fieldExpressionMethod = builderClass.method(Modifier.PUBLIC, builderClass, CONFIG_REF_METHOD_NAME);
         fieldExpressionMethod.param(String.class, CONFIG_REF_VARIABLE_NAME);
         GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(CONFIG_REF_VARIABLE_NAME), ExpressionFactory.ref(CONFIG_REF_VARIABLE_NAME));
@@ -151,7 +153,7 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         final GeneratedExpression defaultValueGeneratedExpression = getDefaultValueExpression(realType, defaultValue);
         final GeneratedField field = new FieldBuilder(processorBuilderClass).name(fieldName).type(Object.class).privateVisibility().initialValue(defaultValueGeneratedExpression).build();
         final GeneratedMethod fieldExpressionMethod = processorBuilderClass.method(Modifier.PUBLIC, processorBuilderClass, fieldName);
-        fieldExpressionMethod.param(realType, fieldName);
+        fieldExpressionMethod.param(Object.class, fieldName);
         final GeneratedBlock fieldMethodBody = fieldExpressionMethod.body();
         fieldMethodBody.assign(ExpressionFactory.refthis(fieldName), ExpressionFactory.ref(fieldName));
         fieldMethodBody._return(ExpressionFactory._this());
