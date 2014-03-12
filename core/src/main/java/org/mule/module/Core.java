@@ -6,6 +6,7 @@ import groovy.lang.Closure;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
 import org.mule.module.core.builder.ChoiceBuilder;
+import org.mule.module.core.builder.EnricherBuilder;
 import org.mule.module.core.builder.FlowRefBuilder;
 import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilder;
@@ -40,6 +41,11 @@ public class Core
     public static FlowBuilder flow(String name)
     {
         return new FlowBuilderImpl(name);
+    }
+
+    public static EnricherBuilder enrich(String target)
+    {
+        return new EnricherBuilder(target);
     }
 
     public static SetPayloadBuilder setPayload(String expression)
