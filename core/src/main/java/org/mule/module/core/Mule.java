@@ -47,12 +47,10 @@ public class Mule
         return this;
     }
 
-
     public Mule start() throws MuleException
     {
 
-        System.out.println("Starting mule with mule home at " + muleHome.getAbsolutePath());
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, muleHome.getAbsolutePath());
         muleContext = new DefaultMuleContextFactory().createMuleContext(new DefaultsConfigurationBuilder(), properties, new DefaultMuleConfiguration());
 
@@ -66,6 +64,11 @@ public class Mule
             startListener.onStart(this);
         }
         return this;
+    }
+
+    public File getMuleHome()
+    {
+        return muleHome;
     }
 
     public Mule onStart(StartListener listener)

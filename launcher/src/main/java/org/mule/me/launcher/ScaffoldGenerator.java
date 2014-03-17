@@ -11,6 +11,7 @@ import org.raml.model.Action;
 import org.raml.model.ActionType;
 import org.raml.model.Raml;
 import org.raml.model.Resource;
+import org.raml.model.Response;
 import org.raml.parser.visitor.RamlDocumentBuilder;
 
 public class ScaffoldGenerator

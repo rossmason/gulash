@@ -18,6 +18,8 @@ public class MuleLauncher
 
     public static final String CREATE_OPTION = "c";
     public static final String HELP_OPTION = "help";
+    public static final String INTERACTIVE_OPTION = "i";
+    public static final String REQUIRE_OPTION = "r";
 
     public static void main(String[] args) throws Exception
     {
@@ -41,6 +43,23 @@ public class MuleLauncher
                 final ScaffoldGenerator scaffoldGenerator = new ScaffoldGenerator();
                 scaffoldGenerator.generateScaffold(new File(line.getOptionValue(CREATE_OPTION)));
             }
+            else if (line.hasOption(INTERACTIVE_OPTION))
+            {
+                final InteractiveGroovyRunner groovyRunner = new InteractiveGroovyRunner();
+                groovyRunner.run(muleHome);
+            }
+            else if (line.hasOption(REQUIRE_OPTION))
+            {
+                //todo improve we should add more parameters to make it more configurable
+                final ModuleResolver moduleResolver = new ModuleResolver();
+                final String moduleName = line.getOptionValue(REQUIRE_OPTION);
+                String groupId = "org.mule.modules";
+                String artifactId = "mule-module-" + moduleName;
+                String classifier = "plugin";
+                String extension = "zip";
+                String lastVersion = moduleResolver.getHighestVersion(groupId, artifactId, classifier, extension).toString();
+                moduleResolver.installModule(groupId, artifactId, classifier, extension, lastVersion, new File(new File(muleHome, "lib"), moduleName));
+            }
             else
             {
                 String[] argsArray = line.getArgs();
@@ -57,8 +76,9 @@ public class MuleLauncher
         }
         catch (ParseException exp)
         {
-            // oops, something went wrong
-            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+            System.err.println("Error: " + exp.getMessage());
+            printHelp(options);
+
         }
 
     }
@@ -72,15 +92,23 @@ public class MuleLauncher
 
     private static Options createOptions()
     {
-        Option ramlFile = OptionBuilder.withArgName("Raml file")
+        Option ramlFile = OptionBuilder.withArgName("RAML file")
                 .hasArg()
-                .withDescription("Create a script based on the specified Raml file.")
-                .create("c");
-        Option help = new Option("help", "Print this message");
+                .withDescription("Create a script based on the specified RAML file.")
+                .create(CREATE_OPTION);
+        Option interactive = new Option(INTERACTIVE_OPTION, "Starts an interactive console for fast testing.");
+        Option help = new Option(HELP_OPTION, "Print this message");
+
+        Option require = OptionBuilder.withArgName("Module name.")
+                .hasArg()
+                .withDescription("Downloads the required dependency so is available.")
+                .create("r");
 
         Options options = new Options();
         options.addOption(ramlFile);
         options.addOption(help);
+        options.addOption(interactive);
+        options.addOption(require);
         return options;
     }
 
