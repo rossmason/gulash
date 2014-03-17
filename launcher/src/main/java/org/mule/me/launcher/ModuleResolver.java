@@ -35,7 +35,7 @@ public class ModuleResolver
         try
         {
             FileUtils.unzip(file, moduleDirectory);
-            System.out.println("Module was successfully installed at " + moduleDirectory.getAbsolutePath());
+            System.out.println("Module " + groupId + ":" + artifactId + ":" + version + " was successfully installed at " + moduleDirectory.getPath());
         }
         catch (IOException e)
         {

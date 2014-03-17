@@ -20,6 +20,7 @@ public class MuleLauncher
     public static final String HELP_OPTION = "help";
     public static final String INTERACTIVE_OPTION = "i";
     public static final String REQUIRE_OPTION = "r";
+    public static final String VERSION_OPTION = "v";
 
     public static void main(String[] args) throws Exception
     {
@@ -57,7 +58,15 @@ public class MuleLauncher
                 String artifactId = "mule-module-" + moduleName;
                 String classifier = "plugin";
                 String extension = "zip";
-                String lastVersion = moduleResolver.getHighestVersion(groupId, artifactId, classifier, extension).toString();
+                String lastVersion;
+                if (line.hasOption(VERSION_OPTION))
+                {
+                    lastVersion = line.getOptionValue(VERSION_OPTION);
+                }
+                else
+                {
+                    lastVersion = moduleResolver.getHighestVersion(groupId, artifactId, classifier, extension).toString();
+                }
                 moduleResolver.installModule(groupId, artifactId, classifier, extension, lastVersion, new File(new File(muleHome, "lib"), moduleName));
             }
             else
@@ -99,10 +108,15 @@ public class MuleLauncher
         Option interactive = new Option(INTERACTIVE_OPTION, "Starts an interactive console for fast testing.");
         Option help = new Option(HELP_OPTION, "Print this message");
 
-        Option require = OptionBuilder.withArgName("Module name.")
+        Option require = OptionBuilder.withArgName("Dependency Module Name.")
                 .hasArg()
-                .withDescription("Downloads the required dependency so is available.")
-                .create("r");
+                .withDescription("Downloads the required dependency so is available at runtime.")
+                .create(REQUIRE_OPTION);
+
+        Option version = OptionBuilder.withArgName("Dependency Module  Version.")
+                .hasArg()
+                .withDescription("The version of the dependency. If not specified use the latest one.")
+                .create(VERSION_OPTION);
 
         Options options = new Options();
         options.addOption(ramlFile);
