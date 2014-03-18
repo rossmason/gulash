@@ -7,12 +7,13 @@ package org.mule.me.launcher.mvn;
  *   http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-import org.apache.maven.repository.internal.MavenRepositorySystemSession;
-import org.sonatype.aether.RepositorySystem;
-import org.sonatype.aether.RepositorySystemSession;
-import org.sonatype.aether.repository.LocalRepository;
-import org.sonatype.aether.repository.RemoteRepository;
 
+import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
+import org.eclipse.aether.DefaultRepositorySystemSession;
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.repository.LocalRepository;
+import org.eclipse.aether.repository.RemoteRepository;
 
 /**
  * A helper to boot the repository system and a repository system session.
@@ -27,10 +28,10 @@ public class MvnFactory
 
     public static RepositorySystemSession newRepositorySystemSession(RepositorySystem system)
     {
-        MavenRepositorySystemSession session = new MavenRepositorySystemSession();
+        DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
         LocalRepository localRepo = newLocalRepository();
-        session.setLocalRepositoryManager(system.newLocalRepositoryManager(localRepo));
+        session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
 
         session.setTransferListener(new ConsoleTransferListener());
         session.setRepositoryListener(new ConsoleRepositoryListener());
@@ -49,13 +50,12 @@ public class MvnFactory
 
     public static RemoteRepository newCentralRepository()
     {
-        return new RemoteRepository("central", "default", "http://repo1.maven.org/maven2/");
+        return new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/").build();
     }
 
     public static RemoteRepository newMuleReleasesRepository()
     {
-        RemoteRepository remoteRepository = new RemoteRepository("mule-releases", "default", "http://repository-master.mulesoft.org/releases/");
-        return remoteRepository;
+        return new RemoteRepository.Builder("mule-releases", "default", "http://repository-master.mulesoft.org/releases/").build();
     }
 
 }

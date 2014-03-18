@@ -10,8 +10,8 @@
     </parent>
     <artifactId>launcher</artifactId>
     <properties>
-        <aetherVersion>1.13</aetherVersion>
-        <mavenVersion>3.0.3</mavenVersion>
+        <aetherVersion>0.9.0.v20140226</aetherVersion>
+        <mavenVersion>3.1.0</mavenVersion>
         <wagonVersion>1.0-beta-7</wagonVersion>
     </properties>
 
@@ -58,59 +58,45 @@
             <artifactId>jansi</artifactId>
             <version>1.11</version>
         </dependency>
-
         <dependency>
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-provider-api</artifactId>
-            <version>${wagonVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.wagon</groupId>
-            <artifactId>wagon-http-lightweight</artifactId>
-            <version>${wagonVersion}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.maven.wagon</groupId>
-                    <artifactId>wagon-http-shared</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>2.0.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.sonatype.sisu</groupId>
-            <artifactId>sisu-inject-plexus</artifactId>
-            <version> 2.3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.sonatype.aether</groupId>
+            <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-api</artifactId>
-            <version>1.13.1</version>
+            <version>${aetherVersion}</version>
         </dependency>
         <dependency>
-            <groupId>org.sonatype.aether</groupId>
+            <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-spi</artifactId>
             <version>${aetherVersion}</version>
         </dependency>
         <dependency>
-            <groupId>org.sonatype.aether</groupId>
+            <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-util</artifactId>
             <version>${aetherVersion}</version>
         </dependency>
         <dependency>
-            <groupId>org.sonatype.aether</groupId>
+            <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-impl</artifactId>
             <version>${aetherVersion}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.sonatype.aether</groupId>
-            <artifactId>aether-connector-file</artifactId>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-connector-basic</artifactId>
             <version>${aetherVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-file</artifactId>
+            <version>${aetherVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.aether</groupId>
+            <artifactId>aether-transport-http</artifactId>
+            <version>${aetherVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-aether-provider</artifactId>
+            <version>${mavenVersion}</version>
         </dependency>
 
 
@@ -121,9 +107,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.apache.ivy</groupId>-->
-            <!--<artifactId>ivy</artifactId>-->
-            <!--<version>2.3.0</version>-->
+        <!--<groupId>org.apache.ivy</groupId>-->
+        <!--<artifactId>ivy</artifactId>-->
+        <!--<version>2.3.0</version>-->
         <!--</dependency>-->
 
         <dependency>
@@ -137,16 +123,19 @@
             <artifactId>jline</artifactId>
             <version>0.9.9</version>
         </dependency>
-        <dependency>
-            <groupId>org.sonatype.aether</groupId>
-            <artifactId>aether-connector-wagon</artifactId>
-            <version>1.13.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-aether-provider</artifactId>
-            <version>3.0.3</version>
-        </dependency>
+
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

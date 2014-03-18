@@ -47,14 +47,31 @@ public class AbstractGroovyRunner
     {
         ClassLoader executionClassLoader = MuleLauncher.class.getClassLoader();
         final File lib = new File(mule.getMuleHome(), "lib");
+        final List<URL> jarsUrl = new ArrayList<URL>();
         if (lib.exists())
         {
-            List<URL> jarsUrl = new ArrayList<URL>();
-            Collection<File> jars = FileUtils.listFiles(lib, new String[] {"jar"}, true);
-            for (File file : jars)
+            File[] files = lib.listFiles();
+            for (File module : files)
             {
-                jarsUrl.add(file.toURI().toURL());
+                if (module.isDirectory())
+                {
+                    File moduleLib = new File(module, "lib");
+                    if (moduleLib.exists() && moduleLib.isDirectory())
+                    {
+                        Collection<File> jars = FileUtils.listFiles(moduleLib, new String[] {"jar"}, true);
+                        for (File file : jars)
+                        {
+                            jarsUrl.add(file.toURI().toURL());
+                        }
+                    }
+                    File moduleClasses = new File(module, "classes");
+                    if (moduleClasses.exists() && moduleClasses.isDirectory())
+                    {
+                        jarsUrl.add(moduleClasses.toURI().toURL());
+                    }
+                }
             }
+
             if (!jarsUrl.isEmpty())
             {
                 executionClassLoader = new URLClassLoader(jarsUrl.toArray(new URL[jarsUrl.size()]), executionClassLoader);

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mule-devkitmodules-parent</artifactId>
+        <groupId>org.mule.modules</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <openimaj.version>1.2</openimaj.version>
+    </properties>
+
+    <artifactId>mule-module-webcam</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <artifactId>image-processing</artifactId>
+            <groupId>org.openimaj</groupId>
+            <version>${openimaj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>faces</artifactId>
+            <groupId>org.openimaj</groupId>
+            <version>${openimaj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <artifactId>video-processing</artifactId>
+            <groupId>org.openimaj</groupId>
+            <version>${openimaj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openimaj</groupId>
+            <artifactId>core</artifactId>
+            <version>${openimaj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>OpenIMAJ maven releases repository</id>
+            <url>http://maven.openimaj.org</url>
+        </repository>
+        <repository>
+            <id>OpenIMAJ maven snapshots repository</id>
+            <url>http://snapshots.openimaj.org</url>
+        </repository>
+    </repositories>
+
+</project>
