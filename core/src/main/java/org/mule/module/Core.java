@@ -5,9 +5,11 @@ import groovy.lang.Closure;
 
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
+import org.mule.module.core.builder.AsyncBuilder;
 import org.mule.module.core.builder.ChoiceBuilder;
 import org.mule.module.core.builder.EnricherBuilder;
 import org.mule.module.core.builder.FlowRefBuilder;
+import org.mule.module.core.builder.IfBuilder;
 import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilderImpl;
@@ -19,6 +21,8 @@ import org.mule.module.core.builder.InboundEndpointBuilder;
 import org.mule.module.core.builder.LoggerBuilder;
 import org.mule.module.core.builder.PollBuilder;
 import org.mule.module.core.builder.SetPayloadBuilder;
+
+import java.util.Arrays;
 
 public class Core
 {
@@ -61,6 +65,16 @@ public class Core
     public static ChoiceBuilder choice()
     {
         return new ChoiceBuilder();
+    }
+
+    public static IfBuilder when(String condition)
+    {
+        return new IfBuilder(condition);
+    }
+
+    public static AsyncBuilder async(Builder<MessageProcessor>... messageProcessors)
+    {
+        return new AsyncBuilder(Arrays.asList(messageProcessors));
     }
 
     public static <T> JavaBeanElementBuilder<T> bean(Class<T> globalElementClass)
