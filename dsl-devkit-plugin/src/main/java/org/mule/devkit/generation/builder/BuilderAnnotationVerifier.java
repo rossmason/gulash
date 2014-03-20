@@ -2,6 +2,7 @@ package org.mule.devkit.generation.builder;
 
 import org.mule.devkit.generation.api.AnnotationVerificationException;
 import org.mule.devkit.generation.api.ModuleAnnotationVerifier;
+import org.mule.devkit.generation.api.gatherer.NotificationGatherer;
 import org.mule.devkit.model.module.Module;
 import org.mule.devkit.model.module.ModuleKind;
 
@@ -18,8 +19,10 @@ public class BuilderAnnotationVerifier implements ModuleAnnotationVerifier
     }
 
     @Override
-    public void verify(Module module) throws AnnotationVerificationException
+    public void verify(Module module, NotificationGatherer notificationGatherer) throws AnnotationVerificationException
     {
 
     }
+
+
 }

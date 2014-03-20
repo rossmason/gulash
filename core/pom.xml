@@ -28,6 +28,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.7.19</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-module-apikit</artifactId>
             <version>${apikit.version}</version>
@@ -112,7 +118,6 @@
         </dependency>
 
     </dependencies>
-
 
 
 </project>

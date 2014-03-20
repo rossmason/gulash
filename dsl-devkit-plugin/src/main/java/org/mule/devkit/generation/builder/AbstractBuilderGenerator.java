@@ -173,17 +173,21 @@ public abstract class AbstractBuilderGenerator implements ModuleGenerator
         return field;
     }
 
-    private GeneratedExpression getDefaultValueExpression(org.mule.devkit.model.code.Type type, String defaultValue)
+    private GeneratedExpression getDefaultValueExpression(org.mule.devkit.model.code.Type fieldType, String defaultValue)
     {
         GeneratedExpression defaultValueGeneratedExpression = null;
         if (!StringUtils.isEmpty(defaultValue))
         {
             String defaultValueExpression = defaultValue;
-            if (type.fullName().equals(String.class.getName()))
+            if (fieldType.fullName().equals(String.class.getName()) || defaultValue.startsWith("#["))
             {
                 defaultValueExpression = "\"" + defaultValue + "\"";
+                defaultValueGeneratedExpression = ExpressionFactory.direct(defaultValueExpression);
             }
-            defaultValueGeneratedExpression = ExpressionFactory.cast(type, ExpressionFactory.direct(defaultValueExpression));
+            else
+            {
+                defaultValueGeneratedExpression = ExpressionFactory.cast(fieldType, ExpressionFactory.direct(defaultValueExpression));
+            }
         }
         return defaultValueGeneratedExpression;
     }

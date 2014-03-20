@@ -15,8 +15,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <mule.version>3.5.0-cascade</mule.version>
-        <mule.devkit.version>3.5.0-cascade</mule.devkit.version>
+        <mule.version>3.5.0-M4</mule.version>
+        <mule.devkit.version>3.5.0-M4</mule.devkit.version>
         <junit.version>4.10</junit.version>
         <mockito.version>1.8.5</mockito.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +29,7 @@
         <module>mule-module-pi</module>
         <module>mule-module-twitter</module>
         <module>mule-module-webcam</module>
+        <module>mule-module-jira</module>
     </modules>
 
     <build>

@@ -12,7 +12,7 @@
     <artifactId>dsl-devkit-plugin</artifactId>
 
     <properties>
-        <devkit.version>3.5.0-cascade</devkit.version>
+        <devkit.version>3.5.0-M4</devkit.version>
     </properties>
 
     <dependencies>
