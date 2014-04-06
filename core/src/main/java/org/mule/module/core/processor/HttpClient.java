@@ -36,24 +36,27 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 
 
-public class RestClient implements MessageProcessor, MuleContextAware, Lifecycle
+public class HttpClient implements MessageProcessor, MuleContextAware, Lifecycle
 {
 
     public static final String TRANSFER_ENCODING_PROPERTY = "Transfer-Encoding";
+
+    private AsyncHttpClient asyncHttpClient;
+    private MuleContext context;
+
+    //Parameters
     private String baseUrl;
     private String uri;
     private String method;
     private String body;
-    private Object headersProperty;
-    private AsyncHttpClient asyncHttpClient;
-    private MuleContext context;
+    private Object headers;
 
-
-    public RestClient()
+    public HttpClient()
     {
         uri = "#[message.inboundProperties['http.request']]";
-        headersProperty = "#[message.inboundProperties['http.headers']";
+        headers = "#[message.inboundProperties['http.headers']";
         method = "#[message.inboundProperties['http.method']]";
+        body = "#[payload]";
     }
 
 
@@ -62,15 +65,18 @@ public class RestClient implements MessageProcessor, MuleContextAware, Lifecycle
     {
         MuleEvent result;
         final String uriEvaluated = (String) new AttributeEvaluator(uri).resolveValue(event.getMessage());
-        Map<String, String> headers = null;
-        if (headersProperty instanceof Map)
+        Map<String, String> headersEvaluated = null;
+        if (headers instanceof Map)
         {
-            headers = (Map<String, String>) headersProperty;
+            headersEvaluated = (Map<String, String>) headers;
         }
-        else if (headersProperty instanceof String)
+        else if (headers instanceof String)
         {
-            headers = (Map<String, String>) new AttributeEvaluator(headersProperty.toString()).resolveValue(event.getMessage());
+            headersEvaluated = (Map<String, String>) new AttributeEvaluator(headers.toString()).resolveValue(event.getMessage());
         }
+
+        final String bodyEvaluated = (String) new AttributeEvaluator(body).resolveValue(event.getMessage());
+        final String methodEvaluated = (String) new AttributeEvaluator(method).resolveValue(event.getMessage());
 
         try
         {
@@ -79,34 +85,38 @@ public class RestClient implements MessageProcessor, MuleContextAware, Lifecycle
 
             AsyncHttpClient.BoundRequestBuilder requestBuilder = null;
 
-            if (method.equalsIgnoreCase(HttpMethod.POST.getName()))
+            if (methodEvaluated.equalsIgnoreCase(HttpMethod.POST.getName()))
             {
                 requestBuilder = asyncHttpClient.preparePost(url);
+                requestBuilder.setBody(bodyEvaluated);
             }
-            else if (method.equalsIgnoreCase(HttpMethod.GET.getName()))
+            else if (methodEvaluated.equalsIgnoreCase(HttpMethod.GET.getName()))
             {
                 requestBuilder = asyncHttpClient.prepareGet(url);
             }
-            else if (method.equalsIgnoreCase(HttpMethod.PUT.getName()))
+            else if (methodEvaluated.equalsIgnoreCase(HttpMethod.PUT.getName()))
             {
                 requestBuilder = asyncHttpClient.preparePut(url);
+                requestBuilder.setBody(bodyEvaluated);
             }
-            else if (method.equalsIgnoreCase(HttpMethod.OPTIONS.getName()))
+            else if (methodEvaluated.equalsIgnoreCase(HttpMethod.OPTIONS.getName()))
             {
                 requestBuilder = asyncHttpClient.prepareOptions(url);
             }
-            else if (method.equalsIgnoreCase(HttpMethod.HEAD.getName()))
+            else if (methodEvaluated.equalsIgnoreCase(HttpMethod.HEAD.getName()))
             {
                 requestBuilder = asyncHttpClient.prepareHead(url);
             }
-            else if (method.equalsIgnoreCase(HttpMethod.DELETE.getName()))
+            else if (methodEvaluated.equalsIgnoreCase(HttpMethod.DELETE.getName()))
             {
                 requestBuilder = asyncHttpClient.prepareDelete(url);
             }
 
-            if (headers != null)
+            //requestBuilder.setRealm()
+
+            if (headersEvaluated != null)
             {
-                for (Map.Entry<String, String> header : headers.entrySet())
+                for (Map.Entry<String, String> header : headersEvaluated.entrySet())
                 {
                     requestBuilder.setHeader(header.getKey(), header.getValue());
                 }
@@ -196,6 +206,25 @@ public class RestClient implements MessageProcessor, MuleContextAware, Lifecycle
         this.method = method;
     }
 
+    public String getBody()
+    {
+        return body;
+    }
+
+    public void setBody(String body)
+    {
+        this.body = body;
+    }
+
+    public Object getHeaders()
+    {
+        return headers;
+    }
+
+    public void setHeaders(Object headers)
+    {
+        this.headers = headers;
+    }
 
     @Override
     public void dispose()
@@ -218,6 +247,7 @@ public class RestClient implements MessageProcessor, MuleContextAware, Lifecycle
                 .setFollowRedirects(true)
                 .setExecutorService(bossExecutor)
                 .setKeepAlive(false)
+
                 .build();
 
 
