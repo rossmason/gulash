@@ -49,7 +49,7 @@ mule.declare(twitterConfig(consumerKey, consumerSecret)
 
 mule.declare(flow("TestTwitter")
                      .on(endpoint("http://localhost:8081"))
-                     .then(updateStatus("#['Hello From Mule Light']").with("twitter"))
+                     .then(updateStatus("#['Enjoying my #Goulash']").with("twitter"))
                      .then(setPayload("OK")));
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -75,7 +75,7 @@ Just use maven
 mvn clean install
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-And a distro will be generated under laucher/target/mule-me.zip
+And a distribution will be generated under goulash/target/goulash.zip
 
 Just unzip it and you have it installed
 
@@ -83,10 +83,22 @@ Running a script
 -----------
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-mule-me/bin/mule.sh example.groovy
+goulash/bin/goulash.sh example.groovy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-usage: mule <MuleFile>
- -c <raml file>   Create an escafolder based on .
- -help            Print this message
+usage: goulash.sh <File>
+ -c <RAML file>                           Create a script based on the
+                                          specified RAML file.
+ -get <Dependency Module Name.>           Downloads the required
+                                          dependency so it is available at
+                                          runtime.
+ -help                                    Print this message
+ -i                                       Starts an interactive console
+                                          for fast testing.
+ -list <Dependency Module Version.>       The version of the dependency.
+                                          If not specified use the latest
+                                          one.
+ -version <Dependency Module  Version.>   The version of the dependency.
+                                          If not specified use the latest
+                                          one.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
