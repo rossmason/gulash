@@ -17,7 +17,7 @@
 
     <modules>
         <module>core</module>
-        <module>launcher</module>
+        <module>goulash</module>
         <module>dsl-devkit-plugin</module> 
         <module>devkit-modules</module>
         <module>modules</module>

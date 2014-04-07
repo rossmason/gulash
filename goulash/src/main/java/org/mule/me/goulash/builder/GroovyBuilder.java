@@ -1,9 +1,11 @@
-package org.mule.module.core.builder;
+package org.mule.me.goulash.builder;
 
 import groovy.lang.Closure;
 
 import org.mule.api.MuleContext;
-import org.mule.module.core.processor.GroovyMessageProcessor;
+import org.mule.me.goulash.processor.GroovyMessageProcessor;
+import org.mule.module.core.builder.MessageProcessorBuilder;
+
 
 import java.util.ArrayList;
 import java.util.List;

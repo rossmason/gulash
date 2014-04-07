@@ -66,11 +66,7 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
-            <version>1.8.6</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.mule.transports</groupId>

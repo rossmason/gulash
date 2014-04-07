@@ -1,23 +1,20 @@
 package org.mule.module;
 
 
-import groovy.lang.Closure;
-
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
 import org.mule.module.core.builder.AsyncBuilder;
 import org.mule.module.core.builder.ChoiceBuilder;
-import org.mule.module.core.builder.EnricherBuilder;
-import org.mule.module.core.builder.FlowRefBuilder;
-import org.mule.module.core.builder.IfBuilder;
-import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilder;
 import org.mule.module.core.builder.CustomMessageProcessorBuilderImpl;
+import org.mule.module.core.builder.EnricherBuilder;
 import org.mule.module.core.builder.FlowBuilder;
 import org.mule.module.core.builder.FlowBuilderImpl;
+import org.mule.module.core.builder.FlowRefBuilder;
 import org.mule.module.core.builder.ForeachBuilder;
-import org.mule.module.core.builder.GroovyBuilder;
+import org.mule.module.core.builder.IfBuilder;
 import org.mule.module.core.builder.InboundEndpointBuilder;
+import org.mule.module.core.builder.JavaBeanElementBuilder;
 import org.mule.module.core.builder.LoggerBuilder;
 import org.mule.module.core.builder.PollBuilder;
 import org.mule.module.core.builder.SetPayloadBuilder;
@@ -97,9 +94,6 @@ public class Core
         return new CustomMessageProcessorBuilderImpl<T>(clazz);
     }
 
-    public static GroovyBuilder call(Closure closure)
-    {
-        return new GroovyBuilder(closure);
-    }
+
 
 }

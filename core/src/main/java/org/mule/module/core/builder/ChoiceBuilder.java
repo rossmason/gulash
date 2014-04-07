@@ -1,7 +1,6 @@
 package org.mule.module.core.builder;
 
 import org.mule.api.MuleContext;
-import org.mule.api.MuleMessage;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.api.routing.filter.Filter;
 import org.mule.config.dsl.Builder;
@@ -11,8 +10,6 @@ import org.mule.routing.filters.ExpressionFilter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import groovy.lang.Closure;
 
 
 public class ChoiceBuilder implements Builder<ChoiceRouter>
@@ -36,18 +33,6 @@ public class ChoiceBuilder implements Builder<ChoiceRouter>
         current = route;
         filters.add(filter);
         return this;
-    }
-
-    public ChoiceBuilder on(final Closure<Boolean> expression)
-    {
-        return on(new Filter()
-        {
-            @Override
-            public boolean accept(MuleMessage message)
-            {
-                return expression.call(message);
-            }
-        });
     }
 
     public ChoiceBuilder otherwise()

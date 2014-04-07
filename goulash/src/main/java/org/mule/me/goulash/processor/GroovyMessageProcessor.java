@@ -1,4 +1,4 @@
-package org.mule.module.core.processor;
+package org.mule.me.goulash.processor;
 
 import groovy.lang.Closure;
 
