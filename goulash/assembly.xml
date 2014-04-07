@@ -12,7 +12,7 @@
     <fileSets>
         <fileSet>
             <directory>src/main/resources/bin</directory>
-            <outputDirectory>mule-me/bin</outputDirectory>
+            <outputDirectory>goulash/bin</outputDirectory>
             <fileMode>777</fileMode>
             <includes>
                 <include>*.sh</include>
@@ -22,7 +22,7 @@
 
     <dependencySets>
         <dependencySet>
-            <outputDirectory>mule-me/lib</outputDirectory>
+            <outputDirectory>goulash/lib</outputDirectory>
             <useTransitiveDependencies>true</useTransitiveDependencies>
         </dependencySet>
     </dependencySets>

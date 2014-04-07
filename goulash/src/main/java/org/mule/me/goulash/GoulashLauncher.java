@@ -86,10 +86,17 @@ public class GoulashLauncher
                 String extension = DEFAULT_EXTENSION;
 
                 final List<Version> versions = moduleResolver.listVersions(groupId, artifactId, classifier, extension);
-                System.out.println("Available versions of " + moduleName);
-                for (Version version : versions)
+                if (versions.isEmpty())
                 {
-                    System.out.println("\t- " + version.toString());
+                    System.out.println("NO VERSION of " + moduleName + " was found");
+                }
+                else
+                {
+                    System.out.println("Available versions of " + moduleName);
+                    for (Version version : versions)
+                    {
+                        System.out.println("\t- " + version.toString());
+                    }
                 }
             }
             else
@@ -119,7 +126,7 @@ public class GoulashLauncher
     {
         // automatically generate the help statement
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("mule <MuleFile>", options);
+        formatter.printHelp("goulash.sh <File>", options);
     }
 
     private static Options createOptions()

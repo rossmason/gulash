@@ -19,7 +19,6 @@
         <module>core</module>
         <module>goulash</module>
         <module>dsl-devkit-plugin</module> 
-        <module>devkit-modules</module>
         <module>modules</module>
     </modules>
 
