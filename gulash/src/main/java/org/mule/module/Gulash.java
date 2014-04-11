@@ -7,7 +7,7 @@ import groovy.lang.Closure;
 /**
  * Created by machaval on 4/6/14.
  */
-public class Goulash
+public class Gulash
 {
 
     public static GroovyBuilder call(Closure closure)

@@ -4,7 +4,7 @@ import org.mule.api.MuleEvent;
 import org.mule.api.MuleMessage;
 import org.mule.module.Apikit;
 import org.mule.module.Core;
-import org.mule.module.Goulash;
+import org.mule.module.Gulash;
 import org.mule.module.core.Mule;
 import org.mule.module.core.StartListener;
 import org.mule.module.core.TimePeriod;
@@ -33,7 +33,7 @@ public class AbstractGroovyRunner
     {
         final CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
         final ImportCustomizer importCustomizer = new ImportCustomizer();
-        importCustomizer.addStaticStars(Core.class.getName(), Goulash.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName(), TimePeriod.class.getName());
+        importCustomizer.addStaticStars(Core.class.getName(), Gulash.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName(), TimePeriod.class.getName());
         importCustomizer.addImports(StartListener.class.getName());
         importCustomizer.addImports(MuleEvent.class.getName());
         importCustomizer.addImports(MuleMessage.class.getName());
@@ -46,7 +46,7 @@ public class AbstractGroovyRunner
 
     protected ClassLoader createClassLoader(Mule mule) throws MalformedURLException
     {
-        ClassLoader executionClassLoader = GoulashLauncher.class.getClassLoader();
+        ClassLoader executionClassLoader = GulashLauncher.class.getClassLoader();
         final File lib = new File(mule.getMuleHome(), "lib");
         final List<URL> jarsUrl = new ArrayList<URL>();
         if (lib.exists())

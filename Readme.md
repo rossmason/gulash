@@ -1,4 +1,4 @@
-Goulash
+Gulash
 ==========
 
 The goal of this project is to create a small java/groovy dsl on top of mule
@@ -86,7 +86,7 @@ Running a script
 goulash/bin/goulash.sh example.groovy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-usage: goulash.sh <File>
+usage: gulash.sh <File>
  -c <RAML file>                           Create a script based on the
                                           specified RAML file.
  -get <Dependency Module Name.>           Downloads the required

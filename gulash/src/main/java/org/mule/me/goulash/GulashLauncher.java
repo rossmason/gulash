@@ -15,7 +15,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.aether.version.Version;
 
-public class GoulashLauncher
+public class GulashLauncher
 {
 
     public static final String CREATE_OPTION = "c";
@@ -126,7 +126,7 @@ public class GoulashLauncher
     {
         // automatically generate the help statement
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("goulash.sh <File>", options);
+        formatter.printHelp("gulash.sh <File>", options);
     }
 
     private static Options createOptions()
