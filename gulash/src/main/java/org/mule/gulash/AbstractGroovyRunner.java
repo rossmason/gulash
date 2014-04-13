@@ -32,6 +32,7 @@ public class AbstractGroovyRunner
     protected GroovyShell createGroovyShell(Mule mule) throws MalformedURLException
     {
         final CompilerConfiguration compilerConfiguration = new CompilerConfiguration();
+        compilerConfiguration.setScriptBaseClass(MuleBaseScript.class.getName());
         final ImportCustomizer importCustomizer = new ImportCustomizer();
         importCustomizer.addStaticStars(Core.class.getName(), Groovy.class.getName(), Apikit.class.getName(), PropertiesBuilder.class.getName(), TimePeriod.class.getName());
         importCustomizer.addImports(StartListener.class.getName());

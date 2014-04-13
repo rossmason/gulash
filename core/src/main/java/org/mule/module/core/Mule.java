@@ -66,7 +66,7 @@ public class Mule
         return this;
     }
 
-    public Mule stop() throws MuleException
+    public Mule down() throws MuleException
     {
         muleContext.stop();
         return this;

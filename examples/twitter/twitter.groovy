@@ -6,11 +6,11 @@ String accessKey = "";
 String accessSecret = "";
 
 
-mule.declare(twitterConfig(consumerKey, consumerSecret)
+declare twitterConfig(consumerKey, consumerSecret)
                      .accessKey(accessKey)
-                     .accessSecret(accessSecret).as("twitter"));
+                     .accessSecret(accessSecret).as("twitterConfig");
 
-mule.declare(flow("TestTwitter")
-                     .on(endpoint("http://localhost:8081"))
-                     .then(updateStatus("#['Hello From Mule Light']").with("twitter"))
-                     .then(setPayload("OK")));
+declare flow "TestTwitter"
+                     on(endpoint("http://localhost:8081"))
+                     then(updateStatus("#['Hello From Mule Light']").with("twitterConfig"))
+                     then(setPayload("OK"));

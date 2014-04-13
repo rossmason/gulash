@@ -49,7 +49,7 @@ class Interpreter
             log.debug("Compiled script: $script")
 
             if (type.declaredMethods.any { it.name == 'main' }) {
-                result = script.run()
+                result = shell.evaluate(source)
             }
 
             // Need to use String.valueOf() here to avoid icky exceptions causes by GString coercion
