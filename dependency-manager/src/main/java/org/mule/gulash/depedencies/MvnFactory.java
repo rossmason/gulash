@@ -33,8 +33,8 @@ public class MvnFactory
         LocalRepository localRepo = newLocalRepository();
         session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
 
-        session.setTransferListener(new ConsoleTransferListener());
-        session.setRepositoryListener(new ConsoleRepositoryListener());
+        session.setTransferListener(new DefaultTransferListener());
+        session.setRepositoryListener(new DefaultRepositoryListener());
 
         // uncomment to generate dirty trees
         // session.setDependencyGraphTransformer( null );

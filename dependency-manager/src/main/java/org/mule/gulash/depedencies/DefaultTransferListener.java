@@ -19,7 +19,7 @@ import org.eclipse.aether.transfer.TransferResource;
 /**
  * A simplistic transfer listener that logs uploads/downloads to the console.
  */
-public class ConsoleTransferListener extends AbstractTransferListener
+public class DefaultTransferListener extends AbstractTransferListener
 {
 
     private PrintStream out;
@@ -28,12 +28,12 @@ public class ConsoleTransferListener extends AbstractTransferListener
 
     private int lastLength;
 
-    public ConsoleTransferListener()
+    public DefaultTransferListener()
     {
         this(null);
     }
 
-    public ConsoleTransferListener(PrintStream out)
+    public DefaultTransferListener(PrintStream out)
     {
         this.out = (out != null) ? out : System.out;
     }
