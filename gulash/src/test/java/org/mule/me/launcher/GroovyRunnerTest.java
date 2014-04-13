@@ -1,6 +1,7 @@
 package org.mule.me.launcher;
 
-import org.mule.me.goulash.GroovyRunner;
+
+import org.mule.gulash.GroovyRunner;
 
 import java.io.File;
 import java.net.URL;
@@ -18,6 +19,6 @@ public class GroovyRunnerTest
     {
         URL resource = getClass().getClassLoader().getResource("test.groovy");
 
-        new GroovyRunner().run(new File(resource.toURI()),new File("."));
+        new GroovyRunner().run(new File(resource.toURI()), new File("."));
     }
 }

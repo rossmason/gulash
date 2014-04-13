@@ -12,7 +12,7 @@
     <fileSets>
         <fileSet>
             <directory>src/main/resources/bin</directory>
-            <outputDirectory>goulash/bin</outputDirectory>
+            <outputDirectory>gulash/bin</outputDirectory>
             <fileMode>777</fileMode>
             <includes>
                 <include>*.sh</include>
@@ -22,7 +22,7 @@
 
     <dependencySets>
         <dependencySet>
-            <outputDirectory>goulash/lib</outputDirectory>
+            <outputDirectory>gulash/lib</outputDirectory>
             <useTransitiveDependencies>true</useTransitiveDependencies>
         </dependencySet>
     </dependencySets>

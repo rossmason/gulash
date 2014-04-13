@@ -1,6 +1,6 @@
-package org.mule.me.goulash;
+package org.mule.gulash;
 
-import org.mule.me.goulash.mvn.MvnFactory;
+import org.mule.gulash.depedencies.MvnFactory;
 import org.mule.util.FileUtils;
 
 import java.io.File;

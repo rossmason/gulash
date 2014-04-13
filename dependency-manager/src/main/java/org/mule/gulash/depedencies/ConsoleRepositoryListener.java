@@ -1,4 +1,4 @@
-package org.mule.me.goulash.mvn;
+package org.mule.gulash.depedencies;
 
 import java.io.PrintStream;
 

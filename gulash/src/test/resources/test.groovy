@@ -1,21 +1,14 @@
-import org.mule.api.MuleEvent
-import org.mule.api.MuleMessage
-
-
-
-
-
 mule.declare(
         flow("Hello")
                 .then(log("#[payload]"),
                       call(
                               {
-                                  MuleMessage event, payload ->
+                                  message ->
                                       println("function called");
-                                      println(payload)
-                                      return event
+                                      println(message.payload)
+                                      return "Hello From here"
                               }
-                      ).argument("must evaluate #[payload]")
+                      )
         )
 );
 

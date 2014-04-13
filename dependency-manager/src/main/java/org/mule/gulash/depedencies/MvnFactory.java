@@ -1,4 +1,4 @@
-package org.mule.me.goulash.mvn;
+package org.mule.gulash.depedencies;
 /*******************************************************************************
  * Copyright (c) 2010-2011 Sonatype, Inc.
  * All rights reserved. This program and the accompanying materials

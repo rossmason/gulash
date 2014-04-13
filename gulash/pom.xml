@@ -4,25 +4,55 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.mule.me</groupId>
-        <artifactId>mule-me-parent</artifactId>
+        <groupId>org.mule.gulash</groupId>
+        <artifactId>gulash-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>goulash</artifactId>
-    <properties>
-        <aetherVersion>0.9.0.v20140226</aetherVersion>
-        <mavenVersion>3.1.0</mavenVersion>
-        <wagonVersion>1.0-beta-7</wagonVersion>
-    </properties>
+    <artifactId>gulash</artifactId>
 
     <build>
         <plugins>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <!-- Bind Groovy Eclipse Compiler -->
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+                <dependencies>
+                    <!-- Define which Groovy version will be used for build (default is 2.0) -->
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-batch</artifactId>
+                        <version>1.8.6-01</version>
+                    </dependency>
+                    <!-- Define dependency to Groovy Eclipse Compiler (as it's referred in compilerId) -->
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-compiler</artifactId>
+                        <version>2.7.0-01</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- Define Groovy Eclipse Compiler again and set extensions=true. Thanks to this, plugin will -->
+            <!-- enhance default build life cycle with an extra phase which adds additional Groovy source folders -->
+            <!-- It works fine under Maven 3.x, but we've encountered problems with Maven 2.x -->
+            <plugin>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-eclipse-compiler</artifactId>
+                <version>2.7.0-01</version>
+                <extensions>true</extensions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                    <finalName>goulash</finalName>
+                    <finalName>gulash</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
 
                     <descriptors>
@@ -48,7 +78,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.mule.me</groupId>
+            <groupId>org.mule.gulash</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -59,50 +89,30 @@
             <version>1.8.6</version>
         </dependency>
 
+
         <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
             <version>1.11</version>
         </dependency>
+
         <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-api</artifactId>
-            <version>${aetherVersion}</version>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>0.9.9</version>
         </dependency>
+
+
         <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-spi</artifactId>
-            <version>${aetherVersion}</version>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>1.8.8</version>
         </dependency>
+
         <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-util</artifactId>
-            <version>${aetherVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-impl</artifactId>
-            <version>${aetherVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-connector-basic</artifactId>
-            <version>${aetherVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-transport-file</artifactId>
-            <version>${aetherVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.aether</groupId>
-            <artifactId>aether-transport-http</artifactId>
-            <version>${aetherVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-aether-provider</artifactId>
-            <version>${mavenVersion}</version>
+            <groupId>org.mule.gulash</groupId>
+            <artifactId>dependency-manager</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
 
@@ -124,11 +134,7 @@
             <version>4.9</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>jline</groupId>
-            <artifactId>jline</artifactId>
-            <version>0.9.9</version>
-        </dependency>
+
 
     </dependencies>
 

@@ -1,4 +1,4 @@
-package org.mule.me.goulash;
+package org.mule.gulash;
 
 
 import java.io.File;
@@ -15,12 +15,12 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.aether.version.Version;
 
-public class GulashLauncher
+public class GulashMain
 {
 
     public static final String CREATE_OPTION = "c";
     public static final String HELP_OPTION = "help";
-    public static final String INTERACTIVE_OPTION = "i";
+
     public static final String REQUIRE_OPTION = "get";
     public static final String VERSION_OPTION = "version";
     public static final String DEFAULT_GROUP_ID = "org.mule.modules";
@@ -51,11 +51,7 @@ public class GulashLauncher
                 final RamlGenerator ramlGenerator = new RamlGenerator();
                 ramlGenerator.generateScaffold(new File(line.getOptionValue(CREATE_OPTION)));
             }
-            else if (line.hasOption(INTERACTIVE_OPTION))
-            {
-                final InteractiveGroovyRunner groovyRunner = new InteractiveGroovyRunner();
-                groovyRunner.run(muleHome);
-            }
+
             else if (line.hasOption(REQUIRE_OPTION))
             {
                 final ModuleResolver moduleResolver = new ModuleResolver();
@@ -109,7 +105,8 @@ public class GulashLauncher
                 }
                 else
                 {
-                    printHelp(options);
+                    final InteractiveGroovyRunner groovyRunner = new InteractiveGroovyRunner();
+                    groovyRunner.run(muleHome);
                 }
             }
         }
@@ -135,7 +132,7 @@ public class GulashLauncher
                 .hasArg()
                 .withDescription("Create a script based on the specified RAML file.")
                 .create(CREATE_OPTION);
-        Option interactive = new Option(INTERACTIVE_OPTION, "Starts an interactive console for fast testing.");
+
         Option help = new Option(HELP_OPTION, "Print this message");
 
         Option require = OptionBuilder.withArgName("Dependency Module Name.")
@@ -156,7 +153,6 @@ public class GulashLauncher
         Options options = new Options();
         options.addOption(ramlFile);
         options.addOption(help);
-        options.addOption(interactive);
         options.addOption(require);
         options.addOption(version);
         options.addOption(listVersion);

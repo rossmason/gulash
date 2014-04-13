@@ -1,4 +1,4 @@
-package org.mule.me.goulash;
+package org.mule.gulash;
 
 import org.mule.module.core.Mule;
 

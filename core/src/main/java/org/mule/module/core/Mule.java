@@ -66,6 +66,12 @@ public class Mule
         return this;
     }
 
+    public Mule stop() throws MuleException
+    {
+        muleContext.stop();
+        return this;
+    }
+
     public File getMuleHome()
     {
         return muleHome;

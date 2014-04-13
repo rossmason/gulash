@@ -42,7 +42,7 @@
                     <extensions>true</extensions>
                     <dependencies>
                         <dependency>
-                            <groupId>org.mule.me</groupId>
+                            <groupId>org.mule.gulash</groupId>
                             <artifactId>dsl-devkit-plugin</artifactId>
                             <version>1.0-SNAPSHOT</version>
                         </dependency>

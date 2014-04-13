@@ -1,4 +1,4 @@
-package org.mule.me.goulash;
+package org.mule.gulash;
 
 import org.mule.module.core.Mule;
 
@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 import groovy.lang.Binding;
-import org.codehaus.groovy.tools.shell.Groovysh;
 import org.codehaus.groovy.tools.shell.IO;
+import org.mule.gulash.Gulash;
 
 
 public class InteractiveGroovyRunner extends AbstractGroovyRunner
@@ -19,8 +19,8 @@ public class InteractiveGroovyRunner extends AbstractGroovyRunner
         final Binding binding = new Binding();
         final Mule mule = new Mule(muleHome);
         binding.setVariable("mule", mule);
-        final Groovysh interactiveShell = new Groovysh(createClassLoader(mule), createBinding(mule), new IO());
-        interactiveShell.run();
+        final Gulash interactiveShell = new Gulash(createGroovyShell(mule), new IO());
+        interactiveShell.run(new String[0]);
     }
 
 

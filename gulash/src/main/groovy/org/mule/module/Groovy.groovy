@@ -1,13 +1,12 @@
 package org.mule.module;
 
-import org.mule.me.goulash.builder.GroovyBuilder;
 
-import groovy.lang.Closure;
+import org.mule.module.groovy.builder.GroovyBuilder
 
 /**
  * Created by machaval on 4/6/14.
  */
-public class Gulash
+public class Groovy
 {
 
     public static GroovyBuilder call(Closure closure)

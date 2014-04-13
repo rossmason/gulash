@@ -1,4 +1,4 @@
-package org.mule.me.goulash.mvn;
+package org.mule.gulash.depedencies;
 /*******************************************************************************
  * Copyright (c) 2010-2011 Sonatype, Inc.
  * All rights reserved. This program and the accompanying materials
@@ -8,9 +8,6 @@ package org.mule.me.goulash.mvn;
  *******************************************************************************/
 
 import java.io.PrintStream;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
