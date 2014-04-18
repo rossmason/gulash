@@ -8,7 +8,9 @@ import org.mule.api.MuleContext;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.client.MuleClient;
+import org.mule.api.config.ConfigurationException;
 import org.mule.api.config.MuleProperties;
+import org.mule.api.lifecycle.InitialisationException;
 import org.mule.api.registry.RegistrationException;
 import org.mule.client.DefaultLocalMuleClient;
 import org.mule.config.DefaultMuleConfiguration;
@@ -167,14 +169,9 @@ public class Mule
     public Mule start() throws MuleException
     {
 
-        final Properties properties = new Properties();
-        properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, muleHome.getAbsolutePath());
-        muleContext = new DefaultMuleContextFactory().createMuleContext(new DefaultsConfigurationBuilder(), properties, new DefaultMuleConfiguration());
+        initMuleContext();
+        build();
 
-        for (Builder<?> builder : builders)
-        {
-            builder.create(muleContext);
-        }
         muleContext.start();
         for (StartListener startListener : startListeners)
         {
@@ -183,7 +180,32 @@ public class Mule
         return this;
     }
 
-    public Mule down() throws MuleException
+    public void build()
+    {
+        for (Builder<?> builder : builders)
+        {
+            builder.create(muleContext);
+        }
+        builders.clear();
+    }
+
+    private void initMuleContext() throws InitialisationException, ConfigurationException
+    {
+        if (muleContext == null)
+        {
+            final Properties properties = new Properties();
+            properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, muleHome.getAbsolutePath());
+            muleContext = new DefaultMuleContextFactory().createMuleContext(new DefaultsConfigurationBuilder(), properties, new DefaultMuleConfiguration());
+        }
+    }
+
+
+    public MuleContext getMuleContext()
+    {
+        return muleContext;
+    }
+
+    public Mule stop() throws MuleException
     {
         muleContext.stop();
         return this;
@@ -221,5 +243,10 @@ public class Mule
     public <T> T lookup(Class<T> clazz) throws RegistrationException
     {
         return muleContext.getRegistry().lookupObject(clazz);
+    }
+
+    public <T> T get(String key)
+    {
+        return muleContext.getRegistry().get(key);
     }
 }

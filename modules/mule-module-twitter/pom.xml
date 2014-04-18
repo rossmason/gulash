@@ -31,6 +31,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.mule.common</groupId>
+            <artifactId>mule-common</artifactId>
+            <version>${mule.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>3.0.6</version>

@@ -22,6 +22,7 @@ import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
 import com.ning.http.client.FluentCaseInsensitiveStringsMap;
 import com.ning.http.client.ListenableFuture;
+import com.ning.http.client.Realm;
 import com.ning.http.client.Response;
 
 import java.io.IOException;
@@ -112,7 +113,8 @@ public class HttpClient implements MessageProcessor, MuleContextAware, Lifecycle
                 requestBuilder = asyncHttpClient.prepareDelete(url);
             }
 
-            //requestBuilder.setRealm()
+
+            //todo add authentication....
 
             if (headersEvaluated != null)
             {
@@ -143,13 +145,12 @@ public class HttpClient implements MessageProcessor, MuleContextAware, Lifecycle
     private MuleMessage handleResponse(Response response) throws IOException
     {
 
-        MuleMessage message = new DefaultMuleMessage(response.getResponseBody(), getMuleContext());
+        final MuleMessage message = new DefaultMuleMessage(response.getResponseBody(), getMuleContext());
         final FluentCaseInsensitiveStringsMap resultHeaders = response.getHeaders();
         final String contentType = response.getContentType();
-        resultHeaders.remove(TRANSFER_ENCODING_PROPERTY);
-        message.setProperty(HttpConnector.HTTP_HEADERS, resultHeaders, PropertyScope.OUTBOUND);
-        message.setProperty(HttpConstants.HEADER_CONTENT_TYPE, contentType, PropertyScope.OUTBOUND);
-        message.setProperty(HttpConnector.HTTP_STATUS_PROPERTY, response.getStatusCode(), PropertyScope.OUTBOUND);
+        message.setProperty(HttpConnector.HTTP_HEADERS, resultHeaders, PropertyScope.INBOUND);
+        message.setProperty(HttpConstants.HEADER_CONTENT_TYPE, contentType, PropertyScope.INBOUND);
+        message.setProperty(HttpConnector.HTTP_STATUS_PROPERTY, response.getStatusCode(), PropertyScope.INBOUND);
         message.setEncoding(getEncoding(contentType));
         return message;
     }
