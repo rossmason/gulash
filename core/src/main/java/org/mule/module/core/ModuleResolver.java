@@ -1,4 +1,4 @@
-package org.mule.gulash;
+package org.mule.module.core;
 
 import org.mule.gulash.depedencies.MvnFactory;
 import org.mule.util.FileUtils;
@@ -34,8 +34,9 @@ public class ModuleResolver
         File file = rangeResult.getArtifact().getFile();
         try
         {
+            //todo add version directory
             FileUtils.unzip(file, moduleDirectory);
-            System.out.println("Module " + groupId + ":" + artifactId + ":" + version + " was successfully installed at " + moduleDirectory.getPath());
+            System.out.println("Module " + groupId + ":" + artifactId + ":" + version + " was successfully installed at " + moduleDirectory.getAbsolutePath());
         }
         catch (IOException e)
         {

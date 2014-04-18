@@ -1,10 +1,3 @@
-import org.mule.api.MuleEvent
-import org.mule.api.MuleMessage
-
-
-
-
-
 declare(
         flow("Hello")
                 .then(log("#[payload]"),

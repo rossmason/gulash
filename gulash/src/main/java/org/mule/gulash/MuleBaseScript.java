@@ -59,6 +59,11 @@ public abstract class MuleBaseScript extends Script
         return getMule().lookup(clazz);
     }
 
+    public void require(String moduleName)
+    {
+        getMule().require(moduleName);
+    }
+
     public Mule getMule()
     {
         return (Mule) getBinding().getVariable("mule");

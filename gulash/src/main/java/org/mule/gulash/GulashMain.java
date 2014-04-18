@@ -1,6 +1,9 @@
 package org.mule.gulash;
 
 
+import org.mule.module.core.ModuleResolver;
+import org.mule.module.core.Mule;
+
 import java.io.File;
 import java.util.List;
 
@@ -23,10 +26,6 @@ public class GulashMain
 
     public static final String REQUIRE_OPTION = "get";
     public static final String VERSION_OPTION = "version";
-    public static final String DEFAULT_GROUP_ID = "org.mule.modules";
-    public static final String DEFAULT_MODULE_PREFIX = "mule-module-";
-    public static final String DEFAULT_CLASSIFIER = "plugin";
-    public static final String DEFAULT_EXTENSION = "zip";
     public static final String LIST_OPTION = "list";
 
     public static void main(String[] args) throws Exception
@@ -56,10 +55,10 @@ public class GulashMain
             {
                 final ModuleResolver moduleResolver = new ModuleResolver();
                 final String moduleName = line.getOptionValue(REQUIRE_OPTION);
-                String groupId = DEFAULT_GROUP_ID;
-                String artifactId = DEFAULT_MODULE_PREFIX + moduleName;
-                String classifier = DEFAULT_CLASSIFIER;
-                String extension = DEFAULT_EXTENSION;
+                String groupId = Mule.DEFAULT_GROUP_ID;
+                String artifactId = Mule.DEFAULT_MODULE_PREFIX + moduleName;
+                String classifier = Mule.DEFAULT_CLASSIFIER;
+                String extension = Mule.DEFAULT_EXTENSION;
                 String version;
                 if (line.hasOption(VERSION_OPTION))
                 {
@@ -76,10 +75,10 @@ public class GulashMain
 
                 final ModuleResolver moduleResolver = new ModuleResolver();
                 final String moduleName = line.getOptionValue(LIST_OPTION);
-                String groupId = DEFAULT_GROUP_ID;
-                String artifactId = DEFAULT_MODULE_PREFIX + moduleName;
-                String classifier = DEFAULT_CLASSIFIER;
-                String extension = DEFAULT_EXTENSION;
+                String groupId = Mule.DEFAULT_GROUP_ID;
+                String artifactId = Mule.DEFAULT_MODULE_PREFIX + moduleName;
+                String classifier = Mule.DEFAULT_CLASSIFIER;
+                String extension = Mule.DEFAULT_EXTENSION;
 
                 final List<Version> versions = moduleResolver.listVersions(groupId, artifactId, classifier, extension);
                 if (versions.isEmpty())

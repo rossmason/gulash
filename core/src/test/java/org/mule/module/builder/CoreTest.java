@@ -34,7 +34,9 @@ public class CoreTest
         Mule mule2 = new Mule();
         mule2.declare(Core.flow("shoki")
                                 .on(Core.endpoint("http://localhost:8081"))
-                                    .then(Core.log("Shoki sos un genio")));
+                                    .then(Core.log("Shoki sos un genio"))
+                                    .then(Core.log("Shoki sos un genio"))
+        );
 
 
     }

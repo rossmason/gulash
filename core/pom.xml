@@ -29,6 +29,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.mule.gulash</groupId>
+            <artifactId>dependency-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
             <version>1.7.19</version>
