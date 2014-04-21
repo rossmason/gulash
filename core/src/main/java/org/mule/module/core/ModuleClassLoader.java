@@ -1,9 +1,15 @@
 package org.mule.module.core;
 
+import org.mule.util.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -131,24 +137,47 @@ public class ModuleClassLoader extends ClassLoader
         throw new ClassNotFoundException(name);
     }
 
-    public void installModule(String name, ClassLoader classLoader)
+    public void installModule(String moduleName, File module)
     {
-        modules.put(name, classLoader);
+        if (!modules.containsKey(moduleName))
+        {
+            final List<URL> moduleJars = new ArrayList<URL>();
+
+            if (module.isDirectory())
+            {
+                File moduleLib = new File(module, "lib");
+                if (moduleLib.exists() && moduleLib.isDirectory())
+                {
+                    Collection<File> jars = FileUtils.listFiles(moduleLib, new String[] {"jar"}, true);
+                    for (File file : jars)
+                    {
+                        try
+                        {
+                            moduleJars.add(file.toURI().toURL());
+                        }
+                        catch (MalformedURLException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                File moduleClasses = new File(module, "classes");
+                if (moduleClasses.exists() && moduleClasses.isDirectory())
+                {
+                    try
+                    {
+                        moduleJars.add(moduleClasses.toURI().toURL());
+                    }
+                    catch (MalformedURLException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            modules.put(moduleName, new URLClassLoader(moduleJars.toArray(new URL[moduleJars.size()])));
+        }
     }
 
-    public void removeModule(String name)
-    {
-        modules.remove(name);
-    }
-
-    public void removeAll()
-    {
-        modules.clear();
-    }
-
-    public Set<String> getInstalledModules(){
-        return modules.keySet();
-    }
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException
@@ -161,5 +190,11 @@ public class ModuleClassLoader extends ClassLoader
     public boolean isModuleInstalled(String module)
     {
         return modules.containsKey(module);
+    }
+
+
+    public Set<String> getInstalledModules()
+    {
+        return modules.keySet();
     }
 }

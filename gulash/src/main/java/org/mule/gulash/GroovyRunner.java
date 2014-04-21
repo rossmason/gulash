@@ -18,9 +18,7 @@ public class GroovyRunner extends AbstractGroovyRunner
 
     public void run(File groovyFile, File muleHome) throws Exception
     {
-        final Binding binding = new Binding();
         final Mule mule = new Mule(muleHome);
-        binding.setVariable("mule", mule);
         final GroovyShell groovyShell = createGroovyShell(mule);
 
         final List<String> lines = FileUtils.readLines(groovyFile);
@@ -30,7 +28,7 @@ public class GroovyRunner extends AbstractGroovyRunner
         {
             String line = lines.get(i);
             //needs to do this better
-            if (StringUtils.trim(line).startsWith("require("))
+            if (StringUtils.trim(line).startsWith("require"))
             {
                 require.append(line).append("\n");
             }
@@ -40,13 +38,14 @@ public class GroovyRunner extends AbstractGroovyRunner
             }
         }
 
-        groovyShell.evaluate(require.toString());
+        groovyShell.evaluate(require.toString(), "Dependencies");
+        mule.build();
         final Set<String> installedModules = mule.getMuleClassLoader().getInstalledModules();
         for (String installedModule : installedModules)
         {
             script.insert(0, "import org.mule.module." + installedModule + ";\n");
         }
-        groovyShell.evaluate(script.toString());
+        groovyShell.evaluate(script.toString(), groovyFile.getName());
         mule.start();
     }
 

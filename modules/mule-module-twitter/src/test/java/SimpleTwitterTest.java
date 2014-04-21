@@ -22,7 +22,7 @@ public class SimpleTwitterTest
     public void testTwitterChangeStatus() throws MuleException
     {
         Mule mule = new Mule();
-        mule.declare(twitterConfig("", "")
+        mule.declare(config("", "")
                              .accessKey("")
                              .accessSecret("").as("twitter"));
         mule.declare(flow("TestTwitter")
@@ -40,7 +40,7 @@ public class SimpleTwitterTest
         String accessKey = "2377668061-bgaWKawaIacFA2JNkXCA0jEyanUr3Vuzn7GRpbi";
         String accessSecret = "prK4R3515VHu9PpD1hZyBoTz152H2tPs7k2jJNtXnvKyE";
 
-        mule.declare(twitterConfig(consumerKey, consumerSecret)
+        mule.declare(config(consumerKey, consumerSecret)
                              .accessKey(accessKey)
                              .accessSecret(accessSecret).as("twitter"));
 

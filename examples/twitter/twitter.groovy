@@ -1,4 +1,4 @@
-require("Twitter")
+require "Twitter"
 
 
 String consumerKey = "KWAiPYoPy60GYJSKYm5PuQ";

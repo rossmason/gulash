@@ -12,13 +12,14 @@ import org.mule.common.Result;
 import org.mule.common.TestResult;
 import org.mule.common.Testable;
 import org.mule.config.dsl.Builder;
+import org.mule.dependency.ModuleBuilder;
 import org.mule.module.core.Mule;
 import org.mule.module.core.StartListener;
 
 import java.io.File;
 
 import groovy.lang.Script;
-import javafx.fxml.Initializable;
+
 
 /**
  * Created by machaval on 4/13/14.
@@ -67,9 +68,9 @@ public abstract class MuleBaseScript extends Script
         return getMule().lookup(clazz);
     }
 
-    public void require(String moduleName)
+    public ModuleBuilder require(String moduleName)
     {
-        getMule().require(moduleName);
+        return getMule().require(moduleName);
     }
 
     public Mule getMule()

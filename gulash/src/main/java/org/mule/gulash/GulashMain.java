@@ -1,7 +1,9 @@
 package org.mule.gulash;
 
 
-import org.mule.module.core.ModuleResolver;
+import org.mule.dependency.DependencyManager;
+import org.mule.dependency.MavenDependencyManager;
+import org.mule.dependency.ModuleBuilder;
 import org.mule.module.core.Mule;
 
 import java.io.File;
@@ -16,7 +18,6 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.aether.version.Version;
 
 public class GulashMain
 {
@@ -53,34 +54,23 @@ public class GulashMain
 
             else if (line.hasOption(REQUIRE_OPTION))
             {
-                final ModuleResolver moduleResolver = new ModuleResolver();
+                final DependencyManager mavenDependencyManager = new MavenDependencyManager();
                 final String moduleName = line.getOptionValue(REQUIRE_OPTION);
-                String groupId = Mule.DEFAULT_GROUP_ID;
-                String artifactId = Mule.DEFAULT_MODULE_PREFIX + moduleName;
-                String classifier = Mule.DEFAULT_CLASSIFIER;
-                String extension = Mule.DEFAULT_EXTENSION;
-                String version;
+                final ModuleBuilder moduleBuilder = new ModuleBuilder(moduleName);
                 if (line.hasOption(VERSION_OPTION))
                 {
-                    version = line.getOptionValue(VERSION_OPTION);
+                    moduleBuilder.version(line.getOptionValue(VERSION_OPTION));
                 }
-                else
-                {
-                    version = moduleResolver.getHighestVersion(groupId, artifactId, classifier, extension).toString();
-                }
-                moduleResolver.installModule(groupId, artifactId, classifier, extension, version, new File(new File(muleHome, "lib"), moduleName));
+                mavenDependencyManager.installModule(moduleBuilder.create(), new Mule(muleHome));
             }
             else if (line.hasOption(LIST_OPTION))
             {
 
-                final ModuleResolver moduleResolver = new ModuleResolver();
+                final DependencyManager mavenDependencyManager = new MavenDependencyManager();
                 final String moduleName = line.getOptionValue(LIST_OPTION);
-                String groupId = Mule.DEFAULT_GROUP_ID;
-                String artifactId = Mule.DEFAULT_MODULE_PREFIX + moduleName;
-                String classifier = Mule.DEFAULT_CLASSIFIER;
-                String extension = Mule.DEFAULT_EXTENSION;
 
-                final List<Version> versions = moduleResolver.listVersions(groupId, artifactId, classifier, extension);
+
+                final List<String> versions = mavenDependencyManager.listVersions(moduleName);
                 if (versions.isEmpty())
                 {
                     System.out.println("NO VERSION of " + moduleName + " was found");
@@ -88,7 +78,7 @@ public class GulashMain
                 else
                 {
                     System.out.println("Available versions of " + moduleName);
-                    for (Version version : versions)
+                    for (String version : versions)
                     {
                         System.out.println("\t- " + version.toString());
                     }

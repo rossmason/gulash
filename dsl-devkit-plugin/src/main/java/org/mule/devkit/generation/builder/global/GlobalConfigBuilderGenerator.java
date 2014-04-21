@@ -79,7 +79,7 @@ public class GlobalConfigBuilderGenerator extends AbstractBuilderGenerator
         createMethodBlock._return(resultVariable);
 
         //Static Factory method for builder
-        GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, configBuilderClass, StringUtils.uncapitalize(module.getModuleName()) + CONFIG_POSTFIX);
+        GeneratedMethod processorFactoryMethod = moduleFactoryClass.method(Modifier.STATIC | Modifier.PUBLIC, configBuilderClass, StringUtils.uncapitalize(CONFIG_POSTFIX));
         GeneratedInvocation newExpression = ExpressionFactory._new(configBuilderClass);
 
         for (GeneratedField constructorField : constructorFields)

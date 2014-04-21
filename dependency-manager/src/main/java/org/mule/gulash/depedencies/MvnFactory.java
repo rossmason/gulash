@@ -28,23 +28,19 @@ public class MvnFactory
 
     public static RepositorySystemSession newRepositorySystemSession(RepositorySystem system)
     {
-        DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
-
-        LocalRepository localRepo = newLocalRepository();
+        final DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
+        final LocalRepository localRepo = newLocalRepository();
         session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
 
         session.setTransferListener(new DefaultTransferListener());
         session.setRepositoryListener(new DefaultRepositoryListener());
-
-        // uncomment to generate dirty trees
-        // session.setDependencyGraphTransformer( null );
 
         return session;
     }
 
     public static LocalRepository newLocalRepository()
     {
-        String homeDirectory = System.getProperty("user.home");
+        final String homeDirectory = System.getProperty("user.home");
         return new LocalRepository(homeDirectory + "/.m2/repository");
     }
 
@@ -56,6 +52,11 @@ public class MvnFactory
     public static RemoteRepository newMuleReleasesRepository()
     {
         return new RemoteRepository.Builder("mule-releases", "default", "http://repository-master.mulesoft.org/releases/").build();
+    }
+
+    public static RemoteRepository newCustomRepository(String url)
+    {
+        return new RemoteRepository.Builder("custom", "default", url).build();
     }
 
 }
