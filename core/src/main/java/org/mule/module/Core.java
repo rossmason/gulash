@@ -3,21 +3,8 @@ package org.mule.module;
 
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
-import org.mule.module.core.builder.AsyncBuilder;
-import org.mule.module.core.builder.ChoiceBuilder;
-import org.mule.module.core.builder.CustomMessageProcessorBuilder;
-import org.mule.module.core.builder.CustomMessageProcessorBuilderImpl;
-import org.mule.module.core.builder.EnricherBuilder;
-import org.mule.module.core.builder.FlowBuilder;
-import org.mule.module.core.builder.FlowBuilderImpl;
-import org.mule.module.core.builder.FlowRefBuilder;
-import org.mule.module.core.builder.ForeachBuilder;
-import org.mule.module.core.builder.IfBuilder;
-import org.mule.module.core.builder.InboundEndpointBuilder;
-import org.mule.module.core.builder.JavaBeanElementBuilder;
-import org.mule.module.core.builder.LoggerBuilder;
-import org.mule.module.core.builder.PollBuilder;
-import org.mule.module.core.builder.SetPayloadBuilder;
+import org.mule.module.core.builder.*;
+import org.mule.transformer.AbstractTransformer;
 
 import java.util.Arrays;
 
@@ -28,6 +15,10 @@ public class Core
     {
         return new LoggerBuilder(message);
     }
+
+    public static TransformerBuilder transformer(Class<? extends AbstractTransformer> transfomerClass) {return new TransformerBuilder(transfomerClass);}
+
+    public static TransformerBuilder transformer(TransformerBuilderImpl transformerBuilderImpl) {return new TransformerBuilder(transformerBuilderImpl);}
 
     public static ForeachBuilder foreach()
     {

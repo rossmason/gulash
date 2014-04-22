@@ -20,6 +20,7 @@
         <module>dependency-manager</module>
         <module>gulash</module>
         <module>dsl-devkit-plugin</module>
+        <module>scallion</module>
         <!--module>modules</module-->
 
     </modules>
