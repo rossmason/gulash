@@ -6,6 +6,7 @@ import org.mule.gulash.GroovyRunner;
 import java.io.File;
 import java.net.URL;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class GroovyRunnerTest
     {
         URL resource = getClass().getClassLoader().getResource("test.groovy");
 
-        new GroovyRunner().run(new File(resource.toURI()), new File("."));
+        new GroovyRunner().run(new File(resource.toURI()), new String[0], new File("."));
     }
 
     @Test
@@ -29,6 +30,6 @@ public class GroovyRunnerTest
     {
         URL resource = getClass().getClassLoader().getResource("twitter.groovy");
 
-        new GroovyRunner().run(new File(resource.toURI()), new File("."));
+        new GroovyRunner().run(new File(resource.toURI()), new String[]{"Probando 1 2 3 4"}, new File("."));
     }
 }

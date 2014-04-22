@@ -1,5 +1,6 @@
 package org.mule.gulash;
 
+import org.mule.construct.Flow;
 import org.mule.module.core.Mule;
 import org.mule.util.FileUtils;
 
@@ -16,7 +17,7 @@ import org.codehaus.groovy.tools.shell.IO;
 public class GroovyRunner extends AbstractGroovyRunner
 {
 
-    public void run(File groovyFile, File muleHome) throws Exception
+    public void run(File groovyFile, String[] arguments, File muleHome) throws Exception
     {
         final Mule mule = new Mule(muleHome);
         final GroovyShell groovyShell = createGroovyShell(mule);
@@ -47,6 +48,11 @@ public class GroovyRunner extends AbstractGroovyRunner
         }
         groovyShell.evaluate(script.toString(), groovyFile.getName());
         mule.start();
+        final Object main = mule.get("main");
+        if (main instanceof Flow)
+        {
+            mule.callFlow("main", arguments);
+        }
     }
 
 }

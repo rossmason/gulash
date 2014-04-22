@@ -7,6 +7,7 @@ import org.mule.dependency.ModuleBuilder;
 import org.mule.module.core.Mule;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.cli.BasicParser;
@@ -17,6 +18,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.ArrayUtils;
 
 public class GulashMain
@@ -90,7 +92,7 @@ public class GulashMain
                 if (!ArrayUtils.isEmpty(argsArray))
                 {
                     final GroovyRunner groovyRunner = new GroovyRunner();
-                    groovyRunner.run(new File(argsArray[argsArray.length - 1]), muleHome);
+                    groovyRunner.run(new File(argsArray[0]), (String[]) ArrayUtils.remove(argsArray, 0), muleHome);
                 }
                 else
                 {

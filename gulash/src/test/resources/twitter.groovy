@@ -14,12 +14,10 @@ declare Twitter.config(consumerKey, consumerSecret)
                 .accessSecret(accessSecret).as("twitterConfig");
 
 
-declare flow("TestTwitter")
+declare flow("main")
                 .on(endpoint("http://localhost:8081"))
                 .then(Twitter.updateStatus("#[payload]").using("twitterConfig"))
                 .then(setPayload("OK"))
 
-onStart {
-            callFlow("TestTwitter", "Hello this is a start");
-        }
+
 
