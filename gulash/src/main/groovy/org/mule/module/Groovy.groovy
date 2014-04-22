@@ -9,7 +9,7 @@ import org.mule.module.groovy.builder.GroovyBuilder
 public class Groovy
 {
 
-    public static GroovyBuilder call(Closure closure)
+    public static GroovyBuilder process(Closure closure)
     {
         return new GroovyBuilder(closure);
     }

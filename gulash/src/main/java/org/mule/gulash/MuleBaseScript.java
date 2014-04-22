@@ -18,6 +18,7 @@ import org.mule.module.core.StartListener;
 
 import java.io.File;
 
+import groovy.lang.Closure;
 import groovy.lang.Script;
 
 
@@ -48,9 +49,16 @@ public abstract class MuleBaseScript extends Script
         return getMule().getMuleHome();
     }
 
-    public Mule onStart(StartListener listener)
+    public Mule onStart(final Closure listener)
     {
-        return getMule().onStart(listener);
+        return getMule().onStart(new StartListener()
+        {
+            @Override
+            public void onStart(Mule mule)
+            {
+                listener.run();
+            }
+        });
     }
 
     public Mule start() throws MuleException

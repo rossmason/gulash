@@ -19,8 +19,7 @@ declare flow("TestTwitter")
                 .then(Twitter.updateStatus("#[payload]").using("twitterConfig"))
                 .then(setPayload("OK"))
 
-onStart(
-        { mule ->
-                callFlow("TestTwitter", "Hello this is a start");
+onStart {
+            callFlow("TestTwitter", "Hello this is a start");
+        }
 
-        } as StartListener)
