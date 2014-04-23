@@ -35,7 +35,8 @@ Groovy Example
 Using a Cloud Connector
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-import static org.mule.module.Twitter.*;
+require "Twitter"
+
 
 String consumerKey = "";
 String consumerSecret = "";
@@ -43,14 +44,19 @@ String accessKey = "";
 String accessSecret = "";
 
 
-mule.declare(twitterConfig(consumerKey, consumerSecret)
-                     .accessKey(accessKey)
-                     .accessSecret(accessSecret).as("twitter"));
+declare Twitter.config(consumerKey, consumerSecret)
+                .accessKey(accessKey)
+                .accessSecret(accessSecret).as("twitterConfig");
 
-mule.declare(flow("TestTwitter")
-                     .on(endpoint("http://localhost:8081"))
-                     .then(updateStatus("#['Enjoying my #Goulash']").with("twitter"))
-                     .then(setPayload("OK")));
+
+declare flow("main")
+                .on(endpoint("http://localhost:8081"))
+                .then(Twitter.updateStatus("#[payload]").using("twitterConfig"))
+                .then(setPayload("Your twitter status updated!"))
+
+
+
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -64,6 +70,7 @@ Features
 * Supports APIKit
  * Basic Scaffolding from raml file.
 * Devkit dsl generation from @Module and @Connectors
+* Dependency support through require expression
 
 
 Building & Installation
