@@ -30,6 +30,7 @@ public class GulashMain
     public static final String REQUIRE_OPTION = "get";
     public static final String VERSION_OPTION = "version";
     public static final String LIST_OPTION = "list";
+    public static final String CLEAN_OPTION = "clean";
 
     public static void main(String[] args) throws Exception
     {
@@ -86,6 +87,10 @@ public class GulashMain
                     }
                 }
             }
+            else if (line.hasOption(CLEAN_OPTION))
+            {
+                new Mule(muleHome).getLibDirectory().delete();
+            }
             else
             {
                 String[] argsArray = line.getArgs();
@@ -141,12 +146,18 @@ public class GulashMain
                 .withDescription("The version of the dependency. If not specified use the latest one.")
                 .create(LIST_OPTION);
 
+        Option clean = OptionBuilder.withArgName("Clean local cache")
+                .hasArg()
+                .withDescription("Clean local cache")
+                .create(CLEAN_OPTION);
+
         Options options = new Options();
         options.addOption(ramlFile);
         options.addOption(help);
         options.addOption(require);
         options.addOption(version);
         options.addOption(listVersion);
+        options.addOption(clean);
         return options;
     }
 
