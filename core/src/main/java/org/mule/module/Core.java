@@ -4,7 +4,6 @@ package org.mule.module;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.config.dsl.Builder;
 import org.mule.module.core.builder.*;
-import org.mule.transformer.AbstractTransformer;
 
 import java.util.Arrays;
 
@@ -15,10 +14,6 @@ public class Core
     {
         return new LoggerBuilder(message);
     }
-
-    public static TransformerBuilder transformer(Class<? extends AbstractTransformer> transfomerClass) {return new TransformerBuilder(transfomerClass);}
-
-    public static TransformerBuilder transformer(TransformerBuilderImpl transformerBuilderImpl) {return new TransformerBuilder(transformerBuilderImpl);}
 
     public static ForeachBuilder foreach()
     {

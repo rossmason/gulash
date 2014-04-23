@@ -132,7 +132,9 @@ public class Mule
 
     public Mule stop() throws MuleException
     {
-        muleContext.stop();
+        if (muleContext != null) {
+            muleContext.stop();
+        }
         return this;
     }
 

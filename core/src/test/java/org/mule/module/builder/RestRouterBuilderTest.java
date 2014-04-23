@@ -1,6 +1,7 @@
 package org.mule.module.builder;
 
 import com.jayway.restassured.RestAssured;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mule.api.MuleException;
@@ -14,19 +15,25 @@ import static org.mule.module.Core.log;
 
 public class RestRouterBuilderTest
 {
-
+    private Mule mule;
 
     @Before
-    public void setup()
+    public void setup() throws MuleException
     {
         RestAssured.port = 8081;
+        startApp();
+    }
+
+    @After
+    public void tearDown() throws MuleException
+    {
+        mule.stop();
     }
 
 
     @Test
     public void simple() throws MuleException
     {
-        startApp();
         given().header("Accept", "*/*").body("hola")
                 .expect()
                 .response().body(containsString("hola"))
@@ -37,7 +44,6 @@ public class RestRouterBuilderTest
     @Test
     public void notAcceptable() throws MuleException
     {
-        startApp();
         given().header("Accept", "application/json").body("hola")
                 .expect()
                 .response().body(containsString(""))
@@ -48,7 +54,6 @@ public class RestRouterBuilderTest
     @Test
     public void notFound() throws MuleException
     {
-        startApp();
         given().header("Accept", "*/*").body("hola")
                 .expect()
                 .response().body(containsString(""))
@@ -59,7 +64,6 @@ public class RestRouterBuilderTest
     @Test
     public void methodNotAllowed() throws MuleException
     {
-        startApp();
         given().header("Accept", "*/*").body("hola")
                 .expect()
                 .response().body(containsString(""))
@@ -69,7 +73,7 @@ public class RestRouterBuilderTest
 
     private void startApp() throws MuleException
     {
-        Mule mule = new Mule();
+        mule = new Mule();
         mule.declare(
                 api("rover.raml")
                         .on("/forward", ActionType.PUT)
