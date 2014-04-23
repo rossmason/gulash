@@ -38,7 +38,7 @@ import org.fusesource.jansi.AnsiConsole
 
 
 /**
- * An interactive shell for evaluating Groovy code from the command-line (aka. gulash).
+ * An interactive shell for evaluating Groovy code with the command-line (aka. gulash).
  *
  * @version $Id$
  * @author <a href="mailto:jason@planet57.com">Jason Dillon</a>

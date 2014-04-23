@@ -25,10 +25,15 @@ public class EnricherBuilder implements MessageProcessorBuilder<MessageEnricher>
         this.enrichmentExpressions.add(new MessageEnricher.EnrichExpressionPair(target, source));
     }
 
-    public EnricherBuilder from(Builder<MessageProcessor>... mps)
+    public EnricherBuilder with(Builder<MessageProcessor>... mps)
     {
         chainBuilder.chain(mps);
         return this;
+    }
+
+    public EnricherBuilder then(Builder<MessageProcessor>... mps)
+    {
+        return with(mps);
     }
 
     @Override

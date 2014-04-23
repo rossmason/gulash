@@ -160,7 +160,7 @@ public class HttpClient implements MessageProcessor, MuleContextAware, Lifecycle
         String encoding = "UTF-8";
         if (contentType != null)
         {
-            // use HttpClient classes to parse the charset part from the Content-Type
+            // use HttpClient classes to parse the charset part with the Content-Type
             // header (e.g. "text/html; charset=UTF-16BE")
             Header contentTypeHeader = new Header(HttpConstants.HEADER_CONTENT_TYPE,
                                                   contentType.toString());

@@ -70,7 +70,7 @@ class Interpreter
             // Remove the script class generated
             cache.remove(type?.name)
 
-            // Remove the inline closures from the cache as well
+            // Remove the inline closures with the cache as well
             cache.remove('$_run_closure')
         }
 

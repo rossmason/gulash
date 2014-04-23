@@ -9,6 +9,12 @@
         Parent pom for all Goulash Modules
     </description>
 
+    <parent>
+        <groupId>org.mule.gulash</groupId>
+        <artifactId>gulash-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>org.mule.modules</groupId>
     <artifactId>mule-devkitmodules-parent</artifactId>
     <version>1.0-SNAPSHOT</version>

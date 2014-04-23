@@ -1,6 +1,5 @@
-import org.mule.module.core.StartListener
-
-require "Twitter"
+require "Twitter" version "3.1.0-SNAPSHOT"
+require "Webcam" version "1.0-SNAPSHOT"
 
 
 String consumerKey = "KWAiPYoPy60GYJSKYm5PuQ";
@@ -13,11 +12,13 @@ declare Twitter.config(consumerKey, consumerSecret)
                 .accessKey(accessKey)
                 .accessSecret(accessSecret).as("twitterConfig");
 
+declare Webcam.config().as("webcamConfig")
+
 
 declare flow("main")
-                .on(endpoint("http://localhost:8081"))
-                .then(Twitter.updateStatus("#[payload]").using("twitterConfig"))
-                .then(setPayload("OK"))
+                 .on(endpoint("http://localhost:8081"))
+                 .then(enrich("#[flowVars['picture']]").with(Webcam.takePicture().using("webcamConfig")))
+                 .then(Twitter.updateStatus("My picture is!").mediaName("Me.png").media("#[flowVars['picture']]").using("twitterConfig"))
 
 
 

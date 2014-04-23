@@ -226,7 +226,7 @@ public class TwitterConnector implements MuleContextAware
      * @param maxId      If specified, returns tweets with status ids less than the given id
      * @param since      If specified, returns tweets since the given date. Date should be formatted as YYYY-MM-DD
      * @param sinceId    Returns tweets with status ids greater than the given id.
-     * @param geocode    A {@link String} containing the latitude and longitude separated by ','. Used to get the tweets by users located within a given radius of the given latitude/longitude, where the user's location is taken from their Twitter profile
+     * @param geocode    A {@link String} containing the latitude and longitude separated by ','. Used to get the tweets by users located within a given radius of the given latitude/longitude, where the user's location is taken with their Twitter profile
      * @param radius     The radius to be used in the geocode -ONLY VALID IF A GEOCODE IS GIVEN-
      * @param unit       The unit of measurement of the given radius. Can be 'mi' or 'km'. Miles by default.
      * @param until      If specified, returns tweets with generated before the given date. Date should be formatted as YYYY-MM-DD
@@ -322,13 +322,13 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Returns the 20 most recent statuses posted from the authenticating user. It's
+     * Returns the 20 most recent statuses posted with the authenticating user. It's
      * also possible to request another user's timeline via the id parameter.<br>
      * This is the equivalent of the Web / page for your own user, or the profile
      * page for a third party.<br>
      * For backwards compatibility reasons, retweets are stripped out of the
      * user_timeline when calling in XML or JSON (they appear with 'RT' in RSS and
-     * Atom). If you'd like them included, you can merge them in from statuses
+     * Atom). If you'd like them included, you can merge them in with statuses
      * retweeted_by_me.<br>
      * <br>
      * This method calls http://api.twitter.com/1.1/statuses/user_timeline.json
@@ -359,13 +359,13 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Returns the 20 most recent statuses posted from the authenticating user. It's
+     * Returns the 20 most recent statuses posted with the authenticating user. It's
      * also possible to request another user's timeline via the id parameter.<br>
      * This is the equivalent of the Web / page for your own user, or the profile
      * page for a third party.<br>
      * For backwards compatibility reasons, retweets are stripped out of the
      * user_timeline when calling in XML or JSON (they appear with 'RT' in RSS and
-     * Atom). If you'd like them included, you can merge them in from statuses
+     * Atom). If you'd like them included, you can merge them in with statuses
      * retweeted_by_me.<br>
      * <br>
      * This method calls http://api.twitter.com/1.1/statuses/user_timeline.json
@@ -406,13 +406,13 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Returns the 20 most recent statuses posted from the authenticating user. It's
+     * Returns the 20 most recent statuses posted with the authenticating user. It's
      * also possible to request another user's timeline via the id parameter.<br>
      * This is the equivalent of the Web / page for your own user, or the profile
      * page for a third party.<br>
      * For backwards compatibility reasons, retweets are stripped out of the
      * user_timeline when calling in XML or JSON (they appear with 'RT' in RSS and
-     * Atom). If you'd like them included, you can merge them in from statuses
+     * Atom). If you'd like them included, you can merge them in with statuses
      * retweeted_by_me.<br>
      * <br>
      * This method calls http://api.twitter.com/1.1/statuses/user_timeline.json
@@ -667,8 +667,8 @@ public class TwitterConnector implements MuleContextAware
      * <p/>
      * {@sample.xml ../../../doc/twitter-connector.xml.sample twitter:setOauthVerifier}
      *
-     * @param requestToken  request token from Twitter
-     * @param oauthVerifier The OAuth verifier code from Twitter.
+     * @param requestToken  request token with Twitter
+     * @param oauthVerifier The OAuth verifier code with Twitter.
      * @return Twitter AccessToken info.
      * @throws TwitterException when Twitter service or network is unavailable
      */
@@ -711,7 +711,7 @@ public class TwitterConnector implements MuleContextAware
      * Search for places (cities and neighborhoods) that can be attached to a
      * statuses/update. Given a latitude and a longitude, return a list of all the
      * valid places that can be used as a place_id when updating a status.
-     * Conceptually, a query can be made from the user's location, retrieve a list of
+     * Conceptually, a query can be made with the user's location, retrieve a list of
      * places, have the user validate the location he or she is at, and then send the
      * ID of this location up with a call to statuses/update.<br>
      * There are multiple granularities of places that can be returned --
@@ -764,7 +764,7 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Find out more details of a place that was returned from the reverseGeoCode
+     * Find out more details of a place that was returned with the reverseGeoCode
      * operation.
      * <p/>
      * <p/>
@@ -790,7 +790,7 @@ public class TwitterConnector implements MuleContextAware
      *                        Try and be as close as possible with the containing place. For
      *                        example, for a room in a building, set the contained_within as the
      *                        building place_id.
-     * @param token           The token found in the response from geo/similar_places.
+     * @param token           The token found in the response with geo/similar_places.
      * @param latitude        The latitude the place is located at.
      * @param longitude       The longitude the place is located at.
      * @param streetAddress   optional: This parameter searches for places which have
@@ -814,7 +814,7 @@ public class TwitterConnector implements MuleContextAware
 
     /**
      * Locates places near the given coordinates which are similar in name.
-     * Conceptually you would use this method to get a list of known places to choose from first.
+     * Conceptually you would use this method to get a list of known places to choose with first.
      * Then, if the desired place doesn't exist, make a request to POST geo/place to create a new one.
      * The token contained in the response is the token needed to be able to create a new place.
      * <p/>
@@ -1165,7 +1165,7 @@ public class TwitterConnector implements MuleContextAware
      * {@sample.xml ../../../doc/twitter-connector.xml.sample twitter:siteStream}
      *
      * @param userIds        ids of users to include in the stream
-     * @param withFollowings withFollowings whether to receive status updates from people following
+     * @param withFollowings withFollowings whether to receive status updates with people following
      * @param callback_      the {@link SourceCallback} used to dispatch messages when a response is received
      */
     @Source
@@ -1202,7 +1202,7 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Sends a new direct message to the specified user from the authenticating user.
+     * Sends a new direct message to the specified user with the authenticating user.
      * Requires both the user and text parameters below. The text will be trimmed if
      * the length of the text is exceeding 140 characters.
      * <p/>
@@ -1220,7 +1220,7 @@ public class TwitterConnector implements MuleContextAware
     }
 
     /**
-     * Sends a new direct message to the specified user from the authenticating user.
+     * Sends a new direct message to the specified user with the authenticating user.
      * Requires both the user and text parameters below. The text will be trimmed if
      * the length of the text is exceeding 140 characters.
      * <p/>
