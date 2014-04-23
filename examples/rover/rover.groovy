@@ -1,5 +1,3 @@
-import org.mule.module.runtime.rover.MockRover;
-import org.mule.module.runtime.rover.Rover;
 import static org.mule.module.RaspberryPi.*;
 
 

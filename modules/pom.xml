@@ -32,7 +32,8 @@
 
 
     <modules>
-        <module>mule-module-pi</module>
+        <module>mule-module-gpio</module>
+        <module>mule-module-rover</module>
         <module>mule-module-twitter</module>
         <module>mule-module-webcam</module>
         <module>mule-module-jira</module>

@@ -16,7 +16,6 @@ declare Webcam.config().as("webcamConfig")
 
 
 declare flow("main")
-                 .on(endpoint("http://localhost:8081"))
                  .then(enrich("#[flowVars['picture']]").with(Webcam.takePicture().using("webcamConfig")))
                  .then(Twitter.updateStatus("My picture is!").mediaName("Me.png").media("#[flowVars['picture']]").using("twitterConfig"))
 

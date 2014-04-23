@@ -41,8 +41,8 @@ import java.util.Map;
  *
  * @author MuleSoft, Inc.
  */
-@Module(name = "pi", schemaVersion = "1.0-SNAPSHOT")
-public class PIConnector
+@Module(name = "GPIO", schemaVersion = "1.0-SNAPSHOT")
+public class GPIOConnector
 {
 
     private GpioController gpio;
