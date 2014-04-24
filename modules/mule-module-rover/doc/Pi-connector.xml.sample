@@ -1,0 +1,9 @@
+<!-- BEGIN_INCLUDE(pi:pinOn) -->
+    <pi:pin-on pin="#[map-payload:content]" />
+<!-- END_INCLUDE(pi:pinOn) -->
+<!-- BEGIN_INCLUDE(pi:pinOff) -->
+    <pi:pin-off pin="#[map-payload:content]" />
+<!-- END_INCLUDE(pi:pinOff) -->
+<!-- BEGIN_INCLUDE(pi:listenPin) -->
+    <pi:listen-pin pin="#[map-payload:content]" />
+<!-- END_INCLUDE(pi:listenPin) -->
