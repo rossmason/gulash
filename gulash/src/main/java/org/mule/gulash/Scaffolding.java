@@ -15,7 +15,7 @@ public class Scaffolding
 
     public Scaffolding init()
     {
-        result.append("mule.declare(");
+        result.append("declare(");
         return this;
     }
 
