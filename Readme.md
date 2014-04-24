@@ -22,14 +22,18 @@ mule.start();
 Groovy Example
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        mule.declare(
-                api("rover.raml")
-                        .on("/motion/forward" , ActionType.PUT).then(log("#[payload]"))
-                        .on("/motion/backard" , ActionType.PUT).then(log("#[payload]"))
-                        .on("/motion/left" , ActionType.PUT).then(log("#[payload]"))
-                        .on("/motion/right" , ActionType.PUT).then(log("#[payload]"))
+declare(
+        api("rover.raml")
+                .on("/motion/forward" , ActionType.PUT)
+                    .then(log("#[payload]"))
+                .on("/motion/backard" , ActionType.PUT)
+                    .then(log("#[payload]"))
+                .on("/motion/left" , ActionType.PUT)
+                    .then(log("#[payload]"))
+                .on("/motion/right" , ActionType.PUT)
+                    .then(log("#[payload]"))
 
-        );
+);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using a Cloud Connector
@@ -59,6 +63,17 @@ declare flow("main")
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Dependencies
+--------
+ The require instruction allows to dynamically fetch a module and add it to the execution
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ require "ModuleName" version "Version" from "url"
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* If version is not specified the last one is going to be picked
+* Url is only required if the module is in other repository different to central or local
+
 
 Features
 --------
